@@ -40,18 +40,18 @@ namespace V2RaySharp
                     {
                         case "-start":
                             V2Ray.Start();
-                            SystemProxy.Enable();
                             break;
                         case "-restart":
                             V2Ray.Restart();
-                            SystemProxy.Enable();
                             break;
                         case "-config":
                             V2Ray.Config();
                             break;
                         case "-exit":
                             V2Ray.Exit();
-                            SystemProxy.Disable();
+                            break;
+                        case "-switch":
+                            V2Ray.Switch();
                             break;
                         default:
                             break;

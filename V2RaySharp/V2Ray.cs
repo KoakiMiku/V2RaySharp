@@ -15,6 +15,7 @@ namespace V2RaySharp
                 Process process = new Process();
                 process.StartInfo.FileName = path;
                 process.Start();
+                SystemProxy.Enable();
             }
             catch (Exception)
             {
@@ -59,6 +60,27 @@ namespace V2RaySharp
                 foreach (var item in process)
                 {
                     item.Kill();
+                }
+                SystemProxy.Disable();
+            }
+            catch (Exception)
+            {
+                throw;
+            }
+        }
+
+        public static void Switch()
+        {
+            try
+            {
+                Process[] process = Process.GetProcessesByName("wv2ray");
+                if (process.Length == 0)
+                {
+                    Start();
+                }
+                else
+                {
+                    Exit();
                 }
             }
             catch (Exception)
