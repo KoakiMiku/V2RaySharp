@@ -38,22 +38,11 @@ namespace V2RaySharp
                 {
                     switch (args[0])
                     {
-                        case "-start":
-                            V2Ray.Start();
-                            break;
-                        case "-restart":
-                            V2Ray.Restart();
-                            break;
-                        case "-config":
-                            V2Ray.Config();
-                            break;
-                        case "-exit":
-                            V2Ray.Exit();
-                            break;
                         case "-switch":
                             V2Ray.Switch();
                             break;
-                        default:
+                        case "-config":
+                            V2Ray.Config();
                             break;
                     }
                 }

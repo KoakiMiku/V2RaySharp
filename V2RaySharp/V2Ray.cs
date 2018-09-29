@@ -1,35 +1,31 @@
 ﻿using System;
 using System.Diagnostics;
 using System.IO;
-using System.Threading;
 
 namespace V2RaySharp
 {
     class V2Ray
     {
-        public static void Start()
+        public static void Switch()
         {
             try
             {
-                string path = Path.Combine(AppContext.BaseDirectory, "wv2ray.exe");
-                Process process = new Process();
-                process.StartInfo.FileName = path;
-                process.Start();
-                SystemProxy.Enable();
-            }
-            catch (Exception)
-            {
-                throw;
-            }
-        }
-
-        public static void Restart()
-        {
-            try
-            {
-                Exit();
-                Thread.Sleep(1000);
-                Start();
+                Process[] processes = Process.GetProcessesByName("wv2ray");
+                if (processes.Length == 0)
+                {
+                    Process process = new Process();
+                    process.StartInfo.FileName = Path.Combine(AppContext.BaseDirectory, "wv2ray.exe");
+                    process.Start();
+                    SystemProxy.Enable();
+                }
+                else
+                {
+                    SystemProxy.Disable();
+                    foreach (var item in processes)
+                    {
+                        item.Kill();
+                    }
+                }
             }
             catch (Exception)
             {
@@ -45,43 +41,6 @@ namespace V2RaySharp
                 Process process = new Process();
                 process.StartInfo.FileName = path;
                 process.Start();
-            }
-            catch (Exception)
-            {
-                throw;
-            }
-        }
-
-        public static void Exit()
-        {
-            try
-            {
-                Process[] process = Process.GetProcessesByName("wv2ray");
-                foreach (var item in process)
-                {
-                    item.Kill();
-                }
-                SystemProxy.Disable();
-            }
-            catch (Exception)
-            {
-                throw;
-            }
-        }
-
-        public static void Switch()
-        {
-            try
-            {
-                Process[] process = Process.GetProcessesByName("wv2ray");
-                if (process.Length == 0)
-                {
-                    Start();
-                }
-                else
-                {
-                    Exit();
-                }
             }
             catch (Exception)
             {
