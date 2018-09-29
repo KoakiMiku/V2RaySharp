@@ -10,7 +10,7 @@ namespace V2RaySharp
         public static void Add()
         {
             RegistryKey autorun = Registry.CurrentUser.OpenSubKey(autorunPath, true);
-            autorun.SetValue("V2Ray", $"{Application.ExecutablePath} -start");
+            autorun.SetValue("V2Ray", $"{Application.ExecutablePath} -switch");
             autorun.Close();
         }
 
