@@ -177,7 +177,7 @@ namespace V2RaySharp.View
                     buttonSwitch.Enabled = false;
                     buttonChange.Enabled = false;
                 }));
-                Thread.Sleep(1000);
+                Thread.Sleep(2000);
                 Invoke(new Action(() =>
                 {
                     if (V2Ray.IsRunning())

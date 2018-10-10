@@ -53,10 +53,15 @@
                 {
                     "outboundTag": "direct",
                     "type": "field",
-                    "domain": [
+                    "ip": [
                         "geoip:private",
                         "geoip:cn"
                     ]
+                },
+                {
+                    "outboundTag": "direct",
+                    "type": "field",
+                    "domain": []
                 }
             ]
         }
