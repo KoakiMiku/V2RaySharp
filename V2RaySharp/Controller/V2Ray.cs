@@ -50,6 +50,7 @@ namespace V2RaySharp.Controller
             try
             {
                 Stop();
+                Thread.Sleep(1000);
                 Start();
             }
             catch (Exception)

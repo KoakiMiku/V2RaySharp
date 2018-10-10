@@ -29,7 +29,7 @@ namespace V2RaySharp.View
                 Node.CompleteEvent += Complete;
                 Configuration.Load();
                 Node.Upgrade();
-                Task.Run(() => UpgradeButton());
+                UpgradeButton(false);
             }
             catch (Exception ex)
             {
@@ -79,7 +79,7 @@ namespace V2RaySharp.View
                 {
                     Task.Run(() => V2Ray.Start());
                 }
-                Task.Run(() => UpgradeButton());
+                Task.Run(() => UpgradeButton(true));
             }
             catch (Exception ex)
             {
@@ -98,7 +98,7 @@ namespace V2RaySharp.View
                     {
                         string name = listBoxNode.SelectedItem.ToString();
                         Task.Run(() => V2Ray.Change(name));
-                        Task.Run(() => UpgradeButton());
+                        Task.Run(() => UpgradeButton(true));
                     }
                     else
                     {
@@ -174,7 +174,7 @@ namespace V2RaySharp.View
             }
         }
 
-        private void UpgradeButton()
+        private void UpgradeButton(bool isWait)
         {
             try
             {
@@ -183,7 +183,10 @@ namespace V2RaySharp.View
                     buttonSwitch.Enabled = false;
                     buttonChange.Enabled = false;
                 }));
-                Thread.Sleep(2000);
+                if (isWait)
+                {
+                    Thread.Sleep(2000);
+                }
                 Invoke(new Action(() =>
                 {
                     if (V2Ray.IsRunning())
