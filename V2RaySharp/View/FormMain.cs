@@ -31,9 +31,10 @@ namespace V2RaySharp.View
                 Node.Upgrade();
                 Task.Run(() => UpgradeButton());
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-                throw;
+                MessageBox.Show(ex.Message, Application.ProductName,
+                  MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
 
@@ -43,9 +44,10 @@ namespace V2RaySharp.View
             {
                 Focus();
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-                throw;
+                MessageBox.Show(ex.Message, Application.ProductName,
+                  MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
 
