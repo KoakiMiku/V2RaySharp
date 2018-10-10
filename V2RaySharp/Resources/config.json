@@ -1,0 +1,74 @@
+{
+    "inbound": {
+        "protocol": "http",
+        "listen": "127.0.0.1",
+        "port": 1080,
+        "settings": {}
+    },
+    "outbound": {
+        "protocol": null,
+        "settings": {
+            "servers": [
+                {
+                    "address": null,
+                    "port": null,
+                    "password": null,
+                    "method": null
+                }
+            ],
+            "vnext": [
+                {
+                    "address": null,
+                    "port": null,
+                    "users": [
+                        {
+                            "id": null,
+                            "alterId": null
+                        }
+                    ]
+                }
+            ]
+        }
+    },
+    "outboundDetour": [
+        {
+            "tag": "direct",
+            "protocol": "freedom",
+            "settings": {}
+        }
+    ],
+    "routing": {
+        "strategy": "rules",
+        "settings": {
+            "domainStrategy": "IPIfNonMatch",
+            "rules": [
+                {
+                    "outboundTag": "direct",
+                    "type": "field",
+                    "domain": [
+                        "geosite:speedtest",
+                        "geosite:cn"
+                    ]
+                },
+                {
+                    "outboundTag": "direct",
+                    "type": "field",
+                    "domain": [
+                        "geoip:private",
+                        "geoip:cn"
+                    ]
+                }
+            ]
+        }
+    },
+    "dns": {
+        "servers": [
+            "8.8.8.8",
+            "8.8.4.4",
+            "localhost"
+        ]
+    },
+    "log": {
+        "loglevel": "debug"
+    }
+}

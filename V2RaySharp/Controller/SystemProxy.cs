@@ -3,14 +3,14 @@ using System;
 using System.Collections.Generic;
 using System.Runtime.InteropServices;
 
-namespace V2RaySharp
+namespace V2RaySharp.Controller
 {
     class SystemProxy
     {
-        static readonly string proxyPath = @"Software\Microsoft\Windows\CurrentVersion\Internet Settings";
-        static readonly string localIPEndpoint = "127.0.0.1:1080";
-        static readonly string proxyOverride = "<local>";
-        static readonly List<string> privateIPAddress = new List<string>() {
+        private static readonly string proxyPath = @"Software\Microsoft\Windows\CurrentVersion\Internet Settings";
+        private static readonly string localIPEndpoint = "127.0.0.1:1080";
+        private static readonly string proxyOverride = "<local>";
+        private static readonly List<string> privateIPAddress = new List<string>() {
             "localhost", "127.*", "10.*", "192.168.*",
             "172.16.*", "172.17.*", "172.18.*", "172.19.*", "172.20.*", "172.21.*",
             "172.22.*", "172.23.*", "172.24.*", "172.25.*", "172.26.*", "172.27.*",
@@ -44,10 +44,10 @@ namespace V2RaySharp
             InternetSetOption(IntPtr.Zero, internetOptionRefresh, IntPtr.Zero, 0);
         }
 
-        static readonly int internetOptionRefresh = 37;
-        static readonly int internetOptionProxySettingsChanged = 95;
+        private static readonly int internetOptionRefresh = 37;
+        private static readonly int internetOptionProxySettingsChanged = 95;
 
         [DllImport("wininet.dll")]
-        static extern bool InternetSetOption(IntPtr hInternet, int dwOption, IntPtr lpBuffer, int dwBufferLength);
+        private static extern bool InternetSetOption(IntPtr hInternet, int dwOption, IntPtr lpBuffer, int dwBufferLength);
     }
 }

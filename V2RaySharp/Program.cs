@@ -1,5 +1,8 @@
 ﻿using System;
 using System.Windows.Forms;
+using V2RaySharp.Controller;
+using V2RaySharp.Regedit;
+using V2RaySharp.View;
 
 namespace V2RaySharp
 {
@@ -25,6 +28,7 @@ namespace V2RaySharp
                         case DialogResult.No:
                             Autorun.Remove();
                             DesktopMenu.Remove();
+                            V2Ray.Stop();
                             break;
                         default:
                             break;
@@ -32,19 +36,30 @@ namespace V2RaySharp
                 }
                 else if (args.Length == 0 && !isAdmin)
                 {
-                    Administrator.RunAsAdmin();
+                    try
+                    {
+                        Administrator.RunAsAdmin();
+                    }
+                    catch (Exception)
+                    {
+                        return;
+                    }
+                }
+                else if (args[0] == "-start")
+                {
+                    V2Ray.Start();
+                }
+                else if (args[0] == "-stop")
+                {
+                    V2Ray.Stop();
+                }
+                else if (args[0] == "-config")
+                {
+                    Application.Run(new FormMain());
                 }
                 else
                 {
-                    switch (args[0])
-                    {
-                        case "-switch":
-                            V2Ray.Switch();
-                            break;
-                        case "-config":
-                            V2Ray.Config();
-                            break;
-                    }
+                    throw new ArgumentException();
                 }
             }
             catch (Exception ex)
