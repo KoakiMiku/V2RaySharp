@@ -4,8 +4,10 @@ using System;
 using System.Diagnostics;
 using System.IO;
 using System.Linq;
+using System.Text;
 using System.Threading;
 using V2RaySharp.Model;
+using V2RaySharp.Properties;
 
 namespace V2RaySharp.Controller
 {
@@ -145,9 +147,7 @@ namespace V2RaySharp.Controller
         {
             try
             {
-                string path = Path.Combine(AppContext.BaseDirectory, "config.json");
-                string json = File.ReadAllText(path);
-                JObject jObject = JsonConvert.DeserializeObject<JObject>(json);
+                JObject jObject = ReadConfig();
                 string protocol = jObject["outbound"]["protocol"].ToString();
                 string address = string.Empty;
                 if (protocol == "shadowsocks")
@@ -187,7 +187,15 @@ namespace V2RaySharp.Controller
             try
             {
                 string path = Path.Combine(AppContext.BaseDirectory, "config.json");
-                string json = File.ReadAllText(path);
+                string json = string.Empty;
+                if (File.Exists(path))
+                {
+                    json = File.ReadAllText(path);
+                }
+                else
+                {
+                    json = Encoding.UTF8.GetString(Resources.config);
+                }
                 JObject jObject = JsonConvert.DeserializeObject<JObject>(json);
                 return jObject;
             }
