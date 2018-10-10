@@ -31,7 +31,7 @@ namespace V2RaySharp.Controller
             }
             catch (Exception)
             {
-                throw new Exception(Language.GetString("UpgradeNodeError"));
+                Complete(-1);
             }
         }
 
@@ -43,7 +43,7 @@ namespace V2RaySharp.Controller
             }
             catch (Exception)
             {
-                throw new Exception(Language.GetString("UpgradeNodeError"));
+                Complete(-1);
             }
         }
 

@@ -140,7 +140,11 @@ namespace V2RaySharp.View
                     listBoxNode.Items.Clear();
                     listBoxNode.Items.AddRange(Node.sses.Select(x => x.Name).ToArray());
                     listBoxNode.Items.AddRange(Node.vmesses.Select(x => x.Name).ToArray());
-                    if (tick == 0 && Configuration.Config.Upgrade == 0)
+                    if (tick == -1)
+                    {
+                        labelUserInfo.Text = Language.GetString("UpgradeNodeError");
+                    }
+                    else if (tick == 0 && Configuration.Config.Upgrade == 0)
                     {
                         Text = $"V2Ray Sharp";
                     }
