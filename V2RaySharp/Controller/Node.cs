@@ -28,6 +28,10 @@ namespace V2RaySharp.Controller
                     http.DownloadStringCompleted += DownloadComplete;
                     http.DownloadStringAsync(new Uri(subscription));
                 }
+                else
+                {
+                    Complete(-2);
+                }
             }
             catch (Exception)
             {

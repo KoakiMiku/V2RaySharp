@@ -15,6 +15,7 @@ namespace V2RaySharp.Controller
             {"Start", "启动"},
             {"Stop", "停止"},
             {"UpgradeNodeError", "节点更新失败！"},
+            {"NoSubscription", "订阅链接未设置！"},
             {"NodeNotChange", "节点未更改！"},
             {"NodeNotSelect", "节点未选择！"},
         };
@@ -28,6 +29,7 @@ namespace V2RaySharp.Controller
             {"Start", "Start"},
             {"Stop", "Stop"},
             {"UpgradeNodeError", "Upgrade node failure!"},
+            {"NoSubscription", "No subscription link!"},
             {"NodeNotChange", "Node not changed!"},
             {"NodeNotSelect", "Node not selected!"},
         };

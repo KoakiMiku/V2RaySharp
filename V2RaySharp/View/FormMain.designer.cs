@@ -59,7 +59,7 @@
             this.listBoxNode.ItemHeight = 20;
             this.listBoxNode.Location = new System.Drawing.Point(3, 3);
             this.listBoxNode.Name = "listBoxNode";
-            this.listBoxNode.Size = new System.Drawing.Size(368, 325);
+            this.listBoxNode.Size = new System.Drawing.Size(368, 326);
             this.listBoxNode.Sorted = true;
             this.listBoxNode.TabIndex = 0;
             // 
@@ -79,7 +79,7 @@
             this.buttonEdit.Dock = System.Windows.Forms.DockStyle.Fill;
             this.buttonEdit.Location = new System.Drawing.Point(3, 219);
             this.buttonEdit.Name = "buttonEdit";
-            this.buttonEdit.Size = new System.Drawing.Size(190, 103);
+            this.buttonEdit.Size = new System.Drawing.Size(190, 104);
             this.buttonEdit.TabIndex = 2;
             this.buttonEdit.Text = "Edit Config";
             this.buttonEdit.UseVisualStyleBackColor = false;
@@ -93,11 +93,11 @@
             this.tableLayoutControl.Controls.Add(this.tableLayoutButton, 1, 0);
             this.tableLayoutControl.Controls.Add(this.listBoxNode, 0, 0);
             this.tableLayoutControl.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.tableLayoutControl.Location = new System.Drawing.Point(3, 23);
+            this.tableLayoutControl.Location = new System.Drawing.Point(3, 28);
             this.tableLayoutControl.Name = "tableLayoutControl";
             this.tableLayoutControl.RowCount = 1;
             this.tableLayoutControl.RowStyles.Add(new System.Windows.Forms.RowStyle());
-            this.tableLayoutControl.Size = new System.Drawing.Size(576, 331);
+            this.tableLayoutControl.Size = new System.Drawing.Size(576, 332);
             this.tableLayoutControl.TabIndex = 0;
             // 
             // tableLayoutButton
@@ -114,7 +114,7 @@
             this.tableLayoutButton.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 33.33333F));
             this.tableLayoutButton.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 33.33333F));
             this.tableLayoutButton.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 33.33333F));
-            this.tableLayoutButton.Size = new System.Drawing.Size(196, 325);
+            this.tableLayoutButton.Size = new System.Drawing.Size(196, 326);
             this.tableLayoutButton.TabIndex = 0;
             // 
             // labelUserInfo
@@ -122,7 +122,7 @@
             this.labelUserInfo.Dock = System.Windows.Forms.DockStyle.Fill;
             this.labelUserInfo.Location = new System.Drawing.Point(3, 0);
             this.labelUserInfo.Name = "labelUserInfo";
-            this.labelUserInfo.Size = new System.Drawing.Size(576, 20);
+            this.labelUserInfo.Size = new System.Drawing.Size(576, 25);
             this.labelUserInfo.TabIndex = 1;
             this.labelUserInfo.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
@@ -138,7 +138,7 @@
             this.tableLayoutMain.RowCount = 2;
             this.tableLayoutMain.RowStyles.Add(new System.Windows.Forms.RowStyle());
             this.tableLayoutMain.RowStyles.Add(new System.Windows.Forms.RowStyle());
-            this.tableLayoutMain.Size = new System.Drawing.Size(582, 357);
+            this.tableLayoutMain.Size = new System.Drawing.Size(582, 363);
             this.tableLayoutMain.TabIndex = 0;
             // 
             // FormMain
@@ -146,7 +146,7 @@
             this.AutoScaleDimensions = new System.Drawing.SizeF(120F, 120F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Dpi;
             this.BackColor = System.Drawing.Color.White;
-            this.ClientSize = new System.Drawing.Size(582, 357);
+            this.ClientSize = new System.Drawing.Size(582, 363);
             this.Controls.Add(this.tableLayoutMain);
             this.Font = new System.Drawing.Font("微软雅黑", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog;

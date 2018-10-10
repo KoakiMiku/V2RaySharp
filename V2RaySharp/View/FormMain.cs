@@ -140,7 +140,11 @@ namespace V2RaySharp.View
                     listBoxNode.Items.Clear();
                     listBoxNode.Items.AddRange(Node.sses.Select(x => x.Name).ToArray());
                     listBoxNode.Items.AddRange(Node.vmesses.Select(x => x.Name).ToArray());
-                    if (tick == -1)
+                    if (tick == -2)
+                    {
+                        labelUserInfo.Text = Language.GetString("NoSubscription");
+                    }
+                    else if (tick == -1)
                     {
                         labelUserInfo.Text = Language.GetString("UpgradeNodeError");
                     }
@@ -161,10 +165,6 @@ namespace V2RaySharp.View
                     if (listBoxNode.Items.Count != 0)
                     {
                         listBoxNode.SelectedItem = V2Ray.Select();
-                    }
-                    else
-                    {
-                        buttonChange.Enabled = false;
                     }
                 }));
             }
