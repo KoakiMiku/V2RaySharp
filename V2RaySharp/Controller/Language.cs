@@ -8,6 +8,7 @@ namespace V2RaySharp.Controller
     {
         private static readonly Dictionary<string, string> Chinese = new Dictionary<string, string>()
         {
+            {"AlreadyRunning", "V2Ray Sharp 已在运行……"},
             {"Setup", "安装 或 卸载 V2Ray Sharp\n是：安装\t否：卸载\t取消：取消"},
             {"Switch", "状态"},
             {"ChangeNode", "切换节点"},
@@ -22,6 +23,7 @@ namespace V2RaySharp.Controller
 
         private static readonly Dictionary<string, string> English = new Dictionary<string, string>()
         {
+            {"AlreadyRunning", "V2Ray Sharp is already running..."},
             {"Setup", "Install or uninstall V2Ray Sharp\nYes: Install\tNo: Uninstall\tCancel: Cancel"},
             {"Switch", "State"},
             {"ChangeNode", "Change Node"},

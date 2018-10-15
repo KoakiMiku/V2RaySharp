@@ -32,7 +32,7 @@ namespace V2RaySharp.Controller
             }
             catch (Exception)
             {
-                throw;
+                //throw;
             }
         }
     }

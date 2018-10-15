@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Diagnostics;
+using System.Threading;
 using System.Windows.Forms;
 using V2RaySharp.Controller;
 using V2RaySharp.Regedit;
@@ -15,6 +17,14 @@ namespace V2RaySharp
 
             try
             {
+                Mutex mutex = new Mutex(false, Application.ProductName);
+                if (!mutex.WaitOne(0, false))
+                {
+                    MessageBox.Show($"{Language.GetString("AlreadyRunning")}", Application.ProductName,
+                       MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    return;
+                }
+
                 bool isAdmin = Administrator.IsAdmin();
                 if (args.Length == 0 && isAdmin)
                 {
@@ -36,14 +46,7 @@ namespace V2RaySharp
                 }
                 else if (args.Length == 0 && !isAdmin)
                 {
-                    try
-                    {
-                        Administrator.RunAsAdmin();
-                    }
-                    catch (Exception)
-                    {
-                        return;
-                    }
+                    Administrator.RunAsAdmin();
                 }
                 else if (args[0] == "-start")
                 {
