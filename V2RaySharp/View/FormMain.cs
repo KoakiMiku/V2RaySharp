@@ -1,7 +1,5 @@
 ﻿using System;
-using System.Diagnostics;
 using System.Drawing;
-using System.IO;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
@@ -23,13 +21,14 @@ namespace V2RaySharp.View
             try
             {
                 Icon = Resources.V2Ray;
-                buttonSwitch.Text = Language.GetString("Switch");
+                buttonSwitch.Text = Language.GetString("Status");
+                buttonRoute.Text = Language.GetString("Status");
                 buttonChange.Text = Language.GetString("ChangeNode");
                 buttonEdit.Text = Language.GetString("EditConfig");
                 Node.CompleteEvent += Complete;
                 Configuration.Load();
                 Node.Upgrade();
-                UpgradeButton(false);
+                UpgradeStatus(false);
             }
             catch (Exception ex)
             {
@@ -79,7 +78,7 @@ namespace V2RaySharp.View
                 {
                     Task.Run(() => V2Ray.Start());
                 }
-                Task.Run(() => UpgradeButton(true));
+                Task.Run(() => UpgradeStatus(true));
             }
             catch (Exception ex)
             {
@@ -94,16 +93,31 @@ namespace V2RaySharp.View
             {
                 if (listBoxNode.SelectedItem != null)
                 {
-                    if (listBoxNode.SelectedItem.ToString() != V2Ray.Select())
-                    {
-                        string name = listBoxNode.SelectedItem.ToString();
-                        Task.Run(() => V2Ray.Change(name));
-                        Task.Run(() => UpgradeButton(true));
-                    }
-                    else
-                    {
-                        throw new Exception(Language.GetString("NodeNotChange"));
-                    }
+                    string name = listBoxNode.SelectedItem.ToString();
+                    Task.Run(() => V2Ray.ChangeNode(name));
+                    Task.Run(() => UpgradeStatus(true));
+                }
+                else
+                {
+                    throw new Exception(Language.GetString("NodeNotSelect"));
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message, Application.ProductName,
+                   MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
+
+        private void buttonRoute_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                if (listBoxNode.SelectedItem != null)
+                {
+                    string name = listBoxNode.SelectedItem.ToString();
+                    Task.Run(() => V2Ray.ChangeRoute(name));
+                    Task.Run(() => UpgradeStatus(true));
                 }
                 else
                 {
@@ -136,10 +150,6 @@ namespace V2RaySharp.View
             {
                 Invoke(new Action(() =>
                 {
-                    labelUserInfo.Text = Node.userInfo;
-                    listBoxNode.Items.Clear();
-                    listBoxNode.Items.AddRange(Node.sses.Select(x => x.Name).ToArray());
-                    listBoxNode.Items.AddRange(Node.vmesses.Select(x => x.Name).ToArray());
                     if (tick == -2)
                     {
                         labelUserInfo.Text = Language.GetString("NoSubscription");
@@ -148,25 +158,19 @@ namespace V2RaySharp.View
                     {
                         labelUserInfo.Text = Language.GetString("UpgradeNodeError");
                     }
-                    else if (tick == 0 && Configuration.Config.Upgrade == 0)
-                    {
-                        Text = $"V2Ray Sharp";
-                    }
-                    else if (tick == 0 && Configuration.Config.Upgrade != 0)
-                    {
-                        DateTime dateTime = new DateTime(Configuration.Config.Upgrade);
-                        Text = $"V2Ray Sharp - {dateTime.ToString("yyyy.MM.dd - HH:mm:ss")}";
-                    }
                     else
                     {
-                        DateTime dateTime = new DateTime(tick);
-                        Text = $"V2Ray Sharp - {dateTime.ToString("yyyy.MM.dd - HH:mm:ss")}";
+                        labelUserInfo.Text = Node.userInfo;
                     }
+                    listBoxNode.Items.Clear();
+                    listBoxNode.Items.AddRange(Node.sses.Select(x => x.Name).ToArray());
+                    listBoxNode.Items.AddRange(Node.vmesses.Select(x => x.Name).ToArray());
                     if (listBoxNode.Items.Count != 0)
                     {
-                        listBoxNode.SelectedItem = V2Ray.Select();
+                        listBoxNode.SelectedItem = V2Ray.SelectNode();
                     }
                 }));
+                UpgradeStatus(false);
             }
             catch (Exception)
             {
@@ -174,32 +178,61 @@ namespace V2RaySharp.View
             }
         }
 
-        private void UpgradeButton(bool isWait)
+        private void UpgradeStatus(bool isWait)
         {
             try
             {
-                Invoke(new Action(() =>
-                {
-                    buttonSwitch.Enabled = false;
-                    buttonChange.Enabled = false;
-                }));
                 if (isWait)
                 {
+                    Invoke(new Action(() =>
+                    {
+                        buttonSwitch.Enabled = false;
+                        buttonRoute.Enabled = false;
+                        buttonChange.Enabled = false;
+                        labelStatus.Text = $"{Language.GetString("Waiting")}";
+                    }));
                     Thread.Sleep(2000);
                 }
                 Invoke(new Action(() =>
                 {
+                    labelStatus.Text = string.Empty;
+                    if (Configuration.Config.Upgrade != 0)
+                    {
+                        DateTime dateTime = new DateTime(Configuration.Config.Upgrade);
+                        labelStatus.Text += $"{Language.GetString("Upgrade")}:{dateTime.ToString("yyyy.MM.dd HH:mm:ss")}";
+                    }
+                    else
+                    {
+                        labelStatus.Text += $"{Language.GetString("Upgrade")}:{Language.GetString("None")}";
+                    }
+                    labelStatus.Text += " - ";
                     if (V2Ray.IsRunning())
                     {
                         buttonSwitch.Text = Language.GetString("Stop");
                         buttonSwitch.ForeColor = Color.Red;
+                        labelStatus.Text += $"{Language.GetString("RunningStatus")}:{Language.GetString("Running")}";
                     }
                     else
                     {
                         buttonSwitch.Text = Language.GetString("Start");
                         buttonSwitch.ForeColor = Color.Green;
+                        labelStatus.Text += $"{Language.GetString("RunningStatus")}:{Language.GetString("Stoped")}";
+                    }
+                    labelStatus.Text += " - ";
+                    if (V2Ray.IsUsingRoute())
+                    {
+                        buttonRoute.Text = Language.GetString("Global");
+                        buttonRoute.ForeColor = Color.Red;
+                        labelStatus.Text += $"{Language.GetString("ProxyStatus")}:{Language.GetString("Route")}";
+                    }
+                    else
+                    {
+                        buttonRoute.Text = Language.GetString("Route");
+                        buttonRoute.ForeColor = Color.Blue;
+                        labelStatus.Text += $"{Language.GetString("ProxyStatus")}:{Language.GetString("Global")}";
                     }
                     buttonSwitch.Enabled = true;
+                    buttonRoute.Enabled = true;
                     buttonChange.Enabled = true;
                 }));
             }

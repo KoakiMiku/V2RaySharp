@@ -63,9 +63,19 @@ namespace V2RaySharp.Properties {
         /// <summary>
         ///   查找 System.Byte[] 类型的本地化资源。
         /// </summary>
-        internal static byte[] config {
+        internal static byte[] Global {
             get {
-                object obj = ResourceManager.GetObject("config", resourceCulture);
+                object obj = ResourceManager.GetObject("Global", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   查找 System.Byte[] 类型的本地化资源。
+        /// </summary>
+        internal static byte[] Route {
+            get {
+                object obj = ResourceManager.GetObject("Route", resourceCulture);
                 return ((byte[])(obj));
             }
         }

@@ -7,14 +7,16 @@ namespace V2RaySharp.Controller
 {
     class Configuration
     {
+        private static readonly string path = AppContext.BaseDirectory;
+        private static readonly string config = Path.Combine(path, "V2RaySharp.json");
+
         public static Config Config { get; set; }
 
         public static void Load()
         {
             try
             {
-                string path = Path.Combine(AppContext.BaseDirectory, "V2RaySharp.json");
-                if (!File.Exists(path))
+                if (!File.Exists(config))
                 {
                     Config = new Config
                     {
@@ -26,7 +28,7 @@ namespace V2RaySharp.Controller
                 }
                 else
                 {
-                    string json = File.ReadAllText(path);
+                    string json = File.ReadAllText(config);
                     Config = JsonConvert.DeserializeObject<Config>(json);
                     Node.Load(Config.Raw, true);
                 }
@@ -41,9 +43,8 @@ namespace V2RaySharp.Controller
         {
             try
             {
-                string path = Path.Combine(AppContext.BaseDirectory, "V2RaySharp.json");
                 string json = JsonConvert.SerializeObject(Config, Formatting.Indented);
-                File.WriteAllText(path, json);
+                File.WriteAllText(config, json);
             }
             catch (Exception)
             {

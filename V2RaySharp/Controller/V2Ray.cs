@@ -13,12 +13,20 @@ namespace V2RaySharp.Controller
 {
     class V2Ray
     {
+        private static readonly string path = AppContext.BaseDirectory;
+        private static readonly string program = Path.Combine(path, "wv2ray.exe");
+        private static readonly string config = Path.Combine(path, "config.json");
+        private static readonly string configGlobal = Path.Combine(path, "config.global.json");
+        private static readonly string configRoute = Path.Combine(path, "config.route.json");
+        private static readonly string jsonGlobal = Encoding.UTF8.GetString(Resources.Global);
+        private static readonly string jsonRoute = Encoding.UTF8.GetString(Resources.Route);
+
         public static void Start()
         {
             try
             {
                 Process process = new Process();
-                process.StartInfo.FileName = Path.Combine(AppContext.BaseDirectory, "wv2ray.exe");
+                process.StartInfo.FileName = program;
                 process.Start();
                 SystemProxy.Enable();
             }
@@ -79,10 +87,11 @@ namespace V2RaySharp.Controller
             }
         }
 
-        public static void Change(string name)
+        public static void ChangeNode(string name)
         {
             try
             {
+                CheckConfig();
                 object node = Node.GetNode(name);
                 if (node is ShadowSocks ss)
                 {
@@ -144,10 +153,55 @@ namespace V2RaySharp.Controller
             }
         }
 
-        public static string Select()
+        public static void ChangeRoute(string name)
         {
             try
             {
+                CheckConfig();
+                if (IsUsingRoute())
+                {
+                    File.Copy(config, configRoute, true);
+                    File.Copy(configGlobal, config, true);
+                }
+                else
+                {
+                    File.Copy(config, configGlobal, true);
+                    File.Copy(configRoute, config, true);
+                }
+                ChangeNode(name);
+            }
+            catch (Exception)
+            {
+                throw;
+            }
+        }
+
+        public static bool IsUsingRoute()
+        {
+            try
+            {
+                JObject jObject = ReadConfig();
+                JToken jToken = jObject["routing"];
+                if (jToken != null)
+                {
+                    return true;
+                }
+                else
+                {
+                    return false;
+                }
+            }
+            catch (Exception)
+            {
+                throw;
+            }
+        }
+
+        public static string SelectNode()
+        {
+            try
+            {
+                CheckConfig();
                 JObject jObject = ReadConfig();
                 string protocol = jObject["outbound"]["protocol"].ToString();
                 string address = string.Empty;
@@ -172,10 +226,33 @@ namespace V2RaySharp.Controller
         {
             try
             {
-                string path = Path.Combine(AppContext.BaseDirectory, "config.json");
+                CheckConfig();
                 Process process = new Process();
-                process.StartInfo.FileName = path;
+                process.StartInfo.FileName = config;
                 process.Start();
+            }
+            catch (Exception)
+            {
+                throw;
+            }
+        }
+
+        private static void CheckConfig()
+        {
+            try
+            {
+                if (!File.Exists(config))
+                {
+                    File.WriteAllText(config, jsonGlobal);
+                }
+                if (!File.Exists(configGlobal))
+                {
+                    File.WriteAllText(configGlobal, jsonGlobal);
+                }
+                if (!File.Exists(configRoute))
+                {
+                    File.WriteAllText(configRoute, jsonRoute);
+                }
             }
             catch (Exception)
             {
@@ -187,16 +264,7 @@ namespace V2RaySharp.Controller
         {
             try
             {
-                string path = Path.Combine(AppContext.BaseDirectory, "config.json");
-                string json = string.Empty;
-                if (File.Exists(path))
-                {
-                    json = File.ReadAllText(path);
-                }
-                else
-                {
-                    json = Encoding.UTF8.GetString(Resources.config);
-                }
+                string json = File.ReadAllText(config);
                 JObject jObject = JsonConvert.DeserializeObject<JObject>(json);
                 return jObject;
             }
@@ -210,9 +278,8 @@ namespace V2RaySharp.Controller
         {
             try
             {
-                string path = Path.Combine(AppContext.BaseDirectory, "config.json");
                 string json = JsonConvert.SerializeObject(jObject, Formatting.Indented);
-                File.WriteAllText(path, json);
+                File.WriteAllText(config, json);
             }
             catch (Exception)
             {

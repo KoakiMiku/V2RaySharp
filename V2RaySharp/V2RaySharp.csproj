@@ -57,6 +57,7 @@
   <ItemGroup>
     <Compile Include="Controller\Administrator.cs" />
     <Compile Include="Controller\Base64.cs" />
+    <Compile Include="Controller\Check.cs" />
     <Compile Include="Controller\Configuration.cs" />
     <Compile Include="Controller\Node.cs" />
     <Compile Include="Properties\Resources.Designer.cs">
@@ -97,7 +98,8 @@
   <ItemGroup>
     <None Include="app.manifest" />
     <None Include="packages.config" />
-    <None Include="Resources\config.json" />
+    <None Include="Resources\Global.json" />
+    <None Include="Resources\Route.json" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">

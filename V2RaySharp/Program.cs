@@ -20,9 +20,13 @@ namespace V2RaySharp
                 Mutex mutex = new Mutex(false, Application.ProductName);
                 if (!mutex.WaitOne(0, false))
                 {
-                    MessageBox.Show($"{Language.GetString("AlreadyRunning")}", Application.ProductName,
-                       MessageBoxButtons.OK, MessageBoxIcon.Information);
-                    return;
+                    throw new Exception(Language.GetString("AlreadyRunning"));
+                }
+
+                bool isTrueDirectory = Check.IsTrueDirectory();
+                if (!isTrueDirectory)
+                {
+                    throw new Exception(Language.GetString("FileNotFound"));
                 }
 
                 bool isAdmin = Administrator.IsAdmin();
