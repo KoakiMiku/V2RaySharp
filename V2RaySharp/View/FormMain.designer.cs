@@ -142,7 +142,7 @@
             this.tableLayoutButton.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 25F));
             this.tableLayoutButton.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
             this.tableLayoutButton.Size = new System.Drawing.Size(196, 326);
-            this.tableLayoutButton.TabIndex = 0;
+            this.tableLayoutButton.TabIndex = 1;
             // 
             // buttonRoute
             // 
