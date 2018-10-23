@@ -18,19 +18,19 @@ namespace V2RaySharpWPF
                 Mutex mutex = new Mutex(false, name);
                 if (!mutex.WaitOne(0, false))
                 {
-                    throw new Exception(Language.GetString("AlreadyRunning"));
+                    throw new Exception(I18N.GetString("AlreadyRunning"));
                 }
 
                 bool isTrueDirectory = Check.IsTrueDirectory();
                 if (!isTrueDirectory)
                 {
-                    throw new Exception(Language.GetString("FileNotFound"));
+                    throw new Exception(I18N.GetString("FileNotFound"));
                 }
 
                 bool isAdmin = Administrator.IsAdmin();
                 if (e.Args.Length == 0 && isAdmin)
                 {
-                    switch (MessageBox.Show($"{Language.GetString("Setup")}", name,
+                    switch (MessageBox.Show($"{I18N.GetString("Setup")}", name,
                         MessageBoxButton.YesNoCancel, MessageBoxImage.Information))
                     {
                         case MessageBoxResult.Yes:

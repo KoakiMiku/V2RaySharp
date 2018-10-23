@@ -73,7 +73,7 @@
     <Compile Include="View\FormMain.designer.cs">
       <DependentUpon>FormMain.cs</DependentUpon>
     </Compile>
-    <Compile Include="Controller\Language.cs" />
+    <Compile Include="Controller\I18N.cs" />
     <Compile Include="Model\Config.cs" />
     <Compile Include="Model\ShadowSocks.cs" />
     <Compile Include="Model\Vmess.cs" />

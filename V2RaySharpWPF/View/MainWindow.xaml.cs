@@ -24,10 +24,11 @@ namespace V2RaySharpWPF.View
         {
             try
             {
-                buttonSwitch.Content = Controller.Language.GetString("Status");
-                buttonRoute.Content = Controller.Language.GetString("Status");
-                buttonNode.Content = Controller.Language.GetString("ChangeNode");
-                buttonEdit.Content = Controller.Language.GetString("EditConfig");
+
+                buttonSwitch.Content = I18N.GetString("Status");
+                buttonRoute.Content = I18N.GetString("Status");
+                buttonNode.Content = I18N.GetString("ChangeNode");
+                buttonEdit.Content = I18N.GetString("EditConfig");
                 Node.CompleteEvent += Complete;
                 Configuration.Load();
                 Node.Upgrade();
@@ -90,7 +91,7 @@ namespace V2RaySharpWPF.View
                 }
                 else
                 {
-                    throw new Exception(Controller.Language.GetString("NodeNotSelect"));
+                    throw new Exception(I18N.GetString("NodeNotSelect"));
                 }
             }
             catch (Exception ex)
@@ -112,7 +113,7 @@ namespace V2RaySharpWPF.View
                 }
                 else
                 {
-                    throw new Exception(Controller.Language.GetString("NodeNotSelect"));
+                    throw new Exception(I18N.GetString("NodeNotSelect"));
                 }
             }
             catch (Exception ex)
@@ -143,11 +144,11 @@ namespace V2RaySharpWPF.View
                 {
                     if (tick == -2)
                     {
-                        labelUserInfo.Content = Controller.Language.GetString("NoSubscription");
+                        labelUserInfo.Content = I18N.GetString("NoSubscription");
                     }
                     else if (tick == -1)
                     {
-                        labelUserInfo.Content = Controller.Language.GetString("UpgradeNodeError");
+                        labelUserInfo.Content = I18N.GetString("UpgradeNodeError");
                     }
                     else
                     {
@@ -156,11 +157,11 @@ namespace V2RaySharpWPF.View
                     if (Configuration.Config.Upgrade != 0)
                     {
                         DateTime dateTime = new DateTime(Configuration.Config.Upgrade);
-                        labelUpgrade.Content = $"{Controller.Language.GetString("Upgrade")}:{dateTime.ToString("yyyy.MM.dd HH:mm:ss")}";
+                        labelUpgrade.Content = $"{I18N.GetString("Upgrade")}:{dateTime.ToString("yyyy.MM.dd HH:mm:ss")}";
                     }
                     else
                     {
-                        labelUpgrade.Content = $"{Controller.Language.GetString("Upgrade")}:{Controller.Language.GetString("None")}";
+                        labelUpgrade.Content = $"{I18N.GetString("Upgrade")}:{I18N.GetString("None")}";
                     }
                     listBoxNode.Items.Clear();
                     List<string> sses = Node.sses.Select(x => x.Name).OrderBy(y => y).ToList();
@@ -194,7 +195,7 @@ namespace V2RaySharpWPF.View
                     buttonSwitch.IsEnabled = false;
                     buttonRoute.IsEnabled = false;
                     buttonNode.IsEnabled = false;
-                    labelStatus.Content = $"{Controller.Language.GetString("Waiting")}";
+                    labelStatus.Content = $"{I18N.GetString("Waiting")}";
                     labelStatus.Foreground = Brushes.Black;
                 }));
                 if (isWait)
@@ -207,38 +208,38 @@ namespace V2RaySharpWPF.View
                     bool isUsingRoute = V2Ray.IsUsingRoute();
                     if (isRunning && isUsingRoute)
                     {
-                        buttonSwitch.Content = Controller.Language.GetString("Stop");
+                        buttonSwitch.Content = I18N.GetString("Stop");
                         buttonSwitch.Foreground = Brushes.Red;
-                        buttonRoute.Content = Controller.Language.GetString("Global");
+                        buttonRoute.Content = I18N.GetString("Global");
                         buttonRoute.Foreground = Brushes.Red;
-                        labelStatus.Content = $"{Controller.Language.GetString("RunningStatus")}:{Controller.Language.GetString("Route")}";
+                        labelStatus.Content = $"{I18N.GetString("RunningStatus")}:{I18N.GetString("Route")}";
                         labelStatus.Foreground = Brushes.Green;
                     }
                     else if (isRunning && !isUsingRoute)
                     {
-                        buttonSwitch.Content = Controller.Language.GetString("Stop");
+                        buttonSwitch.Content = I18N.GetString("Stop");
                         buttonSwitch.Foreground = Brushes.Red;
-                        buttonRoute.Content = Controller.Language.GetString("Route");
+                        buttonRoute.Content = I18N.GetString("Route");
                         buttonRoute.Foreground = Brushes.Blue;
-                        labelStatus.Content = $"{Controller.Language.GetString("RunningStatus")}:{Controller.Language.GetString("Global")}";
+                        labelStatus.Content = $"{I18N.GetString("RunningStatus")}:{I18N.GetString("Global")}";
                         labelStatus.Foreground = Brushes.Blue;
                     }
                     else if (!isRunning && isUsingRoute)
                     {
-                        buttonSwitch.Content = Controller.Language.GetString("Start");
+                        buttonSwitch.Content = I18N.GetString("Start");
                         buttonSwitch.Foreground = Brushes.Green;
-                        buttonRoute.Content = Controller.Language.GetString("Global");
+                        buttonRoute.Content = I18N.GetString("Global");
                         buttonRoute.Foreground = Brushes.Red;
-                        labelStatus.Content = $"{Controller.Language.GetString("RunningStatus")}:{Controller.Language.GetString("Stoped")}";
+                        labelStatus.Content = $"{I18N.GetString("RunningStatus")}:{I18N.GetString("Stoped")}";
                         labelStatus.Foreground = Brushes.Red;
                     }
                     else
                     {
-                        buttonSwitch.Content = Controller.Language.GetString("Start");
+                        buttonSwitch.Content = I18N.GetString("Start");
                         buttonSwitch.Foreground = Brushes.Green;
-                        buttonRoute.Content = Controller.Language.GetString("Route");
+                        buttonRoute.Content = I18N.GetString("Route");
                         buttonRoute.Foreground = Brushes.Blue;
-                        labelStatus.Content = $"{Controller.Language.GetString("RunningStatus")}:{Controller.Language.GetString("Stoped")}";
+                        labelStatus.Content = $"{I18N.GetString("RunningStatus")}:{I18N.GetString("Stoped")}";
                         labelStatus.Foreground = Brushes.Red;
                     }
                     buttonSwitch.IsEnabled = true;

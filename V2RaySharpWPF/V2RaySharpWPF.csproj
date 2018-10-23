@@ -75,7 +75,7 @@
     <Compile Include="Controller\Base64.cs" />
     <Compile Include="Controller\Check.cs" />
     <Compile Include="Controller\Configuration.cs" />
-    <Compile Include="Controller\Language.cs" />
+    <Compile Include="Controller\I18N.cs" />
     <Compile Include="Controller\Node.cs" />
     <Compile Include="Controller\SystemProxy.cs" />
     <Compile Include="Controller\V2Ray.cs" />

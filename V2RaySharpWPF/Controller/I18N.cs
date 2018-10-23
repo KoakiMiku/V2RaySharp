@@ -4,7 +4,7 @@ using System.Globalization;
 
 namespace V2RaySharpWPF.Controller
 {
-    class Language
+    class I18N
     {
         private static readonly Dictionary<string, string> Chinese = new Dictionary<string, string>()
         {

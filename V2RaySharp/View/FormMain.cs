@@ -23,10 +23,10 @@ namespace V2RaySharp.View
             try
             {
                 Icon = Resources.V2Ray;
-                buttonSwitch.Text = Language.GetString("Status");
-                buttonRoute.Text = Language.GetString("Status");
-                buttonNode.Text = Language.GetString("ChangeNode");
-                buttonEdit.Text = Language.GetString("EditConfig");
+                buttonSwitch.Text = I18N.GetString("Status");
+                buttonRoute.Text = I18N.GetString("Status");
+                buttonNode.Text = I18N.GetString("ChangeNode");
+                buttonEdit.Text = I18N.GetString("EditConfig");
                 Node.CompleteEvent += Complete;
                 Configuration.Load();
                 Node.Upgrade();
@@ -101,7 +101,7 @@ namespace V2RaySharp.View
                 }
                 else
                 {
-                    throw new Exception(Language.GetString("NodeNotSelect"));
+                    throw new Exception(I18N.GetString("NodeNotSelect"));
                 }
             }
             catch (Exception ex)
@@ -123,7 +123,7 @@ namespace V2RaySharp.View
                 }
                 else
                 {
-                    throw new Exception(Language.GetString("NodeNotSelect"));
+                    throw new Exception(I18N.GetString("NodeNotSelect"));
                 }
             }
             catch (Exception ex)
@@ -154,11 +154,11 @@ namespace V2RaySharp.View
                 {
                     if (tick == -2)
                     {
-                        labelUserInfo.Text = Language.GetString("NoSubscription");
+                        labelUserInfo.Text = I18N.GetString("NoSubscription");
                     }
                     else if (tick == -1)
                     {
-                        labelUserInfo.Text = Language.GetString("UpgradeNodeError");
+                        labelUserInfo.Text = I18N.GetString("UpgradeNodeError");
                     }
                     else
                     {
@@ -167,11 +167,11 @@ namespace V2RaySharp.View
                     if (Configuration.Config.Upgrade != 0)
                     {
                         DateTime dateTime = new DateTime(Configuration.Config.Upgrade);
-                        labelUpgrade.Text = $"{Language.GetString("Upgrade")}:{dateTime.ToString("yyyy.MM.dd HH:mm:ss")}";
+                        labelUpgrade.Text = $"{I18N.GetString("Upgrade")}:{dateTime.ToString("yyyy.MM.dd HH:mm:ss")}";
                     }
                     else
                     {
-                        labelUpgrade.Text = $"{Language.GetString("Upgrade")}:{Language.GetString("None")}";
+                        labelUpgrade.Text = $"{I18N.GetString("Upgrade")}:{I18N.GetString("None")}";
                     }
                     listBoxNode.Items.Clear();
                     listBoxNode.Items.AddRange(Node.sses.Select(x => x.Name).ToArray());
@@ -197,7 +197,7 @@ namespace V2RaySharp.View
                     buttonSwitch.Enabled = false;
                     buttonRoute.Enabled = false;
                     buttonNode.Enabled = false;
-                    labelStatus.Text = $"{Language.GetString("Waiting")}";
+                    labelStatus.Text = $"{I18N.GetString("Waiting")}";
                     labelStatus.ForeColor = Color.Black;
                 }));
                 if (isWait)
@@ -210,38 +210,38 @@ namespace V2RaySharp.View
                     bool isUsingRoute = V2Ray.IsUsingRoute();
                     if (isRunning && isUsingRoute)
                     {
-                        buttonSwitch.Text = Language.GetString("Stop");
+                        buttonSwitch.Text = I18N.GetString("Stop");
                         buttonSwitch.ForeColor = Color.Red;
-                        buttonRoute.Text = Language.GetString("Global");
+                        buttonRoute.Text = I18N.GetString("Global");
                         buttonRoute.ForeColor = Color.Red;
-                        labelStatus.Text = $"{Language.GetString("RunningStatus")}:{Language.GetString("Route")}";
+                        labelStatus.Text = $"{I18N.GetString("RunningStatus")}:{I18N.GetString("Route")}";
                         labelStatus.ForeColor = Color.Green;
                     }
                     else if (isRunning && !isUsingRoute)
                     {
-                        buttonSwitch.Text = Language.GetString("Stop");
+                        buttonSwitch.Text = I18N.GetString("Stop");
                         buttonSwitch.ForeColor = Color.Red;
-                        buttonRoute.Text = Language.GetString("Route");
+                        buttonRoute.Text = I18N.GetString("Route");
                         buttonRoute.ForeColor = Color.Blue;
-                        labelStatus.Text = $"{Language.GetString("RunningStatus")}:{Language.GetString("Global")}";
+                        labelStatus.Text = $"{I18N.GetString("RunningStatus")}:{I18N.GetString("Global")}";
                         labelStatus.ForeColor = Color.Blue;
                     }
                     else if (!isRunning && isUsingRoute)
                     {
-                        buttonSwitch.Text = Language.GetString("Start");
+                        buttonSwitch.Text = I18N.GetString("Start");
                         buttonSwitch.ForeColor = Color.Green;
-                        buttonRoute.Text = Language.GetString("Global");
+                        buttonRoute.Text = I18N.GetString("Global");
                         buttonRoute.ForeColor = Color.Red;
-                        labelStatus.Text = $"{Language.GetString("RunningStatus")}:{Language.GetString("Stoped")}";
+                        labelStatus.Text = $"{I18N.GetString("RunningStatus")}:{I18N.GetString("Stoped")}";
                         labelStatus.ForeColor = Color.Red;
                     }
                     else
                     {
-                        buttonSwitch.Text = Language.GetString("Start");
+                        buttonSwitch.Text = I18N.GetString("Start");
                         buttonSwitch.ForeColor = Color.Green;
-                        buttonRoute.Text = Language.GetString("Route");
+                        buttonRoute.Text = I18N.GetString("Route");
                         buttonRoute.ForeColor = Color.Blue;
-                        labelStatus.Text = $"{Language.GetString("RunningStatus")}:{Language.GetString("Stoped")}";
+                        labelStatus.Text = $"{I18N.GetString("RunningStatus")}:{I18N.GetString("Stoped")}";
                         labelStatus.ForeColor = Color.Red;
                     }
                     buttonSwitch.Enabled = true;
