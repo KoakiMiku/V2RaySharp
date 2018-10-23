@@ -162,6 +162,15 @@ namespace V2RaySharp.View
                     {
                         labelUserInfo.Text = Node.userInfo;
                     }
+                    if (Configuration.Config.Upgrade != 0)
+                    {
+                        DateTime dateTime = new DateTime(Configuration.Config.Upgrade);
+                        labelUpgrade.Text = $"{Language.GetString("Upgrade")}:{dateTime.ToString("yyyy.MM.dd HH:mm:ss")}";
+                    }
+                    else
+                    {
+                        labelUpgrade.Text = $"{Language.GetString("Upgrade")}:{Language.GetString("None")}";
+                    }
                     listBoxNode.Items.Clear();
                     listBoxNode.Items.AddRange(Node.sses.Select(x => x.Name).ToArray());
                     listBoxNode.Items.AddRange(Node.vmesses.Select(x => x.Name).ToArray());
@@ -170,7 +179,6 @@ namespace V2RaySharp.View
                         listBoxNode.SelectedItem = V2Ray.SelectNode();
                     }
                 }));
-                UpgradeStatus(false);
             }
             catch (Exception)
             {
@@ -182,30 +190,20 @@ namespace V2RaySharp.View
         {
             try
             {
+                Invoke(new Action(() =>
+                {
+                    buttonSwitch.Enabled = false;
+                    buttonRoute.Enabled = false;
+                    buttonChange.Enabled = false;
+                    labelStatus.Text = $"{Language.GetString("Waiting")}";
+                    labelStatus.ForeColor = Color.Black;
+                }));
                 if (isWait)
                 {
-                    Invoke(new Action(() =>
-                    {
-                        buttonSwitch.Enabled = false;
-                        buttonRoute.Enabled = false;
-                        buttonChange.Enabled = false;
-                        labelStatus.Text = $"{Language.GetString("Waiting")}";
-                    }));
                     Thread.Sleep(2000);
                 }
                 Invoke(new Action(() =>
                 {
-                    labelStatus.Text = string.Empty;
-                    if (Configuration.Config.Upgrade != 0)
-                    {
-                        DateTime dateTime = new DateTime(Configuration.Config.Upgrade);
-                        labelStatus.Text += $"{Language.GetString("Upgrade")}:{dateTime.ToString("yyyy.MM.dd HH:mm:ss")}";
-                    }
-                    else
-                    {
-                        labelStatus.Text += $"{Language.GetString("Upgrade")}:{Language.GetString("None")}";
-                    }
-                    labelStatus.Text += "  -  ";
                     bool isRunning = V2Ray.IsRunning();
                     bool isUsingRoute = V2Ray.IsUsingRoute();
                     if (isRunning && isUsingRoute)
@@ -214,7 +212,8 @@ namespace V2RaySharp.View
                         buttonSwitch.ForeColor = Color.Red;
                         buttonRoute.Text = Language.GetString("Global");
                         buttonRoute.ForeColor = Color.Red;
-                        labelStatus.Text += $"{Language.GetString("RunningStatus")}:{Language.GetString("Route")}";
+                        labelStatus.Text = $"{Language.GetString("RunningStatus")}:{Language.GetString("Route")}";
+                        labelStatus.ForeColor = Color.Green;
                     }
                     else if (isRunning && !isUsingRoute)
                     {
@@ -222,7 +221,8 @@ namespace V2RaySharp.View
                         buttonSwitch.ForeColor = Color.Red;
                         buttonRoute.Text = Language.GetString("Route");
                         buttonRoute.ForeColor = Color.Blue;
-                        labelStatus.Text += $"{Language.GetString("RunningStatus")}:{Language.GetString("Global")}";
+                        labelStatus.Text = $"{Language.GetString("RunningStatus")}:{Language.GetString("Global")}";
+                        labelStatus.ForeColor = Color.Blue;
                     }
                     else if (!isRunning && isUsingRoute)
                     {
@@ -230,7 +230,8 @@ namespace V2RaySharp.View
                         buttonSwitch.ForeColor = Color.Green;
                         buttonRoute.Text = Language.GetString("Global");
                         buttonRoute.ForeColor = Color.Red;
-                        labelStatus.Text += $"{Language.GetString("RunningStatus")}:{Language.GetString("Stoped")}";
+                        labelStatus.Text = $"{Language.GetString("RunningStatus")}:{Language.GetString("Stoped")}";
+                        labelStatus.ForeColor = Color.Red;
                     }
                     else
                     {
@@ -238,7 +239,8 @@ namespace V2RaySharp.View
                         buttonSwitch.ForeColor = Color.Green;
                         buttonRoute.Text = Language.GetString("Route");
                         buttonRoute.ForeColor = Color.Blue;
-                        labelStatus.Text += $"{Language.GetString("RunningStatus")}:{Language.GetString("Stoped")}";
+                        labelStatus.Text = $"{Language.GetString("RunningStatus")}:{Language.GetString("Stoped")}";
+                        labelStatus.ForeColor = Color.Red;
                     }
                     buttonSwitch.Enabled = true;
                     buttonRoute.Enabled = true;
