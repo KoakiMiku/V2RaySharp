@@ -205,31 +205,40 @@ namespace V2RaySharp.View
                     {
                         labelStatus.Text += $"{Language.GetString("Upgrade")}:{Language.GetString("None")}";
                     }
-                    labelStatus.Text += " - ";
-                    if (V2Ray.IsRunning())
+                    labelStatus.Text += "  -  ";
+                    bool isRunning = V2Ray.IsRunning();
+                    bool isUsingRoute = V2Ray.IsUsingRoute();
+                    if (isRunning && isUsingRoute)
                     {
                         buttonSwitch.Text = Language.GetString("Stop");
                         buttonSwitch.ForeColor = Color.Red;
-                        labelStatus.Text += $"{Language.GetString("RunningStatus")}:{Language.GetString("Running")}";
+                        buttonRoute.Text = Language.GetString("Global");
+                        buttonRoute.ForeColor = Color.Red;
+                        labelStatus.Text += $"{Language.GetString("RunningStatus")}:{Language.GetString("Route")}";
+                    }
+                    else if (isRunning && !isUsingRoute)
+                    {
+                        buttonSwitch.Text = Language.GetString("Stop");
+                        buttonSwitch.ForeColor = Color.Red;
+                        buttonRoute.Text = Language.GetString("Route");
+                        buttonRoute.ForeColor = Color.Blue;
+                        labelStatus.Text += $"{Language.GetString("RunningStatus")}:{Language.GetString("Global")}";
+                    }
+                    else if (!isRunning && isUsingRoute)
+                    {
+                        buttonSwitch.Text = Language.GetString("Start");
+                        buttonSwitch.ForeColor = Color.Green;
+                        buttonRoute.Text = Language.GetString("Global");
+                        buttonRoute.ForeColor = Color.Red;
+                        labelStatus.Text += $"{Language.GetString("RunningStatus")}:{Language.GetString("Stoped")}";
                     }
                     else
                     {
                         buttonSwitch.Text = Language.GetString("Start");
                         buttonSwitch.ForeColor = Color.Green;
-                        labelStatus.Text += $"{Language.GetString("RunningStatus")}:{Language.GetString("Stoped")}";
-                    }
-                    labelStatus.Text += " - ";
-                    if (V2Ray.IsUsingRoute())
-                    {
-                        buttonRoute.Text = Language.GetString("Global");
-                        buttonRoute.ForeColor = Color.Red;
-                        labelStatus.Text += $"{Language.GetString("ProxyStatus")}:{Language.GetString("Route")}";
-                    }
-                    else
-                    {
                         buttonRoute.Text = Language.GetString("Route");
                         buttonRoute.ForeColor = Color.Blue;
-                        labelStatus.Text += $"{Language.GetString("ProxyStatus")}:{Language.GetString("Global")}";
+                        labelStatus.Text += $"{Language.GetString("RunningStatus")}:{Language.GetString("Stoped")}";
                     }
                     buttonSwitch.Enabled = true;
                     buttonRoute.Enabled = true;
