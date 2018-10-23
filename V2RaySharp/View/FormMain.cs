@@ -213,7 +213,7 @@ namespace V2RaySharp.View
                         buttonSwitch.Text = I18N.GetString("Stop");
                         buttonSwitch.ForeColor = Color.Red;
                         buttonRoute.Text = I18N.GetString("Global");
-                        buttonRoute.ForeColor = Color.Red;
+                        buttonRoute.ForeColor = Color.Blue;
                         labelStatus.Text = $"{I18N.GetString("RunningStatus")}:{I18N.GetString("Route")}";
                         labelStatus.ForeColor = Color.Green;
                     }
@@ -222,7 +222,7 @@ namespace V2RaySharp.View
                         buttonSwitch.Text = I18N.GetString("Stop");
                         buttonSwitch.ForeColor = Color.Red;
                         buttonRoute.Text = I18N.GetString("Route");
-                        buttonRoute.ForeColor = Color.Blue;
+                        buttonRoute.ForeColor = Color.Green;
                         labelStatus.Text = $"{I18N.GetString("RunningStatus")}:{I18N.GetString("Global")}";
                         labelStatus.ForeColor = Color.Blue;
                     }
@@ -231,7 +231,7 @@ namespace V2RaySharp.View
                         buttonSwitch.Text = I18N.GetString("Start");
                         buttonSwitch.ForeColor = Color.Green;
                         buttonRoute.Text = I18N.GetString("Global");
-                        buttonRoute.ForeColor = Color.Red;
+                        buttonRoute.ForeColor = Color.Blue;
                         labelStatus.Text = $"{I18N.GetString("RunningStatus")}:{I18N.GetString("Stoped")}";
                         labelStatus.ForeColor = Color.Red;
                     }
@@ -240,7 +240,7 @@ namespace V2RaySharp.View
                         buttonSwitch.Text = I18N.GetString("Start");
                         buttonSwitch.ForeColor = Color.Green;
                         buttonRoute.Text = I18N.GetString("Route");
-                        buttonRoute.ForeColor = Color.Blue;
+                        buttonRoute.ForeColor = Color.Green;
                         labelStatus.Text = $"{I18N.GetString("RunningStatus")}:{I18N.GetString("Stoped")}";
                         labelStatus.ForeColor = Color.Red;
                     }

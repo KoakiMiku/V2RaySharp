@@ -211,7 +211,7 @@ namespace V2RaySharpWPF.View
                         buttonSwitch.Content = I18N.GetString("Stop");
                         buttonSwitch.Foreground = Brushes.Red;
                         buttonRoute.Content = I18N.GetString("Global");
-                        buttonRoute.Foreground = Brushes.Red;
+                        buttonRoute.Foreground = Brushes.Blue;
                         labelStatus.Content = $"{I18N.GetString("RunningStatus")}:{I18N.GetString("Route")}";
                         labelStatus.Foreground = Brushes.Green;
                     }
@@ -220,7 +220,7 @@ namespace V2RaySharpWPF.View
                         buttonSwitch.Content = I18N.GetString("Stop");
                         buttonSwitch.Foreground = Brushes.Red;
                         buttonRoute.Content = I18N.GetString("Route");
-                        buttonRoute.Foreground = Brushes.Blue;
+                        buttonRoute.Foreground = Brushes.Green;
                         labelStatus.Content = $"{I18N.GetString("RunningStatus")}:{I18N.GetString("Global")}";
                         labelStatus.Foreground = Brushes.Blue;
                     }
@@ -229,7 +229,7 @@ namespace V2RaySharpWPF.View
                         buttonSwitch.Content = I18N.GetString("Start");
                         buttonSwitch.Foreground = Brushes.Green;
                         buttonRoute.Content = I18N.GetString("Global");
-                        buttonRoute.Foreground = Brushes.Red;
+                        buttonRoute.Foreground = Brushes.Blue;
                         labelStatus.Content = $"{I18N.GetString("RunningStatus")}:{I18N.GetString("Stoped")}";
                         labelStatus.Foreground = Brushes.Red;
                     }
@@ -238,7 +238,7 @@ namespace V2RaySharpWPF.View
                         buttonSwitch.Content = I18N.GetString("Start");
                         buttonSwitch.Foreground = Brushes.Green;
                         buttonRoute.Content = I18N.GetString("Route");
-                        buttonRoute.Foreground = Brushes.Blue;
+                        buttonRoute.Foreground = Brushes.Green;
                         labelStatus.Content = $"{I18N.GetString("RunningStatus")}:{I18N.GetString("Stoped")}";
                         labelStatus.Foreground = Brushes.Red;
                     }
