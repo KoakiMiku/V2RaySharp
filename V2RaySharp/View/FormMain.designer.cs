@@ -33,12 +33,11 @@
             this.buttonSwitch = new System.Windows.Forms.Button();
             this.buttonEdit = new System.Windows.Forms.Button();
             this.tableLayoutControl = new System.Windows.Forms.TableLayoutPanel();
-            this.labelUpgrade = new System.Windows.Forms.Label();
-            this.labelStatus = new System.Windows.Forms.Label();
             this.tableLayoutButton = new System.Windows.Forms.TableLayoutPanel();
             this.buttonRoute = new System.Windows.Forms.Button();
             this.labelUserInfo = new System.Windows.Forms.Label();
             this.tableLayoutMain = new System.Windows.Forms.TableLayoutPanel();
+            this.labelStatus = new System.Windows.Forms.Label();
             this.tableLayoutControl.SuspendLayout();
             this.tableLayoutButton.SuspendLayout();
             this.tableLayoutMain.SuspendLayout();
@@ -93,36 +92,15 @@
             this.tableLayoutControl.ColumnCount = 2;
             this.tableLayoutControl.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 65F));
             this.tableLayoutControl.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 35F));
-            this.tableLayoutControl.Controls.Add(this.labelUpgrade, 0, 1);
-            this.tableLayoutControl.Controls.Add(this.labelStatus, 0, 1);
             this.tableLayoutControl.Controls.Add(this.tableLayoutButton, 1, 0);
             this.tableLayoutControl.Controls.Add(this.listBoxNode, 0, 0);
             this.tableLayoutControl.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tableLayoutControl.Location = new System.Drawing.Point(3, 28);
             this.tableLayoutControl.Name = "tableLayoutControl";
-            this.tableLayoutControl.RowCount = 2;
+            this.tableLayoutControl.RowCount = 1;
             this.tableLayoutControl.RowStyles.Add(new System.Windows.Forms.RowStyle());
-            this.tableLayoutControl.RowStyles.Add(new System.Windows.Forms.RowStyle());
-            this.tableLayoutControl.Size = new System.Drawing.Size(576, 357);
+            this.tableLayoutControl.Size = new System.Drawing.Size(576, 332);
             this.tableLayoutControl.TabIndex = 0;
-            // 
-            // labelUpgrade
-            // 
-            this.labelUpgrade.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.labelUpgrade.Location = new System.Drawing.Point(3, 332);
-            this.labelUpgrade.Name = "labelUpgrade";
-            this.labelUpgrade.Size = new System.Drawing.Size(368, 25);
-            this.labelUpgrade.TabIndex = 3;
-            this.labelUpgrade.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            // 
-            // labelStatus
-            // 
-            this.labelStatus.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.labelStatus.Location = new System.Drawing.Point(377, 332);
-            this.labelStatus.Name = "labelStatus";
-            this.labelStatus.Size = new System.Drawing.Size(196, 25);
-            this.labelStatus.TabIndex = 2;
-            this.labelStatus.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
             // tableLayoutButton
             // 
@@ -169,16 +147,26 @@
             this.tableLayoutMain.ColumnCount = 1;
             this.tableLayoutMain.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle());
             this.tableLayoutMain.Controls.Add(this.labelUserInfo, 0, 0);
+            this.tableLayoutMain.Controls.Add(this.labelStatus, 0, 2);
             this.tableLayoutMain.Controls.Add(this.tableLayoutControl, 0, 1);
             this.tableLayoutMain.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tableLayoutMain.Location = new System.Drawing.Point(0, 0);
             this.tableLayoutMain.Name = "tableLayoutMain";
-            this.tableLayoutMain.RowCount = 2;
+            this.tableLayoutMain.RowCount = 3;
             this.tableLayoutMain.RowStyles.Add(new System.Windows.Forms.RowStyle());
             this.tableLayoutMain.RowStyles.Add(new System.Windows.Forms.RowStyle());
-            this.tableLayoutMain.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
+            this.tableLayoutMain.RowStyles.Add(new System.Windows.Forms.RowStyle());
             this.tableLayoutMain.Size = new System.Drawing.Size(582, 388);
             this.tableLayoutMain.TabIndex = 0;
+            // 
+            // labelStatus
+            // 
+            this.labelStatus.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.labelStatus.Location = new System.Drawing.Point(3, 363);
+            this.labelStatus.Name = "labelStatus";
+            this.labelStatus.Size = new System.Drawing.Size(576, 25);
+            this.labelStatus.TabIndex = 2;
+            this.labelStatus.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
             // FormMain
             // 
@@ -218,7 +206,6 @@
         private System.Windows.Forms.TableLayoutPanel tableLayoutMain;
         private System.Windows.Forms.Button buttonRoute;
         private System.Windows.Forms.Label labelStatus;
-        private System.Windows.Forms.Label labelUpgrade;
     }
 }
 
