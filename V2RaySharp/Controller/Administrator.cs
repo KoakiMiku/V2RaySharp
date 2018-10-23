@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Diagnostics;
 using System.Security.Principal;
-using System.Windows.Forms;
 
 namespace V2RaySharp.Controller
 {
@@ -26,7 +25,7 @@ namespace V2RaySharp.Controller
             try
             {
                 Process process = new Process();
-                process.StartInfo.FileName = Application.ExecutablePath;
+                process.StartInfo.FileName = Process.GetCurrentProcess().MainModule.FileName;
                 process.StartInfo.Verb = "runas";
                 process.Start();
             }

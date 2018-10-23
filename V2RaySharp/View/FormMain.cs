@@ -11,6 +11,8 @@ namespace V2RaySharp.View
 {
     public partial class FormMain : Form
     {
+        private static readonly string name = "V2Ray Sharp";
+
         public FormMain()
         {
             InitializeComponent();
@@ -23,7 +25,7 @@ namespace V2RaySharp.View
                 Icon = Resources.V2Ray;
                 buttonSwitch.Text = Language.GetString("Status");
                 buttonRoute.Text = Language.GetString("Status");
-                buttonChange.Text = Language.GetString("ChangeNode");
+                buttonNode.Text = Language.GetString("ChangeNode");
                 buttonEdit.Text = Language.GetString("EditConfig");
                 Node.CompleteEvent += Complete;
                 Configuration.Load();
@@ -32,7 +34,7 @@ namespace V2RaySharp.View
             }
             catch (Exception ex)
             {
-                MessageBox.Show(ex.Message, Application.ProductName,
+                MessageBox.Show(ex.Message, name,
                   MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
@@ -45,7 +47,7 @@ namespace V2RaySharp.View
             }
             catch (Exception ex)
             {
-                MessageBox.Show(ex.Message, Application.ProductName,
+                MessageBox.Show(ex.Message, name,
                   MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
@@ -61,7 +63,7 @@ namespace V2RaySharp.View
             }
             catch (Exception ex)
             {
-                MessageBox.Show(ex.Message, Application.ProductName,
+                MessageBox.Show(ex.Message, name,
                   MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
@@ -82,12 +84,12 @@ namespace V2RaySharp.View
             }
             catch (Exception ex)
             {
-                MessageBox.Show(ex.Message, Application.ProductName,
+                MessageBox.Show(ex.Message, name,
                    MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
 
-        private void ButtonChange_Click(object sender, EventArgs e)
+        private void ButtonNode_Click(object sender, EventArgs e)
         {
             try
             {
@@ -104,7 +106,7 @@ namespace V2RaySharp.View
             }
             catch (Exception ex)
             {
-                MessageBox.Show(ex.Message, Application.ProductName,
+                MessageBox.Show(ex.Message, name,
                    MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
@@ -126,7 +128,7 @@ namespace V2RaySharp.View
             }
             catch (Exception ex)
             {
-                MessageBox.Show(ex.Message, Application.ProductName,
+                MessageBox.Show(ex.Message, name,
                    MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
@@ -139,7 +141,7 @@ namespace V2RaySharp.View
             }
             catch (Exception ex)
             {
-                MessageBox.Show(ex.Message, Application.ProductName,
+                MessageBox.Show(ex.Message, name,
                  MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
@@ -194,7 +196,7 @@ namespace V2RaySharp.View
                 {
                     buttonSwitch.Enabled = false;
                     buttonRoute.Enabled = false;
-                    buttonChange.Enabled = false;
+                    buttonNode.Enabled = false;
                     labelStatus.Text = $"{Language.GetString("Waiting")}";
                     labelStatus.ForeColor = Color.Black;
                 }));
@@ -244,7 +246,7 @@ namespace V2RaySharp.View
                     }
                     buttonSwitch.Enabled = true;
                     buttonRoute.Enabled = true;
-                    buttonChange.Enabled = true;
+                    buttonNode.Enabled = true;
                 }));
             }
             catch (Exception)

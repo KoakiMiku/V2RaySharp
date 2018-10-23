@@ -10,6 +10,8 @@ namespace V2RaySharp
 {
     static class Program
     {
+        private static readonly string name = "V2Ray Sharp";
+
         [STAThread]
         static void Main(string[] args)
         {
@@ -17,7 +19,7 @@ namespace V2RaySharp
 
             try
             {
-                Mutex mutex = new Mutex(false, Application.ProductName);
+                Mutex mutex = new Mutex(false, name);
                 if (!mutex.WaitOne(0, false))
                 {
                     throw new Exception(Language.GetString("AlreadyRunning"));
@@ -32,7 +34,7 @@ namespace V2RaySharp
                 bool isAdmin = Administrator.IsAdmin();
                 if (args.Length == 0 && isAdmin)
                 {
-                    switch (MessageBox.Show($"{Language.GetString("Setup")}", Application.ProductName,
+                    switch (MessageBox.Show($"{Language.GetString("Setup")}", name,
                         MessageBoxButtons.YesNoCancel, MessageBoxIcon.Information))
                     {
                         case DialogResult.Yes:
@@ -71,7 +73,7 @@ namespace V2RaySharp
             }
             catch (Exception ex)
             {
-                MessageBox.Show(ex.Message, Application.ProductName,
+                MessageBox.Show(ex.Message, name,
                     MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }

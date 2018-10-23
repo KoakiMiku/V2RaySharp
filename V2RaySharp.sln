@@ -5,6 +5,8 @@ VisualStudioVersion = 15.0.28010.2026
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "V2RaySharp", "V2RaySharp\V2RaySharp.csproj", "{21AA9E5D-F006-4C78-AD31-E1FC2DC6617E}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "V2RaySharpWPF", "V2RaySharpWPF\V2RaySharpWPF.csproj", "{8FBE2963-6DDB-46D6-B38A-B05E4D1EC2F8}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -15,6 +17,10 @@ Global
 		{21AA9E5D-F006-4C78-AD31-E1FC2DC6617E}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{21AA9E5D-F006-4C78-AD31-E1FC2DC6617E}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{21AA9E5D-F006-4C78-AD31-E1FC2DC6617E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{8FBE2963-6DDB-46D6-B38A-B05E4D1EC2F8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8FBE2963-6DDB-46D6-B38A-B05E4D1EC2F8}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8FBE2963-6DDB-46D6-B38A-B05E4D1EC2F8}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8FBE2963-6DDB-46D6-B38A-B05E4D1EC2F8}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

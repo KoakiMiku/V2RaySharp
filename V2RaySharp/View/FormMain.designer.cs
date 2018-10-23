@@ -28,7 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.buttonChange = new System.Windows.Forms.Button();
+            this.buttonNode = new System.Windows.Forms.Button();
             this.listBoxNode = new System.Windows.Forms.ListBox();
             this.buttonSwitch = new System.Windows.Forms.Button();
             this.buttonEdit = new System.Windows.Forms.Button();
@@ -44,16 +44,16 @@
             this.tableLayoutMain.SuspendLayout();
             this.SuspendLayout();
             // 
-            // buttonChange
+            // buttonNode
             // 
-            this.buttonChange.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.buttonChange.Location = new System.Drawing.Point(3, 84);
-            this.buttonChange.Name = "buttonChange";
-            this.buttonChange.Size = new System.Drawing.Size(190, 75);
-            this.buttonChange.TabIndex = 1;
-            this.buttonChange.Text = "Change Node";
-            this.buttonChange.UseVisualStyleBackColor = false;
-            this.buttonChange.Click += new System.EventHandler(this.ButtonChange_Click);
+            this.buttonNode.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.buttonNode.Location = new System.Drawing.Point(3, 84);
+            this.buttonNode.Name = "buttonNode";
+            this.buttonNode.Size = new System.Drawing.Size(190, 75);
+            this.buttonNode.TabIndex = 1;
+            this.buttonNode.Text = "Change Node";
+            this.buttonNode.UseVisualStyleBackColor = false;
+            this.buttonNode.Click += new System.EventHandler(this.ButtonNode_Click);
             // 
             // listBoxNode
             // 
@@ -129,7 +129,7 @@
             this.tableLayoutButton.ColumnCount = 1;
             this.tableLayoutButton.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle());
             this.tableLayoutButton.Controls.Add(this.buttonRoute, 0, 2);
-            this.tableLayoutButton.Controls.Add(this.buttonChange, 0, 1);
+            this.tableLayoutButton.Controls.Add(this.buttonNode, 0, 1);
             this.tableLayoutButton.Controls.Add(this.buttonSwitch, 0, 0);
             this.tableLayoutButton.Controls.Add(this.buttonEdit, 0, 3);
             this.tableLayoutButton.Dock = System.Windows.Forms.DockStyle.Fill;
@@ -208,7 +208,7 @@
 
         #endregion
 
-        private System.Windows.Forms.Button buttonChange;
+        private System.Windows.Forms.Button buttonNode;
         private System.Windows.Forms.ListBox listBoxNode;
         private System.Windows.Forms.Button buttonSwitch;
         private System.Windows.Forms.Button buttonEdit;

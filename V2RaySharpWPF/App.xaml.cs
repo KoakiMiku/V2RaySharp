@@ -9,26 +9,28 @@ namespace V2RaySharpWPF
 {
     public partial class App : Application
     {
+        private static readonly string name = "V2Ray Sharp";
+
         private void Application_Startup(object sender, StartupEventArgs e)
         {
             try
             {
-                Mutex mutex = new Mutex(false, "V2RaySharpWPF");
+                Mutex mutex = new Mutex(false, name);
                 if (!mutex.WaitOne(0, false))
                 {
                     throw new Exception(Language.GetString("AlreadyRunning"));
                 }
 
-                //bool isTrueDirectory = Check.IsTrueDirectory();
-                //if (!isTrueDirectory)
-                //{
-                //    throw new Exception(Language.GetString("FileNotFound"));
-                //}
+                bool isTrueDirectory = Check.IsTrueDirectory();
+                if (!isTrueDirectory)
+                {
+                    throw new Exception(Language.GetString("FileNotFound"));
+                }
 
                 bool isAdmin = Administrator.IsAdmin();
                 if (e.Args.Length == 0 && isAdmin)
                 {
-                    switch (MessageBox.Show($"{Language.GetString("Setup")}", "V2Ray Sharp",
+                    switch (MessageBox.Show($"{Language.GetString("Setup")}", name,
                         MessageBoxButton.YesNoCancel, MessageBoxImage.Information))
                     {
                         case MessageBoxResult.Yes:
@@ -68,7 +70,7 @@ namespace V2RaySharpWPF
             }
             catch (Exception ex)
             {
-                MessageBox.Show(ex.Message, "V2Ray Sharp",
+                MessageBox.Show(ex.Message, name,
                     MessageBoxButton.OK, MessageBoxImage.Error);
             }
             finally

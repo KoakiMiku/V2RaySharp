@@ -180,6 +180,7 @@ namespace V2RaySharpWPF.Controller
         {
             try
             {
+                CheckConfig();
                 JObject jObject = ReadConfig();
                 JToken jToken = jObject["routing"];
                 if (jToken != null)
