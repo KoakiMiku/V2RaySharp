@@ -6,14 +6,14 @@ using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Input;
 using System.Windows.Media;
-using V2RaySharpWPF.Controller;
-using V2RaySharpWPF.Model;
+using V2RaySharp.Controller;
+using V2RaySharp.Model;
 
-namespace V2RaySharpWPF.View
+namespace V2RaySharp.View
 {
     public partial class MainWindow : Window
     {
-        private static readonly string name = "V2Ray Sharp";
+        private static readonly string name = "V2RaySharp";
 
         public MainWindow()
         {
@@ -144,24 +144,16 @@ namespace V2RaySharpWPF.View
                 {
                     if (tick == -2)
                     {
-                        labelUserInfo.Content = I18N.GetString("NoSubscription");
+                        labelUpgrade.Content = I18N.GetString("NoSubscription");
                     }
                     else if (tick == -1)
                     {
-                        labelUserInfo.Content = I18N.GetString("UpgradeNodeError");
+                        labelUpgrade.Content = I18N.GetString("UpgradeNodeError");
                     }
                     else
-                    {
-                        labelUserInfo.Content = Node.userInfo;
-                    }
-                    if (Configuration.Config.Upgrade != 0)
                     {
                         DateTime dateTime = new DateTime(Configuration.Config.Upgrade);
-                        labelUpgrade.Content = $"{I18N.GetString("Upgrade")}:{dateTime.ToString("yyyy.MM.dd HH:mm:ss")}";
-                    }
-                    else
-                    {
-                        labelUpgrade.Content = $"{I18N.GetString("Upgrade")}:{I18N.GetString("None")}";
+                        labelUpgrade.Content = $"{I18N.GetString("Upgrade")}: {dateTime.ToString("yyyy.MM.dd HH:mm:ss")}";
                     }
                     listBoxNode.Items.Clear();
                     List<string> sses = Node.sses.Select(x => x.Name).OrderBy(y => y).ToList();
@@ -212,7 +204,7 @@ namespace V2RaySharpWPF.View
                         buttonSwitch.Foreground = Brushes.Red;
                         buttonRoute.Content = I18N.GetString("Global");
                         buttonRoute.Foreground = Brushes.Blue;
-                        labelStatus.Content = $"{I18N.GetString("RunningStatus")}:{I18N.GetString("Route")}";
+                        labelStatus.Content = $"{I18N.GetString("RunningStatus")}: {I18N.GetString("Route")}";
                         labelStatus.Foreground = Brushes.Green;
                     }
                     else if (isRunning && !isUsingRoute)
@@ -221,7 +213,7 @@ namespace V2RaySharpWPF.View
                         buttonSwitch.Foreground = Brushes.Red;
                         buttonRoute.Content = I18N.GetString("Route");
                         buttonRoute.Foreground = Brushes.Green;
-                        labelStatus.Content = $"{I18N.GetString("RunningStatus")}:{I18N.GetString("Global")}";
+                        labelStatus.Content = $"{I18N.GetString("RunningStatus")}: {I18N.GetString("Global")}";
                         labelStatus.Foreground = Brushes.Blue;
                     }
                     else if (!isRunning && isUsingRoute)
@@ -230,7 +222,7 @@ namespace V2RaySharpWPF.View
                         buttonSwitch.Foreground = Brushes.Green;
                         buttonRoute.Content = I18N.GetString("Global");
                         buttonRoute.Foreground = Brushes.Blue;
-                        labelStatus.Content = $"{I18N.GetString("RunningStatus")}:{I18N.GetString("Stoped")}";
+                        labelStatus.Content = $"{I18N.GetString("RunningStatus")}: {I18N.GetString("Stoped")}";
                         labelStatus.Foreground = Brushes.Red;
                     }
                     else
@@ -239,7 +231,7 @@ namespace V2RaySharpWPF.View
                         buttonSwitch.Foreground = Brushes.Green;
                         buttonRoute.Content = I18N.GetString("Route");
                         buttonRoute.Foreground = Brushes.Green;
-                        labelStatus.Content = $"{I18N.GetString("RunningStatus")}:{I18N.GetString("Stoped")}";
+                        labelStatus.Content = $"{I18N.GetString("RunningStatus")}: {I18N.GetString("Stoped")}";
                         labelStatus.Foreground = Brushes.Red;
                     }
                     buttonSwitch.IsEnabled = true;

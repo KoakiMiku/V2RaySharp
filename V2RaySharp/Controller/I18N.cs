@@ -9,8 +9,8 @@ namespace V2RaySharp.Controller
         private static readonly Dictionary<string, string> Chinese = new Dictionary<string, string>()
         {
             {"FileNotFound", "缺少核心文件！"},
-            {"AlreadyRunning", "V2Ray Sharp 已在运行……"},
-            {"Setup", "安装 或 卸载 V2Ray Sharp\n是：安装\t否：卸载\t取消：取消"},
+            {"AlreadyRunning", "V2RaySharp 已在运行……"},
+            {"Setup", "安装 或 卸载 V2RaySharp\n是：安装\t否：卸载\t取消：取消"},
             {"Status", "状态"},
             {"ChangeNode", "切换节点"},
             {"EditConfig", "编辑配置"},
@@ -24,15 +24,14 @@ namespace V2RaySharp.Controller
             {"Stoped", "停止"},
             {"RunningStatus", "运行状态"},
             {"Upgrade", "更新时间"},
-            {"None", "无"},
             {"Waiting", "请稍后……"},
         };
 
         private static readonly Dictionary<string, string> English = new Dictionary<string, string>()
         {
             {"FileNotFound", "Core file not found!"},
-            {"AlreadyRunning", "V2Ray Sharp is already running..."},
-            {"Setup", "Install or uninstall V2Ray Sharp\nYes: Install\tNo: Uninstall\tCancel: Cancel"},
+            {"AlreadyRunning", "V2RaySharp is already running..."},
+            {"Setup", "Install or uninstall V2RaySharp\nYes: Install\tNo: Uninstall\tCancel: Cancel"},
             {"Status", "Status"},
             {"ChangeNode", "Change Node"},
             {"EditConfig", "Edit Config"},
@@ -46,7 +45,6 @@ namespace V2RaySharp.Controller
             {"Stoped", "Stoped"},
             {"RunningStatus", "Running status"},
             {"Upgrade", "Upgrade time"},
-            {"None", "None"},
             {"Waiting", "Please wait..."},
         };
 

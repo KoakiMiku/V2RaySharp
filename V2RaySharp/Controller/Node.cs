@@ -158,15 +158,18 @@ namespace V2RaySharp.Controller
             try
             {
                 string name = string.Empty;
-                var temp1 = sses.Where(x => x.Address.Equals(address, StringComparison.OrdinalIgnoreCase)).Select(y => y.Name);
-                var temp2 = vmesses.Where(x => x.Address.Equals(address, StringComparison.OrdinalIgnoreCase)).Select(y => y.Name);
-                if (temp1.Count() != 0)
+                if (!string.IsNullOrWhiteSpace(address))
                 {
-                    name = temp1.First();
-                }
-                else if (temp2.Count() != 0)
-                {
-                    name = temp2.First();
+                    var temp1 = sses.Where(x => x.Address.Equals(address, StringComparison.OrdinalIgnoreCase)).Select(y => y.Name);
+                    var temp2 = vmesses.Where(x => x.Address.Equals(address, StringComparison.OrdinalIgnoreCase)).Select(y => y.Name);
+                    if (temp1.Count() != 0)
+                    {
+                        name = temp1.First();
+                    }
+                    else if (temp2.Count() != 0)
+                    {
+                        name = temp2.First();
+                    }
                 }
                 return name;
             }

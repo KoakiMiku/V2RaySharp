@@ -1,4 +1,4 @@
-﻿<Application x:Class="V2RaySharpWPF.App"
+﻿<Application x:Class="V2RaySharp.App"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              Startup="Application_Startup">

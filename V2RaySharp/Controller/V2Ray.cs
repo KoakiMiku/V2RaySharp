@@ -3,7 +3,6 @@ using Newtonsoft.Json.Linq;
 using System;
 using System.Diagnostics;
 using System.IO;
-using System.Linq;
 using System.Text;
 using System.Threading;
 using V2RaySharp.Model;
@@ -114,15 +113,25 @@ namespace V2RaySharp.Controller
             try
             {
                 JObject jObject = ReadConfig();
-                jObject["outbound"]["protocol"] = "shadowsocks";
-                jObject["outbound"]["settings"]["servers"][0]["address"] = ss.Address;
-                jObject["outbound"]["settings"]["servers"][0]["port"] = ss.Port;
-                jObject["outbound"]["settings"]["servers"][0]["password"] = ss.Password;
-                jObject["outbound"]["settings"]["servers"][0]["method"] = ss.Method;
-                jObject["outbound"]["settings"]["vnext"][0]["address"] = null;
-                jObject["outbound"]["settings"]["vnext"][0]["port"] = null;
-                jObject["outbound"]["settings"]["vnext"][0]["users"][0]["id"] = null;
-                jObject["outbound"]["settings"]["vnext"][0]["users"][0]["alterId"] = null;
+                JArray jArray = jObject["outbounds"].ToObject<JArray>();
+                foreach (var item in jArray)
+                {
+                    if (item["tag"].ToString() == "proxy")
+                    {
+                        item["protocol"] = "shadowsocks";
+                        JArray servers = new JArray() { new JObject()
+                        {
+                            { "address", ss.Address },
+                            { "port", ss.Port },
+                            { "password", ss.Password },
+                            { "method", ss.Method }
+                        }};
+                        item["settings"]["servers"] = servers;
+                        item["settings"]["vnext"] = null;
+                    }
+                    break;
+                }
+                jObject["outbounds"] = jArray;
                 WriteConfig(jObject);
             }
             catch (Exception)
@@ -136,15 +145,29 @@ namespace V2RaySharp.Controller
             try
             {
                 JObject jObject = ReadConfig();
-                jObject["outbound"]["protocol"] = "vmess";
-                jObject["outbound"]["settings"]["vnext"][0]["address"] = vmess.Address;
-                jObject["outbound"]["settings"]["vnext"][0]["port"] = vmess.Port;
-                jObject["outbound"]["settings"]["vnext"][0]["users"][0]["id"] = vmess.ID;
-                jObject["outbound"]["settings"]["vnext"][0]["users"][0]["alterId"] = vmess.AlterID;
-                jObject["outbound"]["settings"]["servers"][0]["address"] = null;
-                jObject["outbound"]["settings"]["servers"][0]["port"] = null;
-                jObject["outbound"]["settings"]["servers"][0]["password"] = null;
-                jObject["outbound"]["settings"]["servers"][0]["method"] = null;
+                JArray jArray = jObject["outbounds"].ToObject<JArray>();
+                foreach (var item in jArray)
+                {
+                    if (item["tag"].ToString() == "proxy")
+                    {
+                        item["protocol"] = "vmess";
+                        JArray vnext = new JArray() { new JObject()
+                        {
+                            { "address", vmess.Address },
+                            { "port", vmess.Port },
+                            { "users", new JArray(){ new JObject()
+                                {
+                                    { "id", vmess.ID },
+                                    { "alterId", vmess.AlterID }
+                                }}
+                            },
+                        }};
+                        item["settings"]["vnext"] = vnext;
+                        item["settings"]["servers"] = null;
+                    }
+                    break;
+                }
+                jObject["outbounds"] = jArray;
                 WriteConfig(jObject);
             }
             catch (Exception)
@@ -202,19 +225,28 @@ namespace V2RaySharp.Controller
         {
             try
             {
+                string name = null;
                 CheckConfig();
                 JObject jObject = ReadConfig();
-                string protocol = jObject["outbound"]["protocol"].ToString();
-                string address = string.Empty;
-                if (protocol == "shadowsocks")
+                JArray jArray = jObject["outbounds"].ToObject<JArray>();
+                foreach (var item in jArray)
                 {
-                    address = jObject["outbound"]["settings"]["servers"][0]["address"].ToString();
+                    if (item["tag"].ToString() == "proxy")
+                    {
+                        string protocol = item["protocol"].ToString();
+                        string address = string.Empty;
+                        if (protocol == "shadowsocks")
+                        {
+                            address = item["settings"]["servers"][0]["address"].ToString();
+                        }
+                        else if (protocol == "vmess")
+                        {
+                            address = item["settings"]["vnext"][0]["address"].ToString();
+                        }
+                        name = Node.GetName(address);
+                    }
+                    break;
                 }
-                else if (protocol == "vmess")
-                {
-                    address = jObject["outbound"]["settings"]["vnext"][0]["address"].ToString();
-                }
-                string name = Node.GetName(address);
                 return name;
             }
             catch (Exception)
@@ -244,7 +276,7 @@ namespace V2RaySharp.Controller
             {
                 if (!File.Exists(config))
                 {
-                    File.WriteAllText(config, jsonGlobal);
+                    File.WriteAllText(config, jsonRoute);
                 }
                 if (!File.Exists(configGlobal))
                 {

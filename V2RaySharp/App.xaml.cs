@@ -1,15 +1,15 @@
 ﻿using System;
 using System.Threading;
 using System.Windows;
-using V2RaySharpWPF.Controller;
-using V2RaySharpWPF.Regedit;
-using V2RaySharpWPF.View;
+using V2RaySharp.Controller;
+using V2RaySharp.Regedit;
+using V2RaySharp.View;
 
-namespace V2RaySharpWPF
+namespace V2RaySharp
 {
     public partial class App : Application
     {
-        private static readonly string name = "V2Ray Sharp";
+        private static readonly string name = "V2RaySharp";
 
         private void Application_Startup(object sender, StartupEventArgs e)
         {
