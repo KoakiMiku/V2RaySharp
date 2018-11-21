@@ -6,6 +6,8 @@ namespace V2RaySharp.Controller
 {
     class Administrator
     {
+        private static readonly string path = Process.GetCurrentProcess().MainModule.FileName;
+
         public static bool IsAdmin()
         {
             try
@@ -25,7 +27,7 @@ namespace V2RaySharp.Controller
             try
             {
                 Process process = new Process();
-                process.StartInfo.FileName = Process.GetCurrentProcess().MainModule.FileName;
+                process.StartInfo.FileName = path;
                 process.StartInfo.Verb = "runas";
                 process.Start();
             }

@@ -1,16 +1,17 @@
 ﻿using Microsoft.Win32;
-using System.Windows.Forms;
+using System.Diagnostics;
 
 namespace V2RaySharp.Regedit
 {
     class Autorun
     {
+        private static readonly string path = Process.GetCurrentProcess().MainModule.FileName;
         private static readonly string autorunPath = @"Software\Microsoft\Windows\CurrentVersion\Run";
 
         public static void Add()
         {
             RegistryKey autorun = Registry.CurrentUser.OpenSubKey(autorunPath, true);
-            autorun.SetValue("V2RaySharp", $"{Application.ExecutablePath} -start");
+            autorun.SetValue("V2RaySharp", $"{path} -start");
             autorun.Close();
         }
 
