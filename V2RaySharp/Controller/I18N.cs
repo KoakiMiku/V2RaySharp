@@ -9,7 +9,6 @@ namespace V2RaySharp.Controller
         private static readonly Dictionary<string, string> Chinese = new Dictionary<string, string>()
         {
             {"FileNotFound", "缺少核心文件！"},
-            {"AlreadyRunning", "V2RaySharp 已在运行……"},
             {"Setup", "安装 或 卸载 V2RaySharp\n是：安装\t否：卸载\t取消：取消"},
             {"Status", "状态"},
             {"ChangeNode", "切换节点"},
@@ -30,7 +29,6 @@ namespace V2RaySharp.Controller
         private static readonly Dictionary<string, string> English = new Dictionary<string, string>()
         {
             {"FileNotFound", "Core file not found!"},
-            {"AlreadyRunning", "V2RaySharp is already running..."},
             {"Setup", "Install or uninstall V2RaySharp\nYes: Install\tNo: Uninstall\tCancel: Cancel"},
             {"Status", "Status"},
             {"ChangeNode", "Change Node"},

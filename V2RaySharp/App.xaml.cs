@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Threading;
 using System.Windows;
 using V2RaySharp.Controller;
 using V2RaySharp.Regedit;
@@ -15,10 +14,11 @@ namespace V2RaySharp
         {
             try
             {
-                Mutex mutex = new Mutex(false, name);
-                if (!mutex.WaitOne(0, false))
+                bool isSingle = SingleInstance.IsSingle();
+                if (!isSingle)
                 {
-                    throw new Exception(I18N.GetString("AlreadyRunning"));
+                    SingleInstance.SetForeground();
+                    return;
                 }
 
                 bool isTrueDirectory = Check.IsTrueDirectory();
