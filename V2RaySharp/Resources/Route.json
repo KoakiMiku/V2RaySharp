@@ -25,7 +25,7 @@
     "routing": {
         "strategy": "rules",
         "settings": {
-            "domainStrategy": "IPIfNonMatch",
+            "domainStrategy": "IPOnDemand",
             "rules": [
                 {
                     "outboundTag": "direct",
@@ -42,22 +42,8 @@
                         "geoip:private",
                         "geoip:cn"
                     ]
-                },
-                {
-                    "outboundTag": "direct",
-                    "type": "field",
-                    "domain": [
-                        "baidu.com"
-                    ]
                 }
             ]
         }
-    },
-    "dns": {
-        "servers": [
-            "8.8.8.8",
-            "8.8.4.4",
-            "localhost"
-        ]
     }
 }
