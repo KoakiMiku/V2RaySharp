@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Diagnostics;
 using System.Security.Principal;
 
@@ -31,10 +31,7 @@ namespace V2RaySharp.Controller
                 process.StartInfo.Verb = "runas";
                 process.Start();
             }
-            catch (Exception)
-            {
-                //throw;
-            }
+            catch { }
         }
     }
 }

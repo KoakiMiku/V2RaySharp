@@ -1,4 +1,5 @@
-﻿using Microsoft.Win32;
+using Microsoft.Win32;
+using System;
 using System.Diagnostics;
 
 namespace V2RaySharp.Regedit
@@ -10,16 +11,30 @@ namespace V2RaySharp.Regedit
 
         public static void Add()
         {
-            RegistryKey autorun = Registry.CurrentUser.OpenSubKey(autorunPath, true);
-            autorun.SetValue("V2RaySharp", $"{path} -start");
-            autorun.Close();
+            try
+            {
+                RegistryKey autorun = Registry.CurrentUser.OpenSubKey(autorunPath, true);
+                autorun.SetValue("V2RaySharp", $"{path} -start");
+                autorun.Close();
+            }
+            catch (Exception)
+            {
+                throw;
+            }
         }
 
         public static void Remove()
         {
-            RegistryKey autoRun = Registry.CurrentUser.OpenSubKey(autorunPath, true);
-            autoRun.DeleteValue("V2RaySharp", false);
-            autoRun.Close();
+            try
+            {
+                RegistryKey autoRun = Registry.CurrentUser.OpenSubKey(autorunPath, true);
+                autoRun.DeleteValue("V2RaySharp", false);
+                autoRun.Close();
+            }
+            catch (Exception)
+            {
+                throw;
+            }
         }
     }
 }
