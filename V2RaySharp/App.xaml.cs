@@ -2,6 +2,7 @@
 using System.Windows;
 using V2RaySharp.Controller;
 using V2RaySharp.Regedit;
+using V2RaySharp.Utiliy;
 using V2RaySharp.View;
 
 namespace V2RaySharp
@@ -60,7 +61,7 @@ namespace V2RaySharp
                 }
                 else if (e.Args[0] == "-config")
                 {
-                    MainWindow window = new MainWindow();
+                    var window = new MainWindow();
                     window.ShowDialog();
                 }
                 else

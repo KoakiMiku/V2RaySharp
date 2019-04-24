@@ -4,7 +4,7 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         mc:Ignorable="d"
-        Title="V2RaySharp" Height="425" Width="600" ResizeMode="NoResize" WindowStartupLocation="CenterScreen" Loaded="Window_Loaded" KeyDown="Window_KeyDown" Icon="/V2RaySharp;component/Resources/V2Ray.ico">
+        Title="V2RaySharp" Height="300" Width="600" ResizeMode="NoResize" WindowStartupLocation="CenterScreen" Loaded="Window_Loaded" KeyDown="Window_KeyDown" Icon="/V2RaySharp;component/Resources/V2Ray.ico">
     <Window.Resources>
 
     </Window.Resources>
@@ -13,20 +13,21 @@
             <RowDefinition Height="2*"/>
             <RowDefinition Height="2*"/>
             <RowDefinition Height="2*"/>
-            <RowDefinition Height="2*"/>
             <RowDefinition/>
         </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="2*"/>
-            <ColumnDefinition/>
+            <ColumnDefinition Width="4*"/>
+            <ColumnDefinition Width="1*"/>
+            <ColumnDefinition Width="1*"/>
         </Grid.ColumnDefinitions>
-        <ListBox x:Name="listBoxNode" Margin="10,10,5,5" Grid.RowSpan="4" Background="{x:Null}" BorderBrush="#FFAAAAAA" TabIndex="0"/>
-        <Label x:Name="labelUpgrade" Margin="10,5,5,10" Grid.Row="4" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Background="{x:Null}"/>
-        <Button x:Name="buttonSwitch" Content="Switch" Grid.Column="1" Margin="5,10,10,5" Background="{x:Null}" BorderBrush="#FFAAAAAA" Click="ButtonSwitch_Click" TabIndex="1"/>
-        <Button x:Name="buttonNode" Content="Change Node" Grid.Column="1" Margin="5,5,10,5" Grid.Row="1" Background="{x:Null}" BorderBrush="#FFAAAAAA" Click="ButtonNode_Click" TabIndex="2"/>
-        <Button x:Name="buttonRoute" Content="Change Route" Grid.Column="1" Margin="5,5,10,5" Grid.Row="2" Background="{x:Null}" BorderBrush="#FFAAAAAA" Click="ButtonRoute_Click" TabIndex="3"/>
-        <Button x:Name="buttonEdit" Content="Edit Config" Grid.Column="1" Margin="5,5,10,5" Grid.Row="3" Background="{x:Null}" BorderBrush="#FFAAAAAA" Click="ButtonEdit_Click" TabIndex="4"/>
-        <Label x:Name="labelStatus" Grid.Column="1" Margin="5,5,10,10" Grid.Row="4" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Background="{x:Null}"/>
+        <ListBox x:Name="listBoxNode" Margin="10,5,5,5" Grid.RowSpan="3" Background="{x:Null}" BorderBrush="#FFAAAAAA" TabIndex="0" />
+        <Label x:Name="labelUpgrade" Margin="10,5,5,5" Grid.Row="4" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Background="{x:Null}" />
+        <Button x:Name="buttonSwitch" Content="Switch" Grid.Column="1" Margin="5" Background="{x:Null}" BorderBrush="#FFAAAAAA" Click="ButtonSwitch_Click" TabIndex="1" />
+        <Button x:Name="buttonNode" Content="Change Node" Grid.Column="1" Margin="5,5,10,5" Grid.Row="1" Background="{x:Null}" BorderBrush="#FFAAAAAA" Click="ButtonNode_Click" TabIndex="2" Grid.ColumnSpan="2" />
+        <Button x:Name="buttonRoute" Content="Change&#xD;&#xA;Route" Grid.Column="2" Margin="5,5,10,5" Background="{x:Null}" BorderBrush="#FFAAAAAA" Click="ButtonRoute_Click" TabIndex="3" />
+        <Button x:Name="buttonConfig" Content="Edit&#xD;&#xA;Config" Grid.Column="1" Margin="5" Grid.Row="2" Background="{x:Null}" BorderBrush="#FFAAAAAA" Click="ButtonConfig_Click" TabIndex="4" />
+        <Label x:Name="labelStatus" Grid.Column="1" Margin="5,5,10,5" Grid.Row="4" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Background="{x:Null}" Grid.ColumnSpan="2" />
+        <Button x:Name="buttonLoopback" Content="Edit&#xD;&#xA;Loopback" Grid.Column="2" Margin="5,5,10,5" Grid.Row="2" Background="{x:Null}" BorderBrush="#FFAAAAAA" Click="ButtonLoopback_Click" TabIndex="4" />
 
     </Grid>
 </Window>

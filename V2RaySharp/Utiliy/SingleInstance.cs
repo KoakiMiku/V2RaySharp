@@ -3,15 +3,15 @@ using System.Diagnostics;
 using System.Linq;
 using System.Runtime.InteropServices;
 
-namespace V2RaySharp.Controller
+namespace V2RaySharp.Utiliy
 {
-    class SingleInstance
+    internal class SingleInstance
     {
         private static readonly string name = "V2RaySharp";
         private static Process process = Process.GetCurrentProcess();
         private static Process[] processes = Process.GetProcessesByName(name);
 
-        public static bool IsSingle()
+        internal static bool IsSingle()
         {
             try
             {
@@ -30,7 +30,7 @@ namespace V2RaySharp.Controller
             }
         }
 
-        public static void SetForeground()
+        internal static void SetForeground()
         {
             try
             {

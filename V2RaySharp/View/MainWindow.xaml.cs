@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
@@ -7,7 +6,7 @@ using System.Windows;
 using System.Windows.Input;
 using System.Windows.Media;
 using V2RaySharp.Controller;
-using V2RaySharp.Model;
+using V2RaySharp.Utiliy;
 
 namespace V2RaySharp.View
 {
@@ -15,30 +14,26 @@ namespace V2RaySharp.View
     {
         private static readonly string name = "V2RaySharp";
 
-        public MainWindow()
-        {
-            InitializeComponent();
-        }
+        internal MainWindow() => this.InitializeComponent();
 
         private void Window_Loaded(object sender, RoutedEventArgs e)
         {
             try
             {
-
-                buttonSwitch.Content = I18N.GetString("Status");
-                buttonRoute.Content = I18N.GetString("Status");
-                buttonNode.Content = I18N.GetString("ChangeNode");
-                buttonEdit.Content = I18N.GetString("EditConfig");
-                Node.CompleteEvent += Complete;
+                this.buttonSwitch.Content = I18N.GetString("Status");
+                this.buttonRoute.Content = I18N.GetString("Status");
+                this.buttonNode.Content = I18N.GetString("ChangeNode");
+                this.buttonConfig.Content = I18N.GetString("EditConfig");
+                this.buttonLoopback.Content = I18N.GetString("EditLoopback");
+                Node.CompleteEvent += this.Complete;
                 Configuration.Load();
                 Node.Upgrade();
-                UpgradeStatus(false);
-                Focus();
+                this.UpgradeStatus(false);
+                this.Focus();
             }
             catch (Exception ex)
             {
-                MessageBox.Show(ex.Message, name,
-                    MessageBoxButton.OK, MessageBoxImage.Error);
+                MessageBox.Show(ex.Message, name, MessageBoxButton.OK, MessageBoxImage.Error);
             }
         }
 
@@ -48,13 +43,12 @@ namespace V2RaySharp.View
             {
                 if (e.Key == Key.Escape)
                 {
-                    Close();
+                    this.Close();
                 }
             }
             catch (Exception ex)
             {
-                MessageBox.Show(ex.Message, name,
-                    MessageBoxButton.OK, MessageBoxImage.Error);
+                MessageBox.Show(ex.Message, name, MessageBoxButton.OK, MessageBoxImage.Error);
             }
         }
 
@@ -70,12 +64,11 @@ namespace V2RaySharp.View
                 {
                     Task.Run(() => V2Ray.Start());
                 }
-                Task.Run(() => UpgradeStatus(true));
+                Task.Run(() => this.UpgradeStatus(true));
             }
             catch (Exception ex)
             {
-                MessageBox.Show(ex.Message, name,
-                   MessageBoxButton.OK, MessageBoxImage.Error);
+                MessageBox.Show(ex.Message, name, MessageBoxButton.OK, MessageBoxImage.Error);
             }
         }
 
@@ -83,11 +76,11 @@ namespace V2RaySharp.View
         {
             try
             {
-                if (listBoxNode.SelectedItem != null)
+                if (this.listBoxNode.SelectedItem != null)
                 {
-                    string name = listBoxNode.SelectedItem.ToString();
+                    string name = this.listBoxNode.SelectedItem.ToString();
                     Task.Run(() => V2Ray.ChangeNode(name));
-                    Task.Run(() => UpgradeStatus(true));
+                    Task.Run(() => this.UpgradeStatus(true));
                 }
                 else
                 {
@@ -96,8 +89,7 @@ namespace V2RaySharp.View
             }
             catch (Exception ex)
             {
-                MessageBox.Show(ex.Message, name,
-                   MessageBoxButton.OK, MessageBoxImage.Error);
+                MessageBox.Show(ex.Message, name, MessageBoxButton.OK, MessageBoxImage.Error);
             }
         }
 
@@ -105,11 +97,11 @@ namespace V2RaySharp.View
         {
             try
             {
-                if (listBoxNode.SelectedItem != null)
+                if (this.listBoxNode.SelectedItem != null)
                 {
-                    string name = listBoxNode.SelectedItem.ToString();
+                    string name = this.listBoxNode.SelectedItem.ToString();
                     Task.Run(() => V2Ray.ChangeRoute(name));
-                    Task.Run(() => UpgradeStatus(true));
+                    Task.Run(() => this.UpgradeStatus(true));
                 }
                 else
                 {
@@ -118,12 +110,11 @@ namespace V2RaySharp.View
             }
             catch (Exception ex)
             {
-                MessageBox.Show(ex.Message, name,
-                   MessageBoxButton.OK, MessageBoxImage.Error);
+                MessageBox.Show(ex.Message, name, MessageBoxButton.OK, MessageBoxImage.Error);
             }
         }
 
-        private void ButtonEdit_Click(object sender, RoutedEventArgs e)
+        private void ButtonConfig_Click(object sender, RoutedEventArgs e)
         {
             try
             {
@@ -131,112 +122,116 @@ namespace V2RaySharp.View
             }
             catch (Exception ex)
             {
-                MessageBox.Show(ex.Message, name,
-                 MessageBoxButton.OK, MessageBoxImage.Error);
+                MessageBox.Show(ex.Message, name, MessageBoxButton.OK, MessageBoxImage.Error);
+            }
+        }
+
+        private void ButtonLoopback_Click(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                Task.Run(() => Loopback.Start());
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message, name, MessageBoxButton.OK, MessageBoxImage.Error);
             }
         }
 
         private void Complete(long tick)
         {
-            try
+            this.Dispatcher.Invoke(new Action(() =>
             {
-                Dispatcher.Invoke(new Action(() =>
+                if (tick == -2)
                 {
-                    if (tick == -2)
-                    {
-                        labelUpgrade.Content = I18N.GetString("NoSubscription");
-                    }
-                    else if (tick == -1)
-                    {
-                        labelUpgrade.Content = I18N.GetString("UpgradeNodeError");
-                    }
-                    else
-                    {
-                        DateTime dateTime = new DateTime(Configuration.Config.Upgrade);
-                        labelUpgrade.Content = $"{I18N.GetString("Upgrade")}: {dateTime.ToString("yyyy.MM.dd HH:mm:ss")}";
-                    }
-                    listBoxNode.Items.Clear();
-                    List<string> sses = Node.sses.Select(x => x.Name).OrderBy(y => y).ToList();
-                    List<string> vmesses = Node.vmesses.Select(x => x.Name).OrderBy(y => y).ToList();
-                    foreach (var item in sses)
-                    {
-                        listBoxNode.Items.Add(item);
-                    }
-                    foreach (var item in vmesses)
-                    {
-                        listBoxNode.Items.Add(item);
-                    }
-                    if (listBoxNode.Items.Count != 0)
-                    {
-                        listBoxNode.SelectedItem = V2Ray.SelectNode();
-                    }
-                }));
-            }
-            catch (Exception)
-            {
-                throw;
-            }
+                    this.labelUpgrade.Content = I18N.GetString("NoSubscription");
+                }
+                else if (tick == -1)
+                {
+                    this.labelUpgrade.Content = I18N.GetString("UpgradeNodeError");
+                }
+                else
+                {
+                    var dateTime = new DateTime(Configuration.Config.Upgrade);
+                    this.labelUpgrade.Content = $"{I18N.GetString("Upgrade")}: {dateTime.ToString("yyyy.MM.dd HH:mm:ss")}";
+                }
+                this.listBoxNode.Items.Clear();
+                var sses = Node.sses.Select(x => x.Name).OrderBy(y => y).ToList();
+                var vmesses = Node.vmesses.Select(x => x.Name).OrderBy(y => y).ToList();
+                foreach (string item in sses)
+                {
+                    this.listBoxNode.Items.Add(item);
+                }
+                foreach (string item in vmesses)
+                {
+                    this.listBoxNode.Items.Add(item);
+                }
+                if (this.listBoxNode.Items.Count != 0)
+                {
+                    this.listBoxNode.SelectedItem = V2Ray.SelectNode();
+                }
+            }));
         }
 
         private void UpgradeStatus(bool isWait)
         {
             try
             {
-                Dispatcher.Invoke(new Action(() =>
+                this.Dispatcher.Invoke(new Action(() =>
                 {
-                    buttonSwitch.IsEnabled = false;
-                    buttonRoute.IsEnabled = false;
-                    buttonNode.IsEnabled = false;
-                    labelStatus.Content = $"{I18N.GetString("Waiting")}";
-                    labelStatus.Foreground = Brushes.Black;
+                    this.buttonSwitch.IsEnabled = false;
+                    this.buttonRoute.IsEnabled = false;
+                    this.buttonNode.IsEnabled = false;
+                    this.labelStatus.Content = $"{I18N.GetString("Waiting")}";
+                    this.labelStatus.Foreground = Brushes.Black;
                 }));
                 if (isWait)
                 {
                     Thread.Sleep(2000);
                 }
-                Dispatcher.Invoke(new Action(() =>
+                this.Dispatcher.Invoke(new Action(() =>
                 {
                     bool isRunning = V2Ray.IsRunning();
                     bool isUsingRoute = V2Ray.IsUsingRoute();
                     if (isRunning && isUsingRoute)
                     {
-                        buttonSwitch.Content = I18N.GetString("Stop");
-                        buttonSwitch.Foreground = Brushes.Red;
-                        buttonRoute.Content = I18N.GetString("Global");
-                        buttonRoute.Foreground = Brushes.Blue;
-                        labelStatus.Content = $"{I18N.GetString("RunningStatus")}: {I18N.GetString("Route")}";
-                        labelStatus.Foreground = Brushes.Green;
+                        this.buttonSwitch.Content = I18N.GetString("Stop");
+                        this.buttonSwitch.Foreground = Brushes.Red;
+                        this.buttonRoute.Content = I18N.GetString("Global");
+                        this.buttonRoute.Foreground = Brushes.Blue;
+                        this.labelStatus.Content = $"{I18N.GetString("RunningStatus")}: {I18N.GetString("Route")}";
+                        this.labelStatus.Foreground = Brushes.Green;
                     }
                     else if (isRunning && !isUsingRoute)
                     {
-                        buttonSwitch.Content = I18N.GetString("Stop");
-                        buttonSwitch.Foreground = Brushes.Red;
-                        buttonRoute.Content = I18N.GetString("Route");
-                        buttonRoute.Foreground = Brushes.Green;
-                        labelStatus.Content = $"{I18N.GetString("RunningStatus")}: {I18N.GetString("Global")}";
-                        labelStatus.Foreground = Brushes.Blue;
+                        this.buttonSwitch.Content = I18N.GetString("Stop");
+                        this.buttonSwitch.Foreground = Brushes.Red;
+                        this.buttonRoute.Content = I18N.GetString("Route");
+                        this.buttonRoute.Foreground = Brushes.Green;
+                        this.labelStatus.Content = $"{I18N.GetString("RunningStatus")}: {I18N.GetString("Global")}";
+                        this.labelStatus.Foreground = Brushes.Blue;
                     }
                     else if (!isRunning && isUsingRoute)
                     {
-                        buttonSwitch.Content = I18N.GetString("Start");
-                        buttonSwitch.Foreground = Brushes.Green;
-                        buttonRoute.Content = I18N.GetString("Global");
-                        buttonRoute.Foreground = Brushes.Blue;
-                        labelStatus.Content = $"{I18N.GetString("RunningStatus")}: {I18N.GetString("Stoped")}";
-                        labelStatus.Foreground = Brushes.Red;
+                        this.buttonSwitch.Content = I18N.GetString("Start");
+                        this.buttonSwitch.Foreground = Brushes.Green;
+                        this.buttonRoute.Content = I18N.GetString("Global");
+                        this.buttonRoute.Foreground = Brushes.Blue;
+                        this.labelStatus.Content = $"{I18N.GetString("RunningStatus")}: {I18N.GetString("Stoped")}";
+                        this.labelStatus.Foreground = Brushes.Red;
                     }
                     else
                     {
-                        buttonSwitch.Content = I18N.GetString("Start");
-                        buttonSwitch.Foreground = Brushes.Green;
-                        buttonRoute.Content = I18N.GetString("Route");
-                        buttonRoute.Foreground = Brushes.Green;
-                        labelStatus.Content = $"{I18N.GetString("RunningStatus")}: {I18N.GetString("Stoped")}";
-                        labelStatus.Foreground = Brushes.Red;
+                        this.buttonSwitch.Content = I18N.GetString("Start");
+                        this.buttonSwitch.Foreground = Brushes.Green;
+                        this.buttonRoute.Content = I18N.GetString("Route");
+                        this.buttonRoute.Foreground = Brushes.Green;
+                        this.labelStatus.Content = $"{I18N.GetString("RunningStatus")}: {I18N.GetString("Stoped")}";
+                        this.labelStatus.Foreground = Brushes.Red;
                     }
-                    buttonSwitch.IsEnabled = true;
-                    buttonRoute.IsEnabled = true;
-                    buttonNode.IsEnabled = true;
+                    this.buttonSwitch.IsEnabled = true;
+                    this.buttonRoute.IsEnabled = true;
+                    this.buttonNode.IsEnabled = true;
                 }));
             }
             catch (Exception)

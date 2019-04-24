@@ -1,16 +1,16 @@
 ﻿using System;
 using System.IO;
 
-namespace V2RaySharp.Controller
+namespace V2RaySharp.Utiliy
 {
-    class Check
+    internal class Check
     {
         private static readonly string path = AppContext.BaseDirectory;
         private static readonly string v2ctl = Path.Combine(path, "v2ctl.exe");
         private static readonly string v2ray = Path.Combine(path, "v2ray.exe");
         private static readonly string wv2ray = Path.Combine(path, "wv2ray.exe");
 
-        public static bool IsTrueDirectory()
+        internal static bool IsTrueDirectory()
         {
             try
             {

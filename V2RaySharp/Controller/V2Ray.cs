@@ -4,13 +4,14 @@ using System;
 using System.Diagnostics;
 using System.IO;
 using System.Text;
-using System.Threading;
+using System.Threading.Tasks;
 using V2RaySharp.Model;
 using V2RaySharp.Properties;
+using V2RaySharp.Utiliy;
 
 namespace V2RaySharp.Controller
 {
-    class V2Ray
+    internal class V2Ray
     {
         private static readonly string path = AppContext.BaseDirectory;
         private static readonly string program = Path.Combine(path, "wv2ray.exe");
@@ -20,138 +21,87 @@ namespace V2RaySharp.Controller
         private static readonly string jsonGlobal = Encoding.UTF8.GetString(Resources.Global);
         private static readonly string jsonRoute = Encoding.UTF8.GetString(Resources.Route);
 
-        public static void Start()
+        internal static void Start()
         {
-            try
-            {
-                Process process = new Process();
-                process.StartInfo.FileName = program;
-                process.Start();
-                SystemProxy.Enable();
-            }
-            catch (Exception)
-            {
-                throw;
-            }
+            var process = new Process();
+            process.StartInfo.FileName = program;
+            process.Start();
+            SystemProxy.Enable();
         }
 
-        public static void Stop()
+        internal static void Stop()
         {
-            try
+            SystemProxy.Disable();
+            var processes = Process.GetProcessesByName("wv2ray");
+            foreach (var item in processes)
             {
-                SystemProxy.Disable();
-                Process[] processes = Process.GetProcessesByName("wv2ray");
-                foreach (var item in processes)
-                {
-                    item.Kill();
-                }
-            }
-            catch (Exception)
-            {
-                throw;
+                item.Kill();
             }
         }
 
         private static void Restart()
         {
-            try
-            {
-                Stop();
-                Thread.Sleep(1000);
-                Start();
-            }
-            catch (Exception)
-            {
-                throw;
-            }
+            Stop();
+            Task.Delay(TimeSpan.FromSeconds(1)).Wait();
+            Start();
         }
 
-        public static bool IsRunning()
+        internal static bool IsRunning()
         {
-            try
-            {
-                Process[] processes = Process.GetProcessesByName("wv2ray");
-                if (processes.Length == 0)
-                {
-                    return false;
-                }
-                else
-                {
-                    return true;
-                }
-            }
-            catch (Exception)
-            {
-                throw;
-            }
+            var processes = Process.GetProcessesByName("wv2ray");
+            return processes.Length != 0;
         }
 
-        public static void ChangeNode(string name)
+        internal static void ChangeNode(string name)
         {
-            try
+            CheckConfig();
+            object node = Node.GetNode(name);
+            if (node is ShadowSocks ss)
             {
-                CheckConfig();
-                object node = Node.GetNode(name);
-                if (node is ShadowSocks ss)
-                {
-                    ChangeSS(ss);
-                }
-                else if (node is Vmess vmess)
-                {
-                    ChangeVmess(vmess);
-                }
-                Restart();
+                ChangeSS(ss);
             }
-            catch (Exception)
+            else if (node is Vmess vmess)
             {
-                throw;
+                ChangeVmess(vmess);
             }
+            Restart();
         }
 
         private static void ChangeSS(ShadowSocks ss)
         {
-            try
+            var jObject = ReadConfig();
+            var jArray = jObject["outbounds"].ToObject<JArray>();
+            foreach (var item in jArray)
             {
-                JObject jObject = ReadConfig();
-                JArray jArray = jObject["outbounds"].ToObject<JArray>();
-                foreach (var item in jArray)
+                if (item["tag"].ToString() == "proxy")
                 {
-                    if (item["tag"].ToString() == "proxy")
-                    {
-                        item["protocol"] = "shadowsocks";
-                        JArray servers = new JArray() { new JObject()
+                    item["protocol"] = "shadowsocks";
+                    var servers = new JArray() { new JObject()
                         {
                             { "address", ss.Address },
                             { "port", ss.Port },
                             { "password", ss.Password },
                             { "method", ss.Method }
                         }};
-                        item["settings"]["servers"] = servers;
-                        item["settings"]["vnext"] = null;
-                    }
-                    break;
+                    item["settings"]["servers"] = servers;
+                    item["settings"]["vnext"] = null;
                 }
-                jObject["outbounds"] = jArray;
-                WriteConfig(jObject);
+                break;
             }
-            catch (Exception)
-            {
-                throw;
-            }
+            jObject["outbounds"] = jArray;
+            WriteConfig(jObject);
         }
 
         private static void ChangeVmess(Vmess vmess)
         {
-            try
+            var jObject = ReadConfig();
+            var jArray = jObject["outbounds"].ToObject<JArray>();
+            foreach (var item in jArray)
             {
-                JObject jObject = ReadConfig();
-                JArray jArray = jObject["outbounds"].ToObject<JArray>();
-                foreach (var item in jArray)
+                if (item["tag"].ToString() == "proxy")
                 {
-                    if (item["tag"].ToString() == "proxy")
-                    {
-                        item["protocol"] = "vmess";
-                        JArray vnext = new JArray() { new JObject()
+                    item["protocol"] = "vmess";
+                    var vnext = new JArray() { new JObject()
                         {
                             { "address", vmess.Address },
                             { "port", vmess.Port },
@@ -162,162 +112,101 @@ namespace V2RaySharp.Controller
                                 }}
                             },
                         }};
-                        item["settings"]["vnext"] = vnext;
-                        item["settings"]["servers"] = null;
-                    }
-                    break;
+                    item["settings"]["vnext"] = vnext;
+                    item["settings"]["servers"] = null;
                 }
-                jObject["outbounds"] = jArray;
-                WriteConfig(jObject);
+                break;
             }
-            catch (Exception)
-            {
-                throw;
-            }
+            jObject["outbounds"] = jArray;
+            WriteConfig(jObject);
         }
 
-        public static void ChangeRoute(string name)
+        internal static void ChangeRoute(string name)
         {
-            try
+            CheckConfig();
+            if (IsUsingRoute())
             {
-                CheckConfig();
-                if (IsUsingRoute())
-                {
-                    File.Copy(config, configRoute, true);
-                    File.Copy(configGlobal, config, true);
-                }
-                else
-                {
-                    File.Copy(config, configGlobal, true);
-                    File.Copy(configRoute, config, true);
-                }
-                ChangeNode(name);
+                File.Copy(config, configRoute, true);
+                File.Copy(configGlobal, config, true);
             }
-            catch (Exception)
+            else
             {
-                throw;
+                File.Copy(config, configGlobal, true);
+                File.Copy(configRoute, config, true);
             }
+            ChangeNode(name);
         }
 
-        public static bool IsUsingRoute()
+        internal static bool IsUsingRoute()
         {
-            try
-            {
-                CheckConfig();
-                JObject jObject = ReadConfig();
-                JToken jToken = jObject["routing"];
-                if (jToken != null)
-                {
-                    return true;
-                }
-                else
-                {
-                    return false;
-                }
-            }
-            catch (Exception)
-            {
-                throw;
-            }
+            CheckConfig();
+            var jObject = ReadConfig();
+            var jToken = jObject["routing"];
+            return jToken != null;
         }
 
-        public static string SelectNode()
+        internal static string SelectNode()
         {
-            try
+            string name = null;
+            CheckConfig();
+            var jObject = ReadConfig();
+            var jArray = jObject["outbounds"].ToObject<JArray>();
+            foreach (var item in jArray)
             {
-                string name = null;
-                CheckConfig();
-                JObject jObject = ReadConfig();
-                JArray jArray = jObject["outbounds"].ToObject<JArray>();
-                foreach (var item in jArray)
+                if (item["tag"].ToString() == "proxy")
                 {
-                    if (item["tag"].ToString() == "proxy")
+                    string protocol = item["protocol"].ToString();
+                    string address = string.Empty;
+                    if (protocol == "shadowsocks")
                     {
-                        string protocol = item["protocol"].ToString();
-                        string address = string.Empty;
-                        if (protocol == "shadowsocks")
-                        {
-                            address = item["settings"]["servers"][0]["address"].ToString();
-                        }
-                        else if (protocol == "vmess")
-                        {
-                            address = item["settings"]["vnext"][0]["address"].ToString();
-                        }
-                        name = Node.GetName(address);
+                        address = item["settings"]["servers"][0]["address"].ToString();
                     }
-                    break;
+                    else if (protocol == "vmess")
+                    {
+                        address = item["settings"]["vnext"][0]["address"].ToString();
+                    }
+                    name = Node.GetName(address);
                 }
-                return name;
+                break;
             }
-            catch (Exception)
-            {
-                throw;
-            }
+            return name;
         }
 
-        public static void EditConfig()
+        internal static void EditConfig()
         {
-            try
-            {
-                CheckConfig();
-                Process process = new Process();
-                process.StartInfo.FileName = config;
-                process.Start();
-            }
-            catch (Exception)
-            {
-                throw;
-            }
+            CheckConfig();
+            var process = new Process();
+            process.StartInfo.FileName = config;
+            process.Start();
         }
 
         private static void CheckConfig()
         {
-            try
+            if (!File.Exists(config))
             {
-                if (!File.Exists(config))
-                {
-                    File.WriteAllText(config, jsonRoute);
-                }
-                if (!File.Exists(configGlobal))
-                {
-                    File.WriteAllText(configGlobal, jsonGlobal);
-                }
-                if (!File.Exists(configRoute))
-                {
-                    File.WriteAllText(configRoute, jsonRoute);
-                }
+                File.WriteAllText(config, jsonRoute);
             }
-            catch (Exception)
+            if (!File.Exists(configGlobal))
             {
-                throw;
+                File.WriteAllText(configGlobal, jsonGlobal);
+            }
+            if (!File.Exists(configRoute))
+            {
+                File.WriteAllText(configRoute, jsonRoute);
             }
         }
 
         private static JObject ReadConfig()
         {
-            try
-            {
-                string json = File.ReadAllText(config);
-                JObject jObject = JsonConvert.DeserializeObject<JObject>(json);
-                return jObject;
-            }
-            catch (Exception)
-            {
-                throw;
-            }
+            string json = File.ReadAllText(config);
+            var jObject = JsonConvert.DeserializeObject<JObject>(json);
+            return jObject;
         }
 
         private static void WriteConfig(JObject jObject)
         {
-            try
-            {
-                string json = JsonConvert.SerializeObject(jObject, Formatting.Indented);
-                File.WriteAllText(config, json);
-            }
-            catch (Exception)
-            {
-                throw;
-            }
+            string json = JsonConvert.SerializeObject(jObject, Formatting.Indented);
+            File.WriteAllText(config, json);
         }
     }
 }

@@ -17,6 +17,11 @@
             }
         },
         {
+            "tag": "blocked",
+            "protocol": "blackhole",
+            "settings": {}
+        },
+        {
             "tag": "direct",
             "protocol": "freedom",
             "settings": {}
@@ -28,11 +33,19 @@
             "domainStrategy": "IPOnDemand",
             "rules": [
                 {
+                    "outboundTag": "blocked",
+                    "type": "field",
+                    "domain": [
+                        "geosite:category-ads"
+                    ]
+                },
+                {
                     "outboundTag": "direct",
                     "type": "field",
                     "domain": [
                         "geosite:speedtest",
-                        "geosite:cn"
+                        "geosite:cn",
+                        "msftconnecttest"
                     ]
                 },
                 {
@@ -45,5 +58,8 @@
                 }
             ]
         }
+    },
+    "log": {
+        "loglevel": "debug"
     }
 }

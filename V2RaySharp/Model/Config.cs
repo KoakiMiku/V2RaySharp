@@ -1,6 +1,6 @@
 ﻿namespace V2RaySharp.Model
 {
-    class Config
+    internal class Config
     {
         public string Subscription { get; set; }
         public string Raw { get; set; }

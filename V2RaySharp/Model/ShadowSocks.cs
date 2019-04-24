@@ -1,11 +1,11 @@
 ﻿namespace V2RaySharp.Model
 {
-    class ShadowSocks
+    internal class ShadowSocks
     {
-        public string Name { get; set; }
-        public string Address { get; set; }
-        public int Port { get; set; }
-        public string Password { get; set; }
-        public string Method { get; set; }
+        internal string Name { get; set; }
+        internal string Address { get; set; }
+        internal int Port { get; set; }
+        internal string Password { get; set; }
+        internal string Method { get; set; }
     }
 }

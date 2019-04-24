@@ -1,11 +1,11 @@
 ﻿namespace V2RaySharp.Model
 {
-    class Vmess
+    internal class Vmess
     {
-        public string Name { get; set; }
-        public string Address { get; set; }
-        public int Port { get; set; }
-        public string ID { get; set; }
-        public int AlterID { get; set; }
+        internal string Name { get; set; }
+        internal string Address { get; set; }
+        internal int Port { get; set; }
+        internal string ID { get; set; }
+        internal int AlterID { get; set; }
     }
 }

@@ -4,22 +4,22 @@ using System.Diagnostics;
 
 namespace V2RaySharp.Regedit
 {
-    class DesktopMenu
+    internal class DesktopMenu
     {
         private static readonly string path = Process.GetCurrentProcess().MainModule.FileName;
         private static readonly string desktopPath = @"DesktopBackground\Shell\V2RaySharp";
         private static readonly string commandPath = @"DesktopBackground\Shell\V2RaySharp\command";
 
-        public static void Add()
+        internal static void Add()
         {
             try
             {
-                RegistryKey desktop = Registry.ClassesRoot.CreateSubKey(desktopPath);
+                var desktop = Registry.ClassesRoot.CreateSubKey(desktopPath);
                 desktop.SetValue("", "V2RaySharp(&Z)");
                 desktop.SetValue("Icon", path);
                 desktop.SetValue("Position", "Bottom");
                 desktop.Close();
-                RegistryKey command = Registry.ClassesRoot.CreateSubKey(commandPath);
+                var command = Registry.ClassesRoot.CreateSubKey(commandPath);
                 command.SetValue("", $"{path} -config");
                 command.Close();
             }
@@ -29,11 +29,11 @@ namespace V2RaySharp.Regedit
             }
         }
 
-        public static void Remove()
+        internal static void Remove()
         {
             try
             {
-                RegistryKey desktop = Registry.ClassesRoot;
+                var desktop = Registry.ClassesRoot;
                 desktop.DeleteSubKeyTree(desktopPath, false);
                 desktop.Close();
             }

@@ -2,9 +2,9 @@
 using System.Collections.Generic;
 using System.Globalization;
 
-namespace V2RaySharp.Controller
+namespace V2RaySharp.Utiliy
 {
-    class I18N
+    internal class I18N
     {
         private static readonly Dictionary<string, string> Chinese = new Dictionary<string, string>()
         {
@@ -13,6 +13,7 @@ namespace V2RaySharp.Controller
             {"Status", "状态"},
             {"ChangeNode", "切换节点"},
             {"EditConfig", "编辑配置"},
+            {"EditLoopback", "编辑回环"},
             {"Start", "启动"},
             {"Stop", "停止"},
             {"UpgradeNodeError", "节点更新失败！"},
@@ -33,6 +34,7 @@ namespace V2RaySharp.Controller
             {"Status", "Status"},
             {"ChangeNode", "Change Node"},
             {"EditConfig", "Edit Config"},
+            {"EditLoopback", "Edit Loopback"},
             {"Start", "Start"},
             {"Stop", "Stop"},
             {"UpgradeNodeError", "Upgrade node failure!"},
@@ -46,7 +48,7 @@ namespace V2RaySharp.Controller
             {"Waiting", "Please wait..."},
         };
 
-        public static string GetString(string value)
+        internal static string GetString(string value)
         {
             try
             {
