@@ -22,7 +22,7 @@ namespace V2RaySharp
                     return;
                 }
 
-                bool isTrueDirectory = Check.IsTrueDirectory();
+                bool isTrueDirectory = DirectoryCheck.IsTrueDirectory();
                 if (!isTrueDirectory)
                 {
                     throw new Exception(I18N.GetString("FileNotFound"));
@@ -71,8 +71,7 @@ namespace V2RaySharp
             }
             catch (Exception ex)
             {
-                MessageBox.Show(ex.Message, name,
-                    MessageBoxButton.OK, MessageBoxImage.Error);
+                MessageBox.Show(ex.Message, name, MessageBoxButton.OK, MessageBoxImage.Error);
             }
             finally
             {

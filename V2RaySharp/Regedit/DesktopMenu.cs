@@ -1,5 +1,4 @@
 using Microsoft.Win32;
-using System;
 using System.Diagnostics;
 
 namespace V2RaySharp.Regedit
@@ -12,35 +11,21 @@ namespace V2RaySharp.Regedit
 
         internal static void Add()
         {
-            try
-            {
-                var desktop = Registry.ClassesRoot.CreateSubKey(desktopPath);
-                desktop.SetValue("", "V2RaySharp(&Z)");
-                desktop.SetValue("Icon", path);
-                desktop.SetValue("Position", "Bottom");
-                desktop.Close();
-                var command = Registry.ClassesRoot.CreateSubKey(commandPath);
-                command.SetValue("", $"{path} -config");
-                command.Close();
-            }
-            catch (Exception)
-            {
-                throw;
-            }
+            var desktop = Registry.ClassesRoot.CreateSubKey(desktopPath);
+            desktop.SetValue("", "V2RaySharp(&Z)");
+            desktop.SetValue("Icon", path);
+            desktop.SetValue("Position", "Bottom");
+            desktop.Close();
+            var command = Registry.ClassesRoot.CreateSubKey(commandPath);
+            command.SetValue("", $"{path} -config");
+            command.Close();
         }
 
         internal static void Remove()
         {
-            try
-            {
-                var desktop = Registry.ClassesRoot;
-                desktop.DeleteSubKeyTree(desktopPath, false);
-                desktop.Close();
-            }
-            catch (Exception)
-            {
-                throw;
-            }
+            var desktop = Registry.ClassesRoot;
+            desktop.DeleteSubKeyTree(desktopPath, false);
+            desktop.Close();
         }
     }
 }

@@ -29,7 +29,7 @@ namespace V2RaySharp.View
                 Configuration.Load();
                 Node.Upgrade();
                 this.UpgradeStatus(false);
-                this.Focus();
+                this.listBoxNode.Focus();
             }
             catch (Exception ex)
             {
@@ -169,75 +169,69 @@ namespace V2RaySharp.View
                 if (this.listBoxNode.Items.Count != 0)
                 {
                     this.listBoxNode.SelectedItem = V2Ray.SelectNode();
+                    this.listBoxNode.Focus();
                 }
             }));
         }
 
         private void UpgradeStatus(bool isWait)
         {
-            try
+            this.Dispatcher.Invoke(new Action(() =>
             {
-                this.Dispatcher.Invoke(new Action(() =>
+                this.buttonSwitch.IsEnabled = false;
+                this.buttonRoute.IsEnabled = false;
+                this.buttonNode.IsEnabled = false;
+                this.labelStatus.Content = $"{I18N.GetString("Waiting")}";
+                this.labelStatus.Foreground = Brushes.Black;
+            }));
+            if (isWait)
+            {
+                Thread.Sleep(2000);
+            }
+            this.Dispatcher.Invoke(new Action(() =>
+            {
+                bool isRunning = V2Ray.IsRunning();
+                bool isUsingRoute = V2Ray.IsUsingRoute();
+                if (isRunning && isUsingRoute)
                 {
-                    this.buttonSwitch.IsEnabled = false;
-                    this.buttonRoute.IsEnabled = false;
-                    this.buttonNode.IsEnabled = false;
-                    this.labelStatus.Content = $"{I18N.GetString("Waiting")}";
-                    this.labelStatus.Foreground = Brushes.Black;
-                }));
-                if (isWait)
-                {
-                    Thread.Sleep(2000);
+                    this.buttonSwitch.Content = I18N.GetString("Stop");
+                    this.buttonSwitch.Foreground = Brushes.Red;
+                    this.buttonRoute.Content = I18N.GetString("Global");
+                    this.buttonRoute.Foreground = Brushes.Blue;
+                    this.labelStatus.Content = $"{I18N.GetString("RunningStatus")}: {I18N.GetString("Route")}";
+                    this.labelStatus.Foreground = Brushes.Green;
                 }
-                this.Dispatcher.Invoke(new Action(() =>
+                else if (isRunning && !isUsingRoute)
                 {
-                    bool isRunning = V2Ray.IsRunning();
-                    bool isUsingRoute = V2Ray.IsUsingRoute();
-                    if (isRunning && isUsingRoute)
-                    {
-                        this.buttonSwitch.Content = I18N.GetString("Stop");
-                        this.buttonSwitch.Foreground = Brushes.Red;
-                        this.buttonRoute.Content = I18N.GetString("Global");
-                        this.buttonRoute.Foreground = Brushes.Blue;
-                        this.labelStatus.Content = $"{I18N.GetString("RunningStatus")}: {I18N.GetString("Route")}";
-                        this.labelStatus.Foreground = Brushes.Green;
-                    }
-                    else if (isRunning && !isUsingRoute)
-                    {
-                        this.buttonSwitch.Content = I18N.GetString("Stop");
-                        this.buttonSwitch.Foreground = Brushes.Red;
-                        this.buttonRoute.Content = I18N.GetString("Route");
-                        this.buttonRoute.Foreground = Brushes.Green;
-                        this.labelStatus.Content = $"{I18N.GetString("RunningStatus")}: {I18N.GetString("Global")}";
-                        this.labelStatus.Foreground = Brushes.Blue;
-                    }
-                    else if (!isRunning && isUsingRoute)
-                    {
-                        this.buttonSwitch.Content = I18N.GetString("Start");
-                        this.buttonSwitch.Foreground = Brushes.Green;
-                        this.buttonRoute.Content = I18N.GetString("Global");
-                        this.buttonRoute.Foreground = Brushes.Blue;
-                        this.labelStatus.Content = $"{I18N.GetString("RunningStatus")}: {I18N.GetString("Stoped")}";
-                        this.labelStatus.Foreground = Brushes.Red;
-                    }
-                    else
-                    {
-                        this.buttonSwitch.Content = I18N.GetString("Start");
-                        this.buttonSwitch.Foreground = Brushes.Green;
-                        this.buttonRoute.Content = I18N.GetString("Route");
-                        this.buttonRoute.Foreground = Brushes.Green;
-                        this.labelStatus.Content = $"{I18N.GetString("RunningStatus")}: {I18N.GetString("Stoped")}";
-                        this.labelStatus.Foreground = Brushes.Red;
-                    }
-                    this.buttonSwitch.IsEnabled = true;
-                    this.buttonRoute.IsEnabled = true;
-                    this.buttonNode.IsEnabled = true;
-                }));
-            }
-            catch (Exception)
-            {
-                throw;
-            }
+                    this.buttonSwitch.Content = I18N.GetString("Stop");
+                    this.buttonSwitch.Foreground = Brushes.Red;
+                    this.buttonRoute.Content = I18N.GetString("Route");
+                    this.buttonRoute.Foreground = Brushes.Green;
+                    this.labelStatus.Content = $"{I18N.GetString("RunningStatus")}: {I18N.GetString("Global")}";
+                    this.labelStatus.Foreground = Brushes.Blue;
+                }
+                else if (!isRunning && isUsingRoute)
+                {
+                    this.buttonSwitch.Content = I18N.GetString("Start");
+                    this.buttonSwitch.Foreground = Brushes.Green;
+                    this.buttonRoute.Content = I18N.GetString("Global");
+                    this.buttonRoute.Foreground = Brushes.Blue;
+                    this.labelStatus.Content = $"{I18N.GetString("RunningStatus")}: {I18N.GetString("Stoped")}";
+                    this.labelStatus.Foreground = Brushes.Red;
+                }
+                else
+                {
+                    this.buttonSwitch.Content = I18N.GetString("Start");
+                    this.buttonSwitch.Foreground = Brushes.Green;
+                    this.buttonRoute.Content = I18N.GetString("Route");
+                    this.buttonRoute.Foreground = Brushes.Green;
+                    this.labelStatus.Content = $"{I18N.GetString("RunningStatus")}: {I18N.GetString("Stoped")}";
+                    this.labelStatus.Foreground = Brushes.Red;
+                }
+                this.buttonSwitch.IsEnabled = true;
+                this.buttonRoute.IsEnabled = true;
+                this.buttonNode.IsEnabled = true;
+            }));
         }
     }
 }

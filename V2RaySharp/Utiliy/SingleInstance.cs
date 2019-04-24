@@ -13,39 +13,25 @@ namespace V2RaySharp.Utiliy
 
         internal static bool IsSingle()
         {
-            try
+            if (processes.Count() == 1)
             {
-                if (processes.Count() == 1)
-                {
-                    return true;
-                }
-                else
-                {
-                    return false;
-                }
+                return true;
             }
-            catch (Exception)
+            else
             {
-                throw;
+                return false;
             }
         }
 
         internal static void SetForeground()
         {
-            try
+            foreach (var item in processes)
             {
-                foreach (var item in processes)
+                if (item.Id != process.Id)
                 {
-                    if (item.Id != process.Id)
-                    {
-                        SetForegroundWindow(item.MainWindowHandle);
-                        return;
-                    }
+                    SetForegroundWindow(item.MainWindowHandle);
+                    return;
                 }
-            }
-            catch (Exception)
-            {
-                throw;
             }
         }
 

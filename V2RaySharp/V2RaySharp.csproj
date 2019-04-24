@@ -73,7 +73,7 @@
     </Page>
     <Compile Include="Utiliy\Administrator.cs" />
     <Compile Include="Utiliy\Base64.cs" />
-    <Compile Include="Utiliy\Check.cs" />
+    <Compile Include="Utiliy\DirectoryCheck.cs" />
     <Compile Include="Controller\Configuration.cs" />
     <Compile Include="Utiliy\I18N.cs" />
     <Compile Include="Controller\Node.cs" />
