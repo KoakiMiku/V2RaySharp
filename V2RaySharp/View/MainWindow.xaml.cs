@@ -114,6 +114,27 @@ namespace V2RaySharp.View
             }
         }
 
+        private void ButtonListen_Click(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                if (this.listBoxNode.SelectedItem != null)
+                {
+                    string name = this.listBoxNode.SelectedItem.ToString();
+                    Task.Run(() => V2Ray.ChangeListen(name));
+                    Task.Run(() => this.UpgradeStatus(true));
+                }
+                else
+                {
+                    throw new Exception(I18N.GetString("NodeNotSelect"));
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message, name, MessageBoxButton.OK, MessageBoxImage.Error);
+            }
+        }
+
         private void ButtonConfig_Click(object sender, RoutedEventArgs e)
         {
             try
@@ -181,6 +202,7 @@ namespace V2RaySharp.View
                 this.buttonSwitch.IsEnabled = false;
                 this.buttonRoute.IsEnabled = false;
                 this.buttonNode.IsEnabled = false;
+                this.buttonListen.IsEnabled = false;
                 this.labelStatus.Content = $"{I18N.GetString("Waiting")}";
                 this.labelStatus.Foreground = Brushes.Black;
             }));
@@ -192,45 +214,69 @@ namespace V2RaySharp.View
             {
                 bool isRunning = V2Ray.IsRunning();
                 bool isUsingRoute = V2Ray.IsUsingRoute();
-                if (isRunning && isUsingRoute)
+                bool isListenHostOnly = V2Ray.IsListenHostOnly();
+                if (isRunning)
                 {
                     this.buttonSwitch.Content = I18N.GetString("Stop");
                     this.buttonSwitch.Foreground = Brushes.Red;
-                    this.buttonRoute.Content = I18N.GetString("Global");
-                    this.buttonRoute.Foreground = Brushes.Blue;
-                    this.labelStatus.Content = $"{I18N.GetString("RunningStatus")}: {I18N.GetString("Route")}";
-                    this.labelStatus.Foreground = Brushes.Green;
-                }
-                else if (isRunning && !isUsingRoute)
-                {
-                    this.buttonSwitch.Content = I18N.GetString("Stop");
-                    this.buttonSwitch.Foreground = Brushes.Red;
-                    this.buttonRoute.Content = I18N.GetString("Route");
-                    this.buttonRoute.Foreground = Brushes.Green;
-                    this.labelStatus.Content = $"{I18N.GetString("RunningStatus")}: {I18N.GetString("Global")}";
-                    this.labelStatus.Foreground = Brushes.Blue;
-                }
-                else if (!isRunning && isUsingRoute)
-                {
-                    this.buttonSwitch.Content = I18N.GetString("Start");
-                    this.buttonSwitch.Foreground = Brushes.Green;
-                    this.buttonRoute.Content = I18N.GetString("Global");
-                    this.buttonRoute.Foreground = Brushes.Blue;
-                    this.labelStatus.Content = $"{I18N.GetString("RunningStatus")}: {I18N.GetString("Stoped")}";
-                    this.labelStatus.Foreground = Brushes.Red;
                 }
                 else
                 {
                     this.buttonSwitch.Content = I18N.GetString("Start");
                     this.buttonSwitch.Foreground = Brushes.Green;
+                }
+                if (isUsingRoute)
+                {
+                    this.buttonRoute.Content = I18N.GetString("Global");
+                    this.buttonRoute.Foreground = Brushes.Blue;
+                }
+                else
+                {
                     this.buttonRoute.Content = I18N.GetString("Route");
                     this.buttonRoute.Foreground = Brushes.Green;
+                }
+                if (isListenHostOnly)
+                {
+                    this.buttonListen.Content = I18N.GetString("AllowAny");
+                    this.buttonListen.Foreground = Brushes.Orange;
+                }
+                else
+                {
+                    this.buttonListen.Content = I18N.GetString("HostOnly");
+                    this.buttonListen.Foreground = Brushes.DarkCyan;
+                }
+                if (isRunning)
+                {
+                    if (isUsingRoute && isListenHostOnly)
+                    {
+                        this.labelStatus.Content = $"{I18N.GetString("RunningStatus")}: {I18N.GetString("Route")}, {I18N.GetString("HostOnly")}";
+                        this.labelStatus.Foreground = Brushes.Green;
+                    }
+                    else if (isUsingRoute && !isListenHostOnly)
+                    {
+                        this.labelStatus.Content = $"{I18N.GetString("RunningStatus")}: {I18N.GetString("Route")}, {I18N.GetString("AllowAny")}";
+                        this.labelStatus.Foreground = Brushes.Green;
+                    }
+                    else if (!isUsingRoute && isListenHostOnly)
+                    {
+                        this.labelStatus.Content = $"{I18N.GetString("RunningStatus")}: {I18N.GetString("Global")}, {I18N.GetString("HostOnly")}";
+                        this.labelStatus.Foreground = Brushes.Blue;
+                    }
+                    else
+                    {
+                        this.labelStatus.Content = $"{I18N.GetString("RunningStatus")}: {I18N.GetString("Global")}, {I18N.GetString("AllowAny")}";
+                        this.labelStatus.Foreground = Brushes.Blue;
+                    }
+                }
+                else
+                {
                     this.labelStatus.Content = $"{I18N.GetString("RunningStatus")}: {I18N.GetString("Stoped")}";
                     this.labelStatus.Foreground = Brushes.Red;
                 }
                 this.buttonSwitch.IsEnabled = true;
                 this.buttonRoute.IsEnabled = true;
                 this.buttonNode.IsEnabled = true;
+                this.buttonListen.IsEnabled = true;
             }));
         }
     }

@@ -22,9 +22,11 @@ namespace V2RaySharp.Utiliy
             {"Route", "路由"},
             {"Global", "全局"},
             {"Stoped", "停止"},
-            {"RunningStatus", "运行状态"},
+            {"RunningStatus", "状态"},
             {"Upgrade", "更新时间"},
             {"Waiting", "请稍后……"},
+            {"HostOnly", "仅本机"},
+            {"AllowAny", "允许所有"},
         };
 
         private static readonly Dictionary<string, string> English = new Dictionary<string, string>()
@@ -32,9 +34,9 @@ namespace V2RaySharp.Utiliy
             {"FileNotFound", "Core file not found!"},
             {"Setup", "Install or uninstall V2RaySharp\nYes: Install\tNo: Uninstall\tCancel: Cancel"},
             {"Status", "Status"},
-            {"ChangeNode", "Change Node"},
-            {"EditConfig", "Edit Config"},
-            {"EditLoopback", "Edit Loopback"},
+            {"ChangeNode", "Change\nNode"},
+            {"EditConfig", "Edit\nConfig"},
+            {"EditLoopback", "Edit\nLoopback"},
             {"Start", "Start"},
             {"Stop", "Stop"},
             {"UpgradeNodeError", "Upgrade node failure!"},
@@ -43,9 +45,11 @@ namespace V2RaySharp.Utiliy
             {"Route", "Route"},
             {"Global", "Global"},
             {"Stoped", "Stoped"},
-            {"RunningStatus", "Running status"},
+            {"RunningStatus", "Status"},
             {"Upgrade", "Upgrade time"},
             {"Waiting", "Please wait..."},
+            {"HostOnly", "Host\nOnly"},
+            {"AllowAny", "Allow\nAny"},
         };
 
         internal static string GetString(string value)

@@ -20,14 +20,15 @@
             <ColumnDefinition Width="1*"/>
             <ColumnDefinition Width="1*"/>
         </Grid.ColumnDefinitions>
-        <ListBox x:Name="listBoxNode" Margin="10,5,5,5" Grid.RowSpan="3" Background="{x:Null}" BorderBrush="#FFAAAAAA" TabIndex="0" d:IsLocked="True" />
+        <ListBox x:Name="listBoxNode" Margin="10,5,0,5" Grid.RowSpan="3" Background="{x:Null}" BorderBrush="#FFAAAAAA" TabIndex="0" d:IsLocked="True" />
         <Label x:Name="labelUpgrade" Margin="10,5,5,5" Grid.Row="4" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Background="{x:Null}" d:IsLocked="True" />
-        <Button x:Name="buttonSwitch" Content="Switch" Grid.Column="1" Margin="5" Background="{x:Null}" BorderBrush="#FFAAAAAA" Click="ButtonSwitch_Click" TabIndex="1" d:IsLocked="True" />
-        <Button x:Name="buttonNode" Content="Change Node" Grid.Column="1" Margin="5,5,10,5" Grid.Row="1" Background="{x:Null}" BorderBrush="#FFAAAAAA" Click="ButtonNode_Click" TabIndex="3" Grid.ColumnSpan="2" d:IsLocked="True" />
-        <Button x:Name="buttonRoute" Content="Change&#xD;&#xA;Route" Grid.Column="2" Margin="5,5,10,5" Background="{x:Null}" BorderBrush="#FFAAAAAA" Click="ButtonRoute_Click" TabIndex="2" d:IsLocked="True" />
-        <Button x:Name="buttonConfig" Content="Edit&#xD;&#xA;Config" Grid.Column="1" Margin="5" Grid.Row="2" Background="{x:Null}" BorderBrush="#FFAAAAAA" Click="ButtonConfig_Click" TabIndex="4" d:IsLocked="True" />
+        <Button x:Name="buttonSwitch" Content="Switch" Grid.Column="1" Margin="10,5,5,5" Background="{x:Null}" BorderBrush="#FFAAAAAA" Click="ButtonSwitch_Click" TabIndex="1" d:IsLocked="True" />
+        <Button x:Name="buttonNode" Content="Change&#xD;&#xA;Node" Grid.Column="2" Margin="5,5,10,5" Background="{x:Null}" BorderBrush="#FFAAAAAA" Click="ButtonNode_Click" TabIndex="3" d:IsLocked="True" />
+        <Button x:Name="buttonRoute" Content="Change&#xD;&#xA;Route" Margin="10,5,5,5" Background="{x:Null}" BorderBrush="#FFAAAAAA" Click="ButtonRoute_Click" TabIndex="2" RenderTransformOrigin="0.501,0.503" Grid.Column="1" Grid.Row="1" d:IsLocked="True" />
+        <Button x:Name="buttonConfig" Content="Edit&#xD;&#xA;Config" Grid.Column="1" Margin="10,5,5,5" Grid.Row="2" Background="{x:Null}" BorderBrush="#FFAAAAAA" Click="ButtonConfig_Click" TabIndex="4" d:IsLocked="True" />
         <Label x:Name="labelStatus" Grid.Column="1" Margin="5,5,10,5" Grid.Row="4" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Background="{x:Null}" Grid.ColumnSpan="2" d:IsLocked="True" />
         <Button x:Name="buttonLoopback" Content="Edit&#xD;&#xA;Loopback" Grid.Column="2" Margin="5,5,10,5" Grid.Row="2" Background="{x:Null}" BorderBrush="#FFAAAAAA" Click="ButtonLoopback_Click" TabIndex="5" d:IsLocked="True" />
+        <Button x:Name="buttonListen" Content="Change&#xD;&#xA;Listen" Grid.Column="2" Margin="5,5,10,5" Grid.Row="1" Background="{x:Null}" BorderBrush="#FFAAAAAA" Click="ButtonListen_Click" TabIndex="3" d:IsLocked="True" />
 
     </Grid>
 </Window>

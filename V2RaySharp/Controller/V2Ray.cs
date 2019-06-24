@@ -137,12 +137,48 @@ namespace V2RaySharp.Controller
             ChangeNode(name);
         }
 
+        internal static void ChangeListen(string name)
+        {
+            CheckConfig();
+            if (IsListenHostOnly())
+            {
+                ChangeAllowAny();
+            }
+            else
+            {
+                ChangeHostOnly();
+            }
+            ChangeNode(name);
+        }
+
+        private static void ChangeHostOnly()
+        {
+            var jObject = ReadConfig();
+            jObject["inbounds"][0]["listen"] = "127.0.0.1";
+            WriteConfig(jObject);
+        }
+
+        private static void ChangeAllowAny()
+        {
+            var jObject = ReadConfig();
+            jObject["inbounds"][0]["listen"] = "0.0.0.0";
+            WriteConfig(jObject);
+        }
+
         internal static bool IsUsingRoute()
         {
             CheckConfig();
             var jObject = ReadConfig();
             var jToken = jObject["routing"];
             return jToken != null;
+        }
+
+        internal static bool IsListenHostOnly()
+        {
+            CheckConfig();
+            var jObject = ReadConfig();
+            var listen = jObject["inbounds"][0]["listen"].ToString();
+            return listen == "127.0.0.1";
         }
 
         internal static string SelectNode()
