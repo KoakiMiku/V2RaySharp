@@ -27,7 +27,7 @@ namespace V2RaySharp.Utiliy
             {"Waiting", "请稍后……"},
             {"HostOnly", "仅本机"},
             {"AllowAny", "允许所有"},
-            {"UpgradeCompleted", "订阅节点更新完成"},
+            {"UpgradeCompleted", "节点更新完成！"},
             {"PleaseWait", "请稍候……"},
         };
 
@@ -52,7 +52,7 @@ namespace V2RaySharp.Utiliy
             {"Waiting", "Please wait..."},
             {"HostOnly", "Host Only"},
             {"AllowAny", "Allow Any"},
-            {"UpgradeCompleted", "Upgrade node completed"},
+            {"UpgradeCompleted", "Upgrade node completed!"},
             {"PleaseWait", "Please wait..."},
         };
 
