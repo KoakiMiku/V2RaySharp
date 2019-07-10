@@ -28,7 +28,7 @@ namespace V2RaySharp.Utiliy
             {"HostOnly", "仅本机"},
             {"AllowAny", "允许所有"},
             {"UpgradeCompleted", "订阅节点更新完成"},
-            {"PleaseWait", "请稍后……"},
+            {"PleaseWait", "请稍候……"},
         };
 
         private static readonly Dictionary<string, string> English = new Dictionary<string, string>()
