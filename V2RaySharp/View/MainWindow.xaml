@@ -31,6 +31,6 @@
             <Button x:Name="buttonLoopback" Content="Edit&#xD;&#xA;Loopback" Grid.Column="2" Margin="10" Height="50" Grid.Row="2" Click="ButtonLoopback_Click" TabIndex="6" d:IsLocked="True"/>
             <Button x:Name="buttonListen" Content="Change&#xD;&#xA;Listen" Grid.Column="2" Margin="10" Height="50" Grid.Row="1" Click="ButtonListen_Click" TabIndex="4" d:IsLocked="True"/>
         </Grid>
-        <materialDesign:Snackbar Message="" x:Name="snackbar"/>
+        <materialDesign:Snackbar x:Name="snackbar" IsActive="False" d:IsLocked="True"/>
     </Grid>
 </Window>
