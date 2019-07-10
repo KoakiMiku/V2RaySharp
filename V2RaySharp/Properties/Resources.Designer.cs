@@ -93,9 +93,9 @@ namespace V2RaySharp.Properties {
         /// <summary>
         ///   查找 System.Byte[] 类型的本地化资源。
         /// </summary>
-        internal static byte[] sysproxy {
+        internal static byte[] sysproxy_x64 {
             get {
-                object obj = ResourceManager.GetObject("sysproxy", resourceCulture);
+                object obj = ResourceManager.GetObject("sysproxy_x64", resourceCulture);
                 return ((byte[])(obj));
             }
         }
@@ -103,9 +103,9 @@ namespace V2RaySharp.Properties {
         /// <summary>
         ///   查找 System.Byte[] 类型的本地化资源。
         /// </summary>
-        internal static byte[] sysproxy64 {
+        internal static byte[] sysproxy_x86 {
             get {
-                object obj = ResourceManager.GetObject("sysproxy64", resourceCulture);
+                object obj = ResourceManager.GetObject("sysproxy_x86", resourceCulture);
                 return ((byte[])(obj));
             }
         }

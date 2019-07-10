@@ -1,6 +1,6 @@
-﻿using System;
+﻿using MaterialDesignThemes.Wpf;
+using System;
 using System.Linq;
-using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Input;
@@ -56,6 +56,7 @@ namespace V2RaySharp.View
         {
             try
             {
+                Task.Run(() => SnakeBarMessage(I18N.GetString("PleaseWait")));
                 if (V2Ray.IsRunning())
                 {
                     Task.Run(() => V2Ray.Stop());
@@ -78,6 +79,7 @@ namespace V2RaySharp.View
             {
                 if (this.listBoxNode.SelectedItem != null)
                 {
+                    Task.Run(() => SnakeBarMessage(I18N.GetString("PleaseWait")));
                     string name = this.listBoxNode.SelectedItem.ToString();
                     Task.Run(() => V2Ray.ChangeNode(name));
                     Task.Run(() => this.UpgradeStatus(true));
@@ -99,6 +101,7 @@ namespace V2RaySharp.View
             {
                 if (this.listBoxNode.SelectedItem != null)
                 {
+                    Task.Run(() => SnakeBarMessage(I18N.GetString("PleaseWait")));
                     string name = this.listBoxNode.SelectedItem.ToString();
                     Task.Run(() => V2Ray.ChangeRoute(name));
                     Task.Run(() => this.UpgradeStatus(true));
@@ -120,6 +123,7 @@ namespace V2RaySharp.View
             {
                 if (this.listBoxNode.SelectedItem != null)
                 {
+                    Task.Run(() => SnakeBarMessage(I18N.GetString("PleaseWait")));
                     string name = this.listBoxNode.SelectedItem.ToString();
                     Task.Run(() => V2Ray.ChangeListen(name));
                     Task.Run(() => this.UpgradeStatus(true));
@@ -139,6 +143,7 @@ namespace V2RaySharp.View
         {
             try
             {
+                Task.Run(() => SnakeBarMessage(I18N.GetString("PleaseWait")));
                 Task.Run(() => V2Ray.EditConfig());
             }
             catch (Exception ex)
@@ -151,6 +156,7 @@ namespace V2RaySharp.View
         {
             try
             {
+                Task.Run(() => SnakeBarMessage(I18N.GetString("PleaseWait")));
                 Task.Run(() => Loopback.Start());
             }
             catch (Exception ex)
@@ -166,15 +172,22 @@ namespace V2RaySharp.View
                 if (tick == -2)
                 {
                     this.labelUpgrade.Content = I18N.GetString("NoSubscription");
+                    Task.Run(() => SnakeBarMessage(I18N.GetString("NoSubscription")));
                 }
                 else if (tick == -1)
                 {
                     this.labelUpgrade.Content = I18N.GetString("UpgradeNodeError");
+                    Task.Run(() => SnakeBarMessage(I18N.GetString("UpgradeNodeError")));
                 }
                 else
                 {
                     var dateTime = new DateTime(Configuration.Config.Upgrade);
                     this.labelUpgrade.Content = $"{I18N.GetString("Upgrade")}: {dateTime.ToString("yyyy.MM.dd HH:mm:ss")}";
+
+                    if ((DateTime.Now - dateTime).TotalSeconds < 2)
+                    {
+                        Task.Run(() => SnakeBarMessage(I18N.GetString("UpgradeCompleted")));
+                    }
                 }
                 this.listBoxNode.Items.Clear();
                 var sses = Node.sses.Select(x => x.Name).OrderBy(y => y).ToList();
@@ -190,6 +203,7 @@ namespace V2RaySharp.View
                 if (this.listBoxNode.Items.Count != 0)
                 {
                     this.listBoxNode.SelectedItem = V2Ray.SelectNode();
+                    this.listBoxNode.ScrollIntoView(this.listBoxNode.SelectedItem);
                     this.listBoxNode.Focus();
                 }
             }));
@@ -203,12 +217,14 @@ namespace V2RaySharp.View
                 this.buttonRoute.IsEnabled = false;
                 this.buttonNode.IsEnabled = false;
                 this.buttonListen.IsEnabled = false;
+                this.buttonConfig.IsEnabled = false;
+                this.buttonLoopback.IsEnabled = false;
                 this.labelStatus.Content = $"{I18N.GetString("Waiting")}";
-                this.labelStatus.Foreground = Brushes.Black;
+                this.labelStatus.Foreground = this.labelUpgrade.Foreground;
             }));
             if (isWait)
             {
-                Thread.Sleep(2000);
+                Task.Delay(2000).Wait();
             }
             this.Dispatcher.Invoke(new Action(() =>
             {
@@ -218,65 +234,80 @@ namespace V2RaySharp.View
                 if (isRunning)
                 {
                     this.buttonSwitch.Content = I18N.GetString("Stop");
-                    this.buttonSwitch.Foreground = Brushes.Red;
                 }
                 else
                 {
                     this.buttonSwitch.Content = I18N.GetString("Start");
-                    this.buttonSwitch.Foreground = Brushes.Green;
                 }
                 if (isUsingRoute)
                 {
                     this.buttonRoute.Content = I18N.GetString("Global");
-                    this.buttonRoute.Foreground = Brushes.Blue;
                 }
                 else
                 {
                     this.buttonRoute.Content = I18N.GetString("Route");
-                    this.buttonRoute.Foreground = Brushes.Green;
                 }
                 if (isListenHostOnly)
                 {
                     this.buttonListen.Content = I18N.GetString("AllowAny");
-                    this.buttonListen.Foreground = Brushes.Orange;
                 }
                 else
                 {
                     this.buttonListen.Content = I18N.GetString("HostOnly");
-                    this.buttonListen.Foreground = Brushes.DarkCyan;
                 }
                 if (isRunning)
                 {
                     if (isUsingRoute && isListenHostOnly)
                     {
                         this.labelStatus.Content = $"{I18N.GetString("RunningStatus")}: {I18N.GetString("Route")}, {I18N.GetString("HostOnly")}";
-                        this.labelStatus.Foreground = Brushes.Green;
+                        this.labelStatus.Foreground = Brushes.DarkCyan;
                     }
                     else if (isUsingRoute && !isListenHostOnly)
                     {
                         this.labelStatus.Content = $"{I18N.GetString("RunningStatus")}: {I18N.GetString("Route")}, {I18N.GetString("AllowAny")}";
-                        this.labelStatus.Foreground = Brushes.Green;
+                        this.labelStatus.Foreground = Brushes.DarkCyan;
                     }
                     else if (!isUsingRoute && isListenHostOnly)
                     {
                         this.labelStatus.Content = $"{I18N.GetString("RunningStatus")}: {I18N.GetString("Global")}, {I18N.GetString("HostOnly")}";
-                        this.labelStatus.Foreground = Brushes.Blue;
+                        this.labelStatus.Foreground = Brushes.DeepPink;
                     }
                     else
                     {
                         this.labelStatus.Content = $"{I18N.GetString("RunningStatus")}: {I18N.GetString("Global")}, {I18N.GetString("AllowAny")}";
-                        this.labelStatus.Foreground = Brushes.Blue;
+                        this.labelStatus.Foreground = Brushes.DeepPink;
                     }
                 }
                 else
                 {
                     this.labelStatus.Content = $"{I18N.GetString("RunningStatus")}: {I18N.GetString("Stoped")}";
-                    this.labelStatus.Foreground = Brushes.Red;
+                    this.labelStatus.Foreground = this.labelUpgrade.Foreground;
                 }
                 this.buttonSwitch.IsEnabled = true;
                 this.buttonRoute.IsEnabled = true;
                 this.buttonNode.IsEnabled = true;
                 this.buttonListen.IsEnabled = true;
+                this.buttonConfig.IsEnabled = true;
+                this.buttonLoopback.IsEnabled = true;
+            }));
+        }
+
+        private void SnakeBarMessage(string message)
+        {
+            this.Dispatcher.Invoke(new Action(() =>
+            {
+                var snackbarMessage = new SnackbarMessage();
+                snackbarMessage.Content = message;
+                snackbar.Message = snackbarMessage;
+                snackbar.IsActive = true;
+            }));
+            Task.Delay(2000).Wait();
+            this.Dispatcher.Invoke(new Action(() =>
+            {
+                var snackbarMessage = new SnackbarMessage();
+                snackbarMessage.Content = string.Empty;
+                snackbar.Message = snackbarMessage;
+                snackbar.IsActive = false;
             }));
         }
     }
