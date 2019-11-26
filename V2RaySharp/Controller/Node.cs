@@ -18,19 +18,34 @@ namespace V2RaySharp.Controller
         {
             try
             {
-                if (!string.IsNullOrWhiteSpace(Configuration.Config.Subscription))
+                if (!string.IsNullOrWhiteSpace(Configuration.Config.SsSub))
                 {
-                    var subscription = Configuration.Config.Subscription;
-                    if (!Configuration.Config.Subscription.StartsWith("http://", StringComparison.OrdinalIgnoreCase) &&
-                        !Configuration.Config.Subscription.StartsWith("https://", StringComparison.OrdinalIgnoreCase))
+                    var subscription = Configuration.Config.SsSub;
+                    if (!Configuration.Config.SsSub.StartsWith("http://", StringComparison.OrdinalIgnoreCase)
+                        && !Configuration.Config.SsSub.StartsWith("https://", StringComparison.OrdinalIgnoreCase))
                     {
-                        subscription = $"http://{Configuration.Config.Subscription}";
+                        subscription = $"http://{Configuration.Config.SsSub}";
                     }
                     var http = new WebClient();
-                    http.DownloadStringCompleted += DownloadComplete;
+                    http.DownloadStringCompleted += DownloadShadowSocksComplete;
                     http.DownloadStringAsync(new Uri(subscription));
                 }
-                else
+
+                if (!string.IsNullOrWhiteSpace(Configuration.Config.VmessSub))
+                {
+                    var subscription = Configuration.Config.VmessSub;
+                    if (!Configuration.Config.SsSub.StartsWith("http://", StringComparison.OrdinalIgnoreCase)
+                        && !Configuration.Config.SsSub.StartsWith("https://", StringComparison.OrdinalIgnoreCase))
+                    {
+                        subscription = $"http://{Configuration.Config.VmessSub}";
+                    }
+                    var http = new WebClient();
+                    http.DownloadStringCompleted += DownloadVmessComplete;
+                    http.DownloadStringAsync(new Uri(subscription));
+                }
+
+                if (string.IsNullOrWhiteSpace(Configuration.Config.SsSub)
+                    && string.IsNullOrWhiteSpace(Configuration.Config.VmessSub))
                 {
                     Complete(-2);
                 }
@@ -41,11 +56,11 @@ namespace V2RaySharp.Controller
             }
         }
 
-        private static void DownloadComplete(object sender, DownloadStringCompletedEventArgs e)
+        private static void DownloadShadowSocksComplete(object sender, DownloadStringCompletedEventArgs e)
         {
             try
             {
-                Load(e.Result, false);
+                LoadShadowSocks(e.Result, false);
             }
             catch (Exception)
             {
@@ -53,10 +68,21 @@ namespace V2RaySharp.Controller
             }
         }
 
-        internal static void Load(string content, bool isFile)
+        private static void DownloadVmessComplete(object sender, DownloadStringCompletedEventArgs e)
+        {
+            try
+            {
+                LoadVmess(e.Result, false);
+            }
+            catch (Exception)
+            {
+                Complete(-1);
+            }
+        }
+
+        internal static void LoadShadowSocks(string content, bool isFile)
         {
             sses.Clear();
-            vmesses.Clear();
 
             var result = Base64.Decode(content);
             var nodeList = result.Split(new char[] { '\r', '\n' }, StringSplitOptions.RemoveEmptyEntries);
@@ -66,7 +92,30 @@ namespace V2RaySharp.Controller
                 {
                     ShadowSocksNode(item);
                 }
-                else if (item.StartsWith("vmess://"))
+            }
+
+            if (!isFile)
+            {
+                Configuration.Config.SsRaw = content;
+                Configuration.Config.Upgrade = DateTime.Now.Ticks;
+                Configuration.Save();
+                Complete(DateTime.Now.Ticks);
+            }
+            else
+            {
+                Complete(0);
+            }
+        }
+
+        internal static void LoadVmess(string content, bool isFile)
+        {
+            vmesses.Clear();
+
+            var result = Base64.Decode(content);
+            var nodeList = result.Split(new char[] { '\r', '\n' }, StringSplitOptions.RemoveEmptyEntries);
+            foreach (var item in nodeList)
+            {
+                if (item.StartsWith("vmess://"))
                 {
                     VmessNode(item);
                 }
@@ -74,7 +123,7 @@ namespace V2RaySharp.Controller
 
             if (!isFile)
             {
-                Configuration.Config.Raw = content;
+                Configuration.Config.VmessRaw = content;
                 Configuration.Config.Upgrade = DateTime.Now.Ticks;
                 Configuration.Save();
                 Complete(DateTime.Now.Ticks);

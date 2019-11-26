@@ -2,8 +2,10 @@
 {
     internal class Config
     {
-        public string Subscription { get; set; }
-        public string Raw { get; set; }
+        public string SsSub { get; set; }
+        public string VmessSub { get; set; }
+        public string SsRaw { get; set; }
+        public string VmessRaw { get; set; }
         public long Upgrade { get; set; }
     }
 }
