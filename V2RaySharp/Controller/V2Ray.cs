@@ -55,7 +55,7 @@ namespace V2RaySharp.Controller
         internal static void ChangeNode(string name)
         {
             CheckConfig();
-            object node = Node.GetNode(name);
+            var node = Node.GetNode(name);
             if (node is ShadowSocks ss)
             {
                 ChangeSS(ss);
@@ -85,6 +85,7 @@ namespace V2RaySharp.Controller
                         }};
                     item["settings"]["servers"] = servers;
                     item["settings"]["vnext"] = null;
+                    item["streamSettings"] = null;
                 }
                 break;
             }
@@ -101,19 +102,47 @@ namespace V2RaySharp.Controller
                 if (item["tag"].ToString() == "proxy")
                 {
                     item["protocol"] = "vmess";
-                    var vnext = new JArray() { new JObject()
+                    var vnext = new JArray()
+                    {
+                        new JObject()
                         {
                             { "address", vmess.Address },
                             { "port", vmess.Port },
-                            { "users", new JArray(){ new JObject()
+                            { "users", new JArray()
                                 {
-                                    { "id", vmess.ID },
-                                    { "alterId", vmess.AlterID }
-                                }}
+                                    new JObject()
+                                    {
+                                        { "id", vmess.ID },
+                                        { "alterId", vmess.AlterID }
+                                    }
+                                }
                             },
-                        }};
+                        }
+                    };
                     item["settings"]["vnext"] = vnext;
                     item["settings"]["servers"] = null;
+                    var streamSettings = new JObject()
+                    {
+                        { "network", vmess.Network },
+                        { "security", vmess.Security },
+                        { "tlsSettings", new JObject()
+                            {
+                                { "allowInsecure", true },
+                                { "serverName", vmess.Address }
+                            }
+                        },
+                        { "wsSettings", new JObject()
+                            {
+                                { "path", vmess.Path },
+                                { "headers", new JObject()
+                                    {
+                                        { "Host", vmess.Address }
+                                    }
+                                }
+                            }
+                        }
+                    };
+                    item["streamSettings"] = streamSettings;
                 }
                 break;
             }
@@ -191,8 +220,8 @@ namespace V2RaySharp.Controller
             {
                 if (item["tag"].ToString() == "proxy")
                 {
-                    string protocol = item["protocol"].ToString();
-                    string address = string.Empty;
+                    var protocol = item["protocol"].ToString();
+                    var address = string.Empty;
                     if (protocol == "shadowsocks")
                     {
                         address = item["settings"]["servers"][0]["address"].ToString();
@@ -234,14 +263,14 @@ namespace V2RaySharp.Controller
 
         private static JObject ReadConfig()
         {
-            string json = File.ReadAllText(config);
+            var json = File.ReadAllText(config);
             var jObject = JsonConvert.DeserializeObject<JObject>(json);
             return jObject;
         }
 
         private static void WriteConfig(JObject jObject)
         {
-            string json = JsonConvert.SerializeObject(jObject, Formatting.Indented);
+            var json = JsonConvert.SerializeObject(jObject, Formatting.Indented);
             File.WriteAllText(config, json);
         }
     }

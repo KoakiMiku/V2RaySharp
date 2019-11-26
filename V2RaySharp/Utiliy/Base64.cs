@@ -7,8 +7,8 @@ namespace V2RaySharp.Utiliy
     {
         internal static string Decode(string text)
         {
-            string s = text.Replace("-", "+").Replace("_", "/");
-            int i = s.Length % 4;
+            var s = text.Replace("-", "+").Replace("_", "/");
+            var i = s.Length % 4;
             if (i == 2)
             {
                 s = s.PadRight(s.Length + 2, '=');
@@ -17,7 +17,7 @@ namespace V2RaySharp.Utiliy
             {
                 s = s.PadRight(s.Length + 1, '=');
             }
-            byte[] b = Convert.FromBase64String(s);
+            var b = Convert.FromBase64String(s);
             return Encoding.UTF8.GetString(b);
         }
     }

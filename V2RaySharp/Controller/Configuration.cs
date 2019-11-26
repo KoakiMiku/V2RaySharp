@@ -26,7 +26,7 @@ namespace V2RaySharp.Controller
             }
             else
             {
-                string json = File.ReadAllText(config);
+                var json = File.ReadAllText(config);
                 Config = JsonConvert.DeserializeObject<Config>(json);
                 Node.Load(Config.Raw, true);
             }
@@ -34,7 +34,7 @@ namespace V2RaySharp.Controller
 
         internal static void Save()
         {
-            string json = JsonConvert.SerializeObject(Config, Formatting.Indented);
+            var json = JsonConvert.SerializeObject(Config, Formatting.Indented);
             File.WriteAllText(config, json);
         }
     }

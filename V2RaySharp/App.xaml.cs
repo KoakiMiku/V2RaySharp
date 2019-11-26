@@ -15,20 +15,20 @@ namespace V2RaySharp
         {
             try
             {
-                bool isSingle = SingleInstance.IsSingle();
+                var isSingle = SingleInstance.IsSingle();
                 if (!isSingle)
                 {
                     SingleInstance.SetForeground();
                     return;
                 }
 
-                bool isTrueDirectory = DirectoryCheck.IsTrueDirectory();
+                var isTrueDirectory = DirectoryCheck.IsTrueDirectory();
                 if (!isTrueDirectory)
                 {
                     throw new Exception(I18N.GetString("FileNotFound"));
                 }
 
-                bool isAdmin = Administrator.IsAdmin();
+                var isAdmin = Administrator.IsAdmin();
                 if (e.Args.Length == 0 && isAdmin)
                 {
                     switch (MessageBox.Show($"{I18N.GetString("Setup")}", name,

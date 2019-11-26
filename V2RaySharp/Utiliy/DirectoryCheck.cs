@@ -12,9 +12,9 @@ namespace V2RaySharp.Utiliy
 
         internal static bool IsTrueDirectory()
         {
-            bool file1 = File.Exists(v2ctl);
-            bool file2 = File.Exists(v2ray);
-            bool file3 = File.Exists(wv2ray);
+            var file1 = File.Exists(v2ctl);
+            var file2 = File.Exists(v2ray);
+            var file3 = File.Exists(wv2ray);
             return file1 && file2 && file3;
         }
     }

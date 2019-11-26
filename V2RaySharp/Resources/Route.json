@@ -14,7 +14,8 @@
             "settings": {
                 "servers": null,
                 "vnext": null
-            }
+            },
+            "streamSettings": null
         },
         {
             "tag": "blocked",
@@ -60,6 +61,6 @@
         }
     },
     "log": {
-        "loglevel": "debug"
+        "loglevel": "warning"
     }
 }

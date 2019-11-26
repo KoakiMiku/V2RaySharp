@@ -80,7 +80,7 @@ namespace V2RaySharp.View
                 if (this.listBoxNode.SelectedItem != null)
                 {
                     Task.Run(() => SnakeBarMessage(I18N.GetString("PleaseWait")));
-                    string name = this.listBoxNode.SelectedItem.ToString();
+                    var name = this.listBoxNode.SelectedItem.ToString();
                     Task.Run(() => V2Ray.ChangeNode(name));
                     Task.Run(() => this.UpgradeStatus(true));
                 }
@@ -102,7 +102,7 @@ namespace V2RaySharp.View
                 if (this.listBoxNode.SelectedItem != null)
                 {
                     Task.Run(() => SnakeBarMessage(I18N.GetString("PleaseWait")));
-                    string name = this.listBoxNode.SelectedItem.ToString();
+                    var name = this.listBoxNode.SelectedItem.ToString();
                     Task.Run(() => V2Ray.ChangeRoute(name));
                     Task.Run(() => this.UpgradeStatus(true));
                 }
@@ -124,7 +124,7 @@ namespace V2RaySharp.View
                 if (this.listBoxNode.SelectedItem != null)
                 {
                     Task.Run(() => SnakeBarMessage(I18N.GetString("PleaseWait")));
-                    string name = this.listBoxNode.SelectedItem.ToString();
+                    var name = this.listBoxNode.SelectedItem.ToString();
                     Task.Run(() => V2Ray.ChangeListen(name));
                     Task.Run(() => this.UpgradeStatus(true));
                 }
@@ -192,11 +192,11 @@ namespace V2RaySharp.View
                 this.listBoxNode.Items.Clear();
                 var sses = Node.sses.Select(x => x.Name).OrderBy(y => y).ToList();
                 var vmesses = Node.vmesses.Select(x => x.Name).OrderBy(y => y).ToList();
-                foreach (string item in sses)
+                foreach (var item in sses)
                 {
                     this.listBoxNode.Items.Add(item);
                 }
-                foreach (string item in vmesses)
+                foreach (var item in vmesses)
                 {
                     this.listBoxNode.Items.Add(item);
                 }
@@ -228,9 +228,9 @@ namespace V2RaySharp.View
             }
             this.Dispatcher.Invoke(new Action(() =>
             {
-                bool isRunning = V2Ray.IsRunning();
-                bool isUsingRoute = V2Ray.IsUsingRoute();
-                bool isListenHostOnly = V2Ray.IsListenHostOnly();
+                var isRunning = V2Ray.IsRunning();
+                var isUsingRoute = V2Ray.IsUsingRoute();
+                var isListenHostOnly = V2Ray.IsListenHostOnly();
                 if (isRunning)
                 {
                     this.buttonSwitch.Content = I18N.GetString("Stop");

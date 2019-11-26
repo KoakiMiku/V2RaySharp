@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Net;
+using Newtonsoft.Json.Linq;
 using V2RaySharp.Model;
 using V2RaySharp.Utiliy;
 
@@ -19,7 +20,7 @@ namespace V2RaySharp.Controller
             {
                 if (!string.IsNullOrWhiteSpace(Configuration.Config.Subscription))
                 {
-                    string subscription = Configuration.Config.Subscription;
+                    var subscription = Configuration.Config.Subscription;
                     if (!Configuration.Config.Subscription.StartsWith("http://", StringComparison.OrdinalIgnoreCase) &&
                         !Configuration.Config.Subscription.StartsWith("https://", StringComparison.OrdinalIgnoreCase))
                     {
@@ -57,9 +58,9 @@ namespace V2RaySharp.Controller
             sses.Clear();
             vmesses.Clear();
 
-            string result = Base64.Decode(content);
-            string[] nodeList = result.Split(new char[] { '\r', '\n' }, StringSplitOptions.RemoveEmptyEntries);
-            foreach (string item in nodeList)
+            var result = Base64.Decode(content);
+            var nodeList = result.Split(new char[] { '\r', '\n' }, StringSplitOptions.RemoveEmptyEntries);
+            foreach (var item in nodeList)
             {
                 if (item.StartsWith("ssr://"))
                 {
@@ -86,15 +87,15 @@ namespace V2RaySharp.Controller
 
         private static void ShadowSocksNode(string url)
         {
-            string nodeBase = url.Replace("ssr://", "");
-            string node = Base64.Decode(nodeBase);
-            string server = node.Split(':')[0];
-            int port = Convert.ToInt32(node.Split(':')[1]);
-            string passwordBase = node.Split(':')[5].Split('?')[0].Replace("/", "");
-            string password = Base64.Decode(passwordBase);
-            string method = node.Split(':')[3];
-            string remarkBase = node.Split(':')[5].Split('&')[2].Replace("remarks=", "");
-            string remark = Base64.Decode(remarkBase);
+            var nodeBase = url.Replace("ssr://", "");
+            var node = Base64.Decode(nodeBase);
+            var server = node.Split(':')[0];
+            var port = Convert.ToInt32(node.Split(':')[1]);
+            var passwordBase = node.Split(':')[5].Split('?')[0].Replace("/", "");
+            var password = Base64.Decode(passwordBase);
+            var method = node.Split(':')[3];
+            var remarkBase = node.Split(':')[5].Split('&')[2].Replace("remarks=", "");
+            var remark = Base64.Decode(remarkBase);
 
             if (server.Contains("账户状态"))
             {
@@ -116,7 +117,44 @@ namespace V2RaySharp.Controller
 
         private static void VmessNode(string url)
         {
-            // TODO: vmess
+            var nodeBase = url.Replace("vmess://", "");
+            var node = Base64.Decode(nodeBase);
+            var json = JObject.Parse(node);
+            var version = json["v"].ToString();
+
+            if (version != "2")
+            {
+                return;
+            }
+
+            var server = json["host"].ToString();
+            var port = Convert.ToInt32(json["port"]);
+            var alterId = Convert.ToInt32(json["aid"]);
+            var id = json["id"].ToString();
+            var network = json["net"].ToString();
+            var security = json["tls"].ToString();
+            var path = json["path"].ToString();
+            var remark = json["ps"].ToString();
+
+            if (server.Contains("账户状态"))
+            {
+                userInfo = $"{server}：{remark}";
+            }
+            else
+            {
+                var v = new Vmess
+                {
+                    Name = remark,
+                    Address = server,
+                    Port = port,
+                    AlterID = alterId,
+                    ID = id,
+                    Network = network,
+                    Security = security,
+                    Path = path
+                };
+                vmesses.Add(v);
+            }
         }
 
         internal static event CompleteDelegate CompleteEvent;
@@ -125,7 +163,7 @@ namespace V2RaySharp.Controller
 
         internal static string GetName(string address)
         {
-            string name = string.Empty;
+            var name = string.Empty;
             if (!string.IsNullOrWhiteSpace(address))
             {
                 var temp1 = sses.Where(x => x.Address.Equals(address, StringComparison.OrdinalIgnoreCase)).Select(y => y.Name);

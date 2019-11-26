@@ -14,10 +14,11 @@
             "settings": {
                 "servers": null,
                 "vnext": null
-            }
+            },
+            "streamSettings": null
         }
     ],
     "log": {
-        "loglevel": "debug"
+        "loglevel": "warning"
     }
 }
