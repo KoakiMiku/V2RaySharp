@@ -23,8 +23,6 @@ namespace V2RaySharp.View
                 buttonSwitch.Content = I18N.GetString("Status");
                 buttonRoute.Content = I18N.GetString("Status");
                 buttonNode.Content = I18N.GetString("ChangeNode");
-                buttonConfig.Content = I18N.GetString("EditConfig");
-                buttonLoopback.Content = I18N.GetString("EditLoopback");
                 Node.CompleteEvent += Complete;
                 Configuration.Load();
                 Node.Upgrade();
@@ -33,7 +31,8 @@ namespace V2RaySharp.View
             }
             catch (Exception ex)
             {
-                MessageBox.Show(ex.Message, name, MessageBoxButton.OK, MessageBoxImage.Error);
+                MessageBox.Show(ex.Message, name,
+                    MessageBoxButton.OK, MessageBoxImage.Error);
             }
         }
 
@@ -48,7 +47,8 @@ namespace V2RaySharp.View
             }
             catch (Exception ex)
             {
-                MessageBox.Show(ex.Message, name, MessageBoxButton.OK, MessageBoxImage.Error);
+                MessageBox.Show(ex.Message, name,
+                    MessageBoxButton.OK, MessageBoxImage.Error);
             }
         }
 
@@ -69,7 +69,8 @@ namespace V2RaySharp.View
             }
             catch (Exception ex)
             {
-                MessageBox.Show(ex.Message, name, MessageBoxButton.OK, MessageBoxImage.Error);
+                MessageBox.Show(ex.Message, name,
+                    MessageBoxButton.OK, MessageBoxImage.Error);
             }
         }
 
@@ -91,7 +92,8 @@ namespace V2RaySharp.View
             }
             catch (Exception ex)
             {
-                MessageBox.Show(ex.Message, name, MessageBoxButton.OK, MessageBoxImage.Error);
+                MessageBox.Show(ex.Message, name,
+                    MessageBoxButton.OK, MessageBoxImage.Error);
             }
         }
 
@@ -113,7 +115,8 @@ namespace V2RaySharp.View
             }
             catch (Exception ex)
             {
-                MessageBox.Show(ex.Message, name, MessageBoxButton.OK, MessageBoxImage.Error);
+                MessageBox.Show(ex.Message, name,
+                    MessageBoxButton.OK, MessageBoxImage.Error);
             }
         }
 
@@ -135,33 +138,8 @@ namespace V2RaySharp.View
             }
             catch (Exception ex)
             {
-                MessageBox.Show(ex.Message, name, MessageBoxButton.OK, MessageBoxImage.Error);
-            }
-        }
-
-        private void ButtonConfig_Click(object sender, RoutedEventArgs e)
-        {
-            try
-            {
-                Task.Run(() => SnakeBarMessage(I18N.GetString("PleaseWait")));
-                Task.Run(() => V2Ray.EditConfig());
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show(ex.Message, name, MessageBoxButton.OK, MessageBoxImage.Error);
-            }
-        }
-
-        private void ButtonLoopback_Click(object sender, RoutedEventArgs e)
-        {
-            try
-            {
-                Task.Run(() => SnakeBarMessage(I18N.GetString("PleaseWait")));
-                Task.Run(() => Loopback.Start());
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show(ex.Message, name, MessageBoxButton.OK, MessageBoxImage.Error);
+                MessageBox.Show(ex.Message, name,
+                    MessageBoxButton.OK, MessageBoxImage.Error);
             }
         }
 
@@ -182,7 +160,8 @@ namespace V2RaySharp.View
                 else
                 {
                     var dateTime = new DateTime(Configuration.Config.Upgrade);
-                    labelUpgrade.Content = $"{I18N.GetString("Upgrade")}: {dateTime.ToString("yyyy.MM.dd HH:mm:ss")}";
+                    labelUpgrade.Content = $"{I18N.GetString("Upgrade")}: " +
+                        $"{dateTime:yyyy.MM.dd HH:mm:ss}";
 
                     if ((DateTime.Now - dateTime).TotalSeconds < 2)
                     {
@@ -190,12 +169,7 @@ namespace V2RaySharp.View
                     }
                 }
                 listBoxNode.Items.Clear();
-                var sses = Node.sses.Select(x => x.Name).OrderBy(y => y).ToList();
                 var vmesses = Node.vmesses.Select(x => x.Name).OrderBy(y => y).ToList();
-                foreach (var item in sses)
-                {
-                    listBoxNode.Items.Add(item);
-                }
                 foreach (var item in vmesses)
                 {
                     listBoxNode.Items.Add(item);
@@ -217,8 +191,6 @@ namespace V2RaySharp.View
                 buttonRoute.IsEnabled = false;
                 buttonNode.IsEnabled = false;
                 buttonListen.IsEnabled = false;
-                buttonConfig.IsEnabled = false;
-                buttonLoopback.IsEnabled = false;
                 labelStatus.Content = $"{I18N.GetString("Waiting")}";
                 labelStatus.Foreground = labelUpgrade.Foreground;
             }));
@@ -259,36 +231,39 @@ namespace V2RaySharp.View
                 {
                     if (isUsingRoute && isListenHostOnly)
                     {
-                        labelStatus.Content = $"{I18N.GetString("RunningStatus")}: {I18N.GetString("Route")}, {I18N.GetString("HostOnly")}";
+                        labelStatus.Content = $"{I18N.GetString("RunningStatus")}: " +
+                            $"{I18N.GetString("Route")}, {I18N.GetString("HostOnly")}";
                         labelStatus.Foreground = Brushes.DarkCyan;
                     }
                     else if (isUsingRoute && !isListenHostOnly)
                     {
-                        labelStatus.Content = $"{I18N.GetString("RunningStatus")}: {I18N.GetString("Route")}, {I18N.GetString("AllowAny")}";
+                        labelStatus.Content = $"{I18N.GetString("RunningStatus")}: " +
+                            $"{I18N.GetString("Route")}, {I18N.GetString("AllowAny")}";
                         labelStatus.Foreground = Brushes.DarkCyan;
                     }
                     else if (!isUsingRoute && isListenHostOnly)
                     {
-                        labelStatus.Content = $"{I18N.GetString("RunningStatus")}: {I18N.GetString("Global")}, {I18N.GetString("HostOnly")}";
+                        labelStatus.Content = $"{I18N.GetString("RunningStatus")}: " +
+                            $"{I18N.GetString("Global")}, {I18N.GetString("HostOnly")}";
                         labelStatus.Foreground = Brushes.DeepPink;
                     }
                     else
                     {
-                        labelStatus.Content = $"{I18N.GetString("RunningStatus")}: {I18N.GetString("Global")}, {I18N.GetString("AllowAny")}";
+                        labelStatus.Content = $"{I18N.GetString("RunningStatus")}: " +
+                            $"{I18N.GetString("Global")}, {I18N.GetString("AllowAny")}";
                         labelStatus.Foreground = Brushes.DeepPink;
                     }
                 }
                 else
                 {
-                    labelStatus.Content = $"{I18N.GetString("RunningStatus")}: {I18N.GetString("Stoped")}";
+                    labelStatus.Content = $"{I18N.GetString("RunningStatus")}: " +
+                        $"{I18N.GetString("Stoped")}";
                     labelStatus.Foreground = labelUpgrade.Foreground;
                 }
                 buttonSwitch.IsEnabled = true;
                 buttonRoute.IsEnabled = true;
                 buttonNode.IsEnabled = true;
                 buttonListen.IsEnabled = true;
-                buttonConfig.IsEnabled = true;
-                buttonLoopback.IsEnabled = true;
             }));
         }
 

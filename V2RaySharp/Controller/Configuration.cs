@@ -18,9 +18,7 @@ namespace V2RaySharp.Controller
             {
                 Config = new Config
                 {
-                    SsSub = string.Empty,
                     VmessSub = string.Empty,
-                    SsRaw = string.Empty,
                     VmessRaw = string.Empty,
                     Upgrade = 0
                 };
@@ -30,7 +28,6 @@ namespace V2RaySharp.Controller
             {
                 var json = File.ReadAllText(config);
                 Config = JsonConvert.DeserializeObject<Config>(json);
-                Node.LoadShadowSocks(Config.SsRaw, true);
                 Node.LoadVmess(Config.VmessRaw, true);
             }
         }

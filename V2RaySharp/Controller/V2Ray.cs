@@ -55,42 +55,9 @@ namespace V2RaySharp.Controller
         public static void ChangeNode(string name)
         {
             CheckConfig();
-            var node = Node.GetNode(name);
-            if (node is ShadowSocks ss)
-            {
-                ChangeSS(ss);
-            }
-            else if (node is Vmess vmess)
-            {
-                ChangeVmess(vmess);
-            }
+            var vmess = Node.GetNode(name);
+            ChangeVmess(vmess);
             Restart();
-        }
-
-        private static void ChangeSS(ShadowSocks ss)
-        {
-            var jObject = ReadConfig();
-            var jArray = jObject["outbounds"].ToObject<JArray>();
-            foreach (var item in jArray)
-            {
-                if (item["tag"].ToString() == "proxy")
-                {
-                    item["protocol"] = "shadowsocks";
-                    var servers = new JArray() { new JObject()
-                        {
-                            { "address", ss.Address },
-                            { "port", ss.Port },
-                            { "password", ss.Password },
-                            { "method", ss.Method }
-                        }};
-                    item["settings"]["servers"] = servers;
-                    item["settings"]["vnext"] = null;
-                    item["streamSettings"] = null;
-                }
-                break;
-            }
-            jObject["outbounds"] = jArray;
-            WriteConfig(jObject);
         }
 
         private static void ChangeVmess(Vmess vmess)
@@ -101,48 +68,15 @@ namespace V2RaySharp.Controller
             {
                 if (item["tag"].ToString() == "proxy")
                 {
-                    item["protocol"] = "vmess";
-                    var vnext = new JArray()
-                    {
-                        new JObject()
-                        {
-                            { "address", vmess.Address },
-                            { "port", vmess.Port },
-                            { "users", new JArray()
-                                {
-                                    new JObject()
-                                    {
-                                        { "id", vmess.ID },
-                                        { "alterId", vmess.AlterID }
-                                    }
-                                }
-                            },
-                        }
-                    };
-                    item["settings"]["vnext"] = vnext;
-                    item["settings"]["servers"] = null;
-                    var streamSettings = new JObject()
-                    {
-                        { "network", vmess.Network },
-                        { "security", vmess.Security },
-                        { "tlsSettings", new JObject()
-                            {
-                                { "allowInsecure", true },
-                                { "serverName", vmess.Address }
-                            }
-                        },
-                        { "wsSettings", new JObject()
-                            {
-                                { "path", vmess.Path },
-                                { "headers", new JObject()
-                                    {
-                                        { "Host", vmess.Address }
-                                    }
-                                }
-                            }
-                        }
-                    };
-                    item["streamSettings"] = streamSettings;
+                    item["settings"]["vnext"][0]["address"] = vmess.Address;
+                    item["settings"]["vnext"][0]["port"] = vmess.Port;
+                    item["settings"]["vnext"][0]["users"][0]["id"] = vmess.ID;
+                    item["settings"]["vnext"][0]["users"][0]["alterId"] = vmess.AlterID;
+                    item["streamSettings"]["network"] = vmess.Network;
+                    item["streamSettings"]["security"] = vmess.Security;
+                    item["streamSettings"]["tlsSettings"]["serverName"] = vmess.Address;
+                    item["streamSettings"]["wsSettings"]["path"] = vmess.Path;
+                    item["streamSettings"]["wsSettings"]["headers"]["Host"] = vmess.Address;
                 }
                 break;
             }
@@ -183,14 +117,24 @@ namespace V2RaySharp.Controller
         private static void ChangeHostOnly()
         {
             var jObject = ReadConfig();
-            jObject["inbounds"][0]["listen"] = "127.0.0.1";
+            var jArray = jObject["inbounds"].ToObject<JArray>();
+            foreach (var item in jArray)
+            {
+                item["listen"] = "127.0.0.1";
+            }
+            jObject["inbounds"] = jArray;
             WriteConfig(jObject);
         }
 
         private static void ChangeAllowAny()
         {
             var jObject = ReadConfig();
-            jObject["inbounds"][0]["listen"] = "0.0.0.0";
+            var jArray = jObject["inbounds"].ToObject<JArray>();
+            foreach (var item in jArray)
+            {
+                item["listen"] = "0.0.0.0";
+            }
+            jObject["inbounds"] = jArray;
             WriteConfig(jObject);
         }
 
@@ -212,7 +156,6 @@ namespace V2RaySharp.Controller
 
         public static string SelectNode()
         {
-            string name = null;
             CheckConfig();
             var jObject = ReadConfig();
             var jArray = jObject["outbounds"].ToObject<JArray>();
@@ -220,29 +163,11 @@ namespace V2RaySharp.Controller
             {
                 if (item["tag"].ToString() == "proxy")
                 {
-                    var protocol = item["protocol"].ToString();
-                    var address = string.Empty;
-                    if (protocol == "shadowsocks")
-                    {
-                        address = item["settings"]["servers"][0]["address"].ToString();
-                    }
-                    else if (protocol == "vmess")
-                    {
-                        address = item["settings"]["vnext"][0]["address"].ToString();
-                    }
-                    name = Node.GetName(address);
+                    var address = item["settings"]["vnext"][0]["address"].ToString();
+                    return Node.GetName(address);
                 }
-                break;
             }
-            return name;
-        }
-
-        public static void EditConfig()
-        {
-            CheckConfig();
-            var process = new Process();
-            process.StartInfo.FileName = config;
-            process.Start();
+            return null;
         }
 
         private static void CheckConfig()
@@ -264,8 +189,7 @@ namespace V2RaySharp.Controller
         private static JObject ReadConfig()
         {
             var json = File.ReadAllText(config);
-            var jObject = JsonConvert.DeserializeObject<JObject>(json);
-            return jObject;
+            return JsonConvert.DeserializeObject<JObject>(json);
         }
 
         private static void WriteConfig(JObject jObject)

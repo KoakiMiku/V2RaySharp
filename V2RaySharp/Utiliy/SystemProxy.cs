@@ -8,9 +8,7 @@ namespace V2RaySharp.Utiliy
     class SystemProxy
     {
         private static readonly string path = AppContext.BaseDirectory;
-        private static readonly string sysproxyX64 = Path.Combine(path, "sysproxy_x64.exe");
-        private static readonly string sysproxyX86 = Path.Combine(path, "sysproxy_x86.exe");
-        private static readonly bool isX64 = Environment.Is64BitOperatingSystem;
+        private static readonly string sysproxy = Path.Combine(path, "sysproxy.exe");
         private static readonly string localIPEndpoint = "127.0.0.1:1080";
         private static readonly List<string> privateIPAddressList = new List<string>() {
             "localhost", "127.*",
@@ -26,7 +24,7 @@ namespace V2RaySharp.Utiliy
         {
             Check();
             var process = new Process();
-            process.StartInfo.FileName = isX64 ? sysproxyX64 : sysproxyX86;
+            process.StartInfo.FileName = sysproxy;
             process.StartInfo.Arguments = $"global {localIPEndpoint} {privateIPAddress}";
             process.StartInfo.CreateNoWindow = true;
             process.StartInfo.UseShellExecute = false;
@@ -37,7 +35,7 @@ namespace V2RaySharp.Utiliy
         {
             Check();
             var process = new Process();
-            process.StartInfo.FileName = isX64 ? sysproxyX64 : sysproxyX86;
+            process.StartInfo.FileName = sysproxy;
             process.StartInfo.Arguments = $"set 1 {localIPEndpoint} {privateIPAddress} {string.Empty}";
             process.StartInfo.CreateNoWindow = true;
             process.StartInfo.UseShellExecute = false;
@@ -46,13 +44,9 @@ namespace V2RaySharp.Utiliy
 
         private static void Check()
         {
-            if (!File.Exists(sysproxyX64))
+            if (!File.Exists(sysproxy))
             {
-                File.WriteAllBytes(sysproxyX64, Properties.Resources.sysproxy_x64);
-            }
-            if (!File.Exists(sysproxyX86))
-            {
-                File.WriteAllBytes(sysproxyX86, Properties.Resources.sysproxy_x86);
+                File.WriteAllBytes(sysproxy, Properties.Resources.sysproxy);
             }
         }
     }

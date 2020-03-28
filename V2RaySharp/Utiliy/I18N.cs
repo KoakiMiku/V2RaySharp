@@ -9,11 +9,10 @@ namespace V2RaySharp.Utiliy
         private static readonly Dictionary<string, string> Chinese = new Dictionary<string, string>()
         {
             {"FileNotFound", "缺少核心文件！"},
+            {"PermissionDenied", "请以管理员身份运行！"},
             {"Setup", "安装 或 卸载 V2RaySharp\n是：安装\t否：卸载\t取消：取消"},
             {"Status", "状态"},
             {"ChangeNode", "切换节点"},
-            {"EditConfig", "编辑配置"},
-            {"EditLoopback", "编辑回环"},
             {"Start", "启动"},
             {"Stop", "停止"},
             {"UpgradeNodeError", "节点更新失败！"},
@@ -34,11 +33,10 @@ namespace V2RaySharp.Utiliy
         private static readonly Dictionary<string, string> English = new Dictionary<string, string>()
         {
             {"FileNotFound", "Core file not found!"},
+            {"PermissionDenied", "Please run as administrator!"},
             {"Setup", "Install or uninstall V2RaySharp\nYes: Install\tNo: Uninstall\tCancel: Cancel"},
             {"Status", "Status"},
             {"ChangeNode", "Change\nNode"},
-            {"EditConfig", "Edit\nConfig"},
-            {"EditLoopback", "Edit\nLoopback"},
             {"Start", "Start"},
             {"Stop", "Stop"},
             {"UpgradeNodeError", "Upgrade node failure!"},

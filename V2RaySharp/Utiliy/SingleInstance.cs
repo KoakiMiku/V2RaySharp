@@ -13,14 +13,7 @@ namespace V2RaySharp.Utiliy
 
         public static bool IsSingle()
         {
-            if (processes.Count() == 1)
-            {
-                return true;
-            }
-            else
-            {
-                return false;
-            }
+            return processes.Count() == 1;
         }
 
         public static void SetForeground()

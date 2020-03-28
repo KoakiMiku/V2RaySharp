@@ -7,6 +7,7 @@
         <Copyright>Copyright © KoakiMiku 2020</Copyright>
         <Version>3.0.0</Version>
         <ApplicationIcon>Resources\V2Ray.ico</ApplicationIcon>
+        <Authors>KoakiMiku</Authors>
         <ApplicationManifest>app.manifest</ApplicationManifest>
     </PropertyGroup>
 

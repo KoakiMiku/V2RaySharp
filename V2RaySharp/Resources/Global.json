@@ -5,20 +5,49 @@
             "listen": "127.0.0.1",
             "port": 1080,
             "settings": {}
+        },
+        {
+            "protocol": "socks",
+            "listen": "127.0.0.1",
+            "port": 1081,
+            "settings": {}
         }
     ],
     "outbounds": [
         {
             "tag": "proxy",
-            "protocol": null,
+            "protocol": "vmess",
             "settings": {
-                "servers": null,
-                "vnext": null
+                "vnext": [
+                    {
+                        "address": null,
+                        "port": null,
+                        "users": [
+                            {
+                                "id": null,
+                                "alterId": null
+                            }
+                        ]
+                    }
+                ]
             },
-            "streamSettings": null
+            "streamSettings": {
+                "network": "ws",
+                "security": "tls",
+                "tlsSettings": {
+                    "allowInsecure": true,
+                    "serverName": null
+                },
+                "wsSettings": {
+                    "path": null,
+                    "headers": {
+                        "Host": null
+                    }
+                }
+            }
         }
     ],
     "log": {
-        "loglevel": "warning"
+        "loglevel": "none"
     }
 }

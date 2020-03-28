@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Windows;
 using V2RaySharp.Controller;
 using V2RaySharp.Regedit;
@@ -49,7 +49,7 @@ namespace V2RaySharp
                 }
                 else if (e.Args.Length == 0 && !isAdmin)
                 {
-                    Administrator.RunAsAdmin();
+                    throw new Exception(I18N.GetString("PermissionDenied"));
                 }
                 else if (e.Args[0] == "-start")
                 {

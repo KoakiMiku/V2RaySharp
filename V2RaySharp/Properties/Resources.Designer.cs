@@ -63,16 +63,6 @@ namespace V2RaySharp.Properties {
         /// <summary>
         ///   查找 System.Byte[] 类型的本地化资源。
         /// </summary>
-        internal static byte[] EnableLoopback {
-            get {
-                object obj = ResourceManager.GetObject("EnableLoopback", resourceCulture);
-                return ((byte[])(obj));
-            }
-        }
-        
-        /// <summary>
-        ///   查找 System.Byte[] 类型的本地化资源。
-        /// </summary>
         internal static byte[] Global {
             get {
                 object obj = ResourceManager.GetObject("Global", resourceCulture);
@@ -93,19 +83,9 @@ namespace V2RaySharp.Properties {
         /// <summary>
         ///   查找 System.Byte[] 类型的本地化资源。
         /// </summary>
-        internal static byte[] sysproxy_x64 {
+        internal static byte[] sysproxy {
             get {
-                object obj = ResourceManager.GetObject("sysproxy_x64", resourceCulture);
-                return ((byte[])(obj));
-            }
-        }
-        
-        /// <summary>
-        ///   查找 System.Byte[] 类型的本地化资源。
-        /// </summary>
-        internal static byte[] sysproxy_x86 {
-            get {
-                object obj = ResourceManager.GetObject("sysproxy_x86", resourceCulture);
+                object obj = ResourceManager.GetObject("sysproxy", resourceCulture);
                 return ((byte[])(obj));
             }
         }
