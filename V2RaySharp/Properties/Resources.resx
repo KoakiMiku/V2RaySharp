@@ -1,4 +1,4 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="utf-8"?>
 <root>
   <!-- 
     Microsoft ResX Schema 
@@ -118,22 +118,22 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <assembly alias="System.Windows.Forms" name="System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
+  <data name="EnableLoopback" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\resources\enableloopback.exe;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
   <data name="Global" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\resources\global.json;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <data name="Route" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\resources\route.json;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
-  <data name="V2Ray" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\resources\v2ray.ico;System.Drawing.Icon, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="EnableLoopback" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\EnableLoopback.exe;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
   <data name="sysproxy_x64" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\resources\sysproxy_x64.exe;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <data name="sysproxy_x86" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\resources\sysproxy_x86.exe;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="V2Ray" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\resources\v2ray.ico;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
 </root>
