@@ -1,15 +1,15 @@
-using Microsoft.Win32;
 using System.Diagnostics;
+using Microsoft.Win32;
 
 namespace V2RaySharp.Regedit
 {
-    internal class DesktopMenu
+    class DesktopMenu
     {
         private static readonly string path = Process.GetCurrentProcess().MainModule.FileName;
         private static readonly string desktopPath = @"DesktopBackground\Shell\V2RaySharp";
         private static readonly string commandPath = @"DesktopBackground\Shell\V2RaySharp\command";
 
-        internal static void Add()
+        public static void Add()
         {
             var desktop = Registry.ClassesRoot.CreateSubKey(desktopPath);
             desktop.SetValue("", "V2RaySharp(&Z)");
@@ -21,7 +21,7 @@ namespace V2RaySharp.Regedit
             command.Close();
         }
 
-        internal static void Remove()
+        public static void Remove()
         {
             var desktop = Registry.ClassesRoot;
             desktop.DeleteSubKeyTree(desktopPath, false);

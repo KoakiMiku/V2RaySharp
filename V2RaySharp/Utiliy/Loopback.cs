@@ -1,15 +1,15 @@
-﻿using System;
+using System;
 using System.Diagnostics;
 using System.IO;
 
 namespace V2RaySharp.Utiliy
 {
-    internal class Loopback
+    class Loopback
     {
         private static readonly string path = AppContext.BaseDirectory;
         private static readonly string execute = Path.Combine(path, "EnableLoopback.exe");
 
-        internal static void Start()
+        public static void Start()
         {
             Check();
             var process = new Process();

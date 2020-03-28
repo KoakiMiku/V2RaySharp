@@ -1,6 +1,6 @@
-﻿namespace V2RaySharp.Model
+namespace V2RaySharp.Model
 {
-    internal class Config
+    public class Config
     {
         public string SsSub { get; set; }
         public string VmessSub { get; set; }

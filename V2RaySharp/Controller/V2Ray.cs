@@ -1,17 +1,17 @@
-﻿using Newtonsoft.Json;
-using Newtonsoft.Json.Linq;
 using System;
 using System.Diagnostics;
 using System.IO;
 using System.Text;
 using System.Threading.Tasks;
+using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
 using V2RaySharp.Model;
 using V2RaySharp.Properties;
 using V2RaySharp.Utiliy;
 
 namespace V2RaySharp.Controller
 {
-    internal class V2Ray
+    class V2Ray
     {
         private static readonly string path = AppContext.BaseDirectory;
         private static readonly string program = Path.Combine(path, "wv2ray.exe");
@@ -21,7 +21,7 @@ namespace V2RaySharp.Controller
         private static readonly string jsonGlobal = Encoding.UTF8.GetString(Resources.Global);
         private static readonly string jsonRoute = Encoding.UTF8.GetString(Resources.Route);
 
-        internal static void Start()
+        public static void Start()
         {
             var process = new Process();
             process.StartInfo.FileName = program;
@@ -29,7 +29,7 @@ namespace V2RaySharp.Controller
             SystemProxy.Enable();
         }
 
-        internal static void Stop()
+        public static void Stop()
         {
             SystemProxy.Disable();
             var processes = Process.GetProcessesByName("wv2ray");
@@ -46,13 +46,13 @@ namespace V2RaySharp.Controller
             Start();
         }
 
-        internal static bool IsRunning()
+        public static bool IsRunning()
         {
             var processes = Process.GetProcessesByName("wv2ray");
             return processes.Length != 0;
         }
 
-        internal static void ChangeNode(string name)
+        public static void ChangeNode(string name)
         {
             CheckConfig();
             var node = Node.GetNode(name);
@@ -150,7 +150,7 @@ namespace V2RaySharp.Controller
             WriteConfig(jObject);
         }
 
-        internal static void ChangeRoute(string name)
+        public static void ChangeRoute(string name)
         {
             CheckConfig();
             if (IsUsingRoute())
@@ -166,7 +166,7 @@ namespace V2RaySharp.Controller
             ChangeNode(name);
         }
 
-        internal static void ChangeListen(string name)
+        public static void ChangeListen(string name)
         {
             CheckConfig();
             if (IsListenHostOnly())
@@ -194,7 +194,7 @@ namespace V2RaySharp.Controller
             WriteConfig(jObject);
         }
 
-        internal static bool IsUsingRoute()
+        public static bool IsUsingRoute()
         {
             CheckConfig();
             var jObject = ReadConfig();
@@ -202,7 +202,7 @@ namespace V2RaySharp.Controller
             return jToken != null;
         }
 
-        internal static bool IsListenHostOnly()
+        public static bool IsListenHostOnly()
         {
             CheckConfig();
             var jObject = ReadConfig();
@@ -210,7 +210,7 @@ namespace V2RaySharp.Controller
             return listen == "127.0.0.1";
         }
 
-        internal static string SelectNode()
+        public static string SelectNode()
         {
             string name = null;
             CheckConfig();
@@ -237,7 +237,7 @@ namespace V2RaySharp.Controller
             return name;
         }
 
-        internal static void EditConfig()
+        public static void EditConfig()
         {
             CheckConfig();
             var process = new Process();

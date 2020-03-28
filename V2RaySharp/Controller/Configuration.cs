@@ -1,18 +1,18 @@
-﻿using Newtonsoft.Json;
 using System;
 using System.IO;
+using Newtonsoft.Json;
 using V2RaySharp.Model;
 
 namespace V2RaySharp.Controller
 {
-    internal class Configuration
+    class Configuration
     {
         private static readonly string path = AppContext.BaseDirectory;
         private static readonly string config = Path.Combine(path, "V2RaySharp.json");
 
-        internal static Config Config { get; set; }
+        public static Config Config { get; set; }
 
-        internal static void Load()
+        public static void Load()
         {
             if (!File.Exists(config))
             {
@@ -35,7 +35,7 @@ namespace V2RaySharp.Controller
             }
         }
 
-        internal static void Save()
+        public static void Save()
         {
             var json = JsonConvert.SerializeObject(Config, Formatting.Indented);
             File.WriteAllText(config, json);

@@ -1,10 +1,10 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Globalization;
 
 namespace V2RaySharp.Utiliy
 {
-    internal class I18N
+    class I18N
     {
         private static readonly Dictionary<string, string> Chinese = new Dictionary<string, string>()
         {
@@ -56,7 +56,7 @@ namespace V2RaySharp.Utiliy
             {"PleaseWait", "Please wait..."},
         };
 
-        internal static string GetString(string value)
+        public static string GetString(string value)
         {
             try
             {

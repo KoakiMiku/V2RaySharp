@@ -1,11 +1,11 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
 
 namespace V2RaySharp.Utiliy
 {
-    internal class SystemProxy
+    class SystemProxy
     {
         private static readonly string path = AppContext.BaseDirectory;
         private static readonly string sysproxyX64 = Path.Combine(path, "sysproxy_x64.exe");
@@ -22,7 +22,7 @@ namespace V2RaySharp.Utiliy
         };
         private static readonly string privateIPAddress = string.Join(";", privateIPAddressList);
 
-        internal static void Enable()
+        public static void Enable()
         {
             Check();
             var process = new Process();
@@ -33,7 +33,7 @@ namespace V2RaySharp.Utiliy
             process.Start();
         }
 
-        internal static void Disable()
+        public static void Disable()
         {
             Check();
             var process = new Process();

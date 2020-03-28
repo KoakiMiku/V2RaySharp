@@ -1,10 +1,10 @@
-﻿using MaterialDesignThemes.Wpf;
 using System;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Input;
 using System.Windows.Media;
+using MaterialDesignThemes.Wpf;
 using V2RaySharp.Controller;
 using V2RaySharp.Utiliy;
 
@@ -14,7 +14,7 @@ namespace V2RaySharp.View
     {
         private static readonly string name = "V2RaySharp";
 
-        internal MainWindow() => InitializeComponent();
+        public MainWindow() => InitializeComponent();
 
         private void Window_Loaded(object sender, RoutedEventArgs e)
         {

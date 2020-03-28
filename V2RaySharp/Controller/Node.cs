@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net;
@@ -8,13 +8,13 @@ using V2RaySharp.Utiliy;
 
 namespace V2RaySharp.Controller
 {
-    internal class Node
+    public class Node
     {
-        internal static string userInfo = string.Empty;
-        internal static List<ShadowSocks> sses = new List<ShadowSocks>();
-        internal static List<Vmess> vmesses = new List<Vmess>();
+        public static string userInfo = string.Empty;
+        public static List<ShadowSocks> sses = new List<ShadowSocks>();
+        public static List<Vmess> vmesses = new List<Vmess>();
 
-        internal static void Upgrade()
+        public static void Upgrade()
         {
             try
             {
@@ -80,7 +80,7 @@ namespace V2RaySharp.Controller
             }
         }
 
-        internal static void LoadShadowSocks(string content, bool isFile)
+        public static void LoadShadowSocks(string content, bool isFile)
         {
             sses.Clear();
 
@@ -107,7 +107,7 @@ namespace V2RaySharp.Controller
             }
         }
 
-        internal static void LoadVmess(string content, bool isFile)
+        public static void LoadVmess(string content, bool isFile)
         {
             vmesses.Clear();
 
@@ -206,11 +206,11 @@ namespace V2RaySharp.Controller
             }
         }
 
-        internal static event CompleteDelegate CompleteEvent;
-        internal delegate void CompleteDelegate(long tick);
-        internal static void Complete(long tick) => CompleteEvent?.Invoke(tick);
+        public static event CompleteDelegate CompleteEvent;
+        public delegate void CompleteDelegate(long tick);
+        public static void Complete(long tick) => CompleteEvent?.Invoke(tick);
 
-        internal static string GetName(string address)
+        public static string GetName(string address)
         {
             var name = string.Empty;
             if (!string.IsNullOrWhiteSpace(address))
@@ -229,7 +229,7 @@ namespace V2RaySharp.Controller
             return name;
         }
 
-        internal static object GetNode(string name)
+        public static object GetNode(string name)
         {
             object address = null;
             var temp1 = sses.Where(x => x.Name.Equals(name, StringComparison.OrdinalIgnoreCase));

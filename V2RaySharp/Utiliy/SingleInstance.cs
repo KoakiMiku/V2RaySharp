@@ -1,17 +1,17 @@
-﻿using System;
+using System;
 using System.Diagnostics;
 using System.Linq;
 using System.Runtime.InteropServices;
 
 namespace V2RaySharp.Utiliy
 {
-    internal class SingleInstance
+    class SingleInstance
     {
         private static readonly string name = "V2RaySharp";
         private static Process process = Process.GetCurrentProcess();
         private static Process[] processes = Process.GetProcessesByName(name);
 
-        internal static bool IsSingle()
+        public static bool IsSingle()
         {
             if (processes.Count() == 1)
             {
@@ -23,7 +23,7 @@ namespace V2RaySharp.Utiliy
             }
         }
 
-        internal static void SetForeground()
+        public static void SetForeground()
         {
             foreach (var item in processes)
             {

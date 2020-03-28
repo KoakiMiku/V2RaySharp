@@ -1,11 +1,11 @@
-﻿using System;
+using System;
 using System.Text;
 
 namespace V2RaySharp.Utiliy
 {
-    internal class Base64
+    class Base64
     {
-        internal static string Decode(string text)
+        public static string Decode(string text)
         {
             var s = text.Replace("-", "+").Replace("_", "/");
             var i = s.Length % 4;
