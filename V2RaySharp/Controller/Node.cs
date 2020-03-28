@@ -17,22 +17,22 @@ namespace V2RaySharp.Controller
         {
             try
             {
-                if (!string.IsNullOrWhiteSpace(Configuration.Config.VmessSub))
+                if (!string.IsNullOrWhiteSpace(Configuration.Config.Subscription))
                 {
-                    var subscription = Configuration.Config.VmessSub;
-                    if (!Configuration.Config.VmessSub.StartsWith("http://",
+                    var subscription = Configuration.Config.Subscription;
+                    if (!Configuration.Config.Subscription.StartsWith("http://",
                             StringComparison.OrdinalIgnoreCase)
-                        && !Configuration.Config.VmessSub.StartsWith("https://",
+                        && !Configuration.Config.Subscription.StartsWith("https://",
                             StringComparison.OrdinalIgnoreCase))
                     {
-                        subscription = $"http://{Configuration.Config.VmessSub}";
+                        subscription = $"http://{Configuration.Config.Subscription}";
                     }
                     var http = new WebClient();
                     http.DownloadStringCompleted += DownloadVmessComplete;
                     http.DownloadStringAsync(new Uri(subscription));
                 }
 
-                if (string.IsNullOrWhiteSpace(Configuration.Config.VmessSub))
+                if (string.IsNullOrWhiteSpace(Configuration.Config.Subscription))
                 {
                     Complete(-2);
                 }
@@ -73,8 +73,8 @@ namespace V2RaySharp.Controller
 
             if (!isFile)
             {
-                Configuration.Config.VmessRaw = content;
-                Configuration.Config.Upgrade = DateTime.Now.Ticks;
+                Configuration.Config.RawData = content;
+                Configuration.Config.UpgradeTime = DateTime.Now.Ticks;
                 Configuration.Save();
                 Complete(DateTime.Now.Ticks);
             }

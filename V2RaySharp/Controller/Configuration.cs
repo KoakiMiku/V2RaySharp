@@ -18,9 +18,9 @@ namespace V2RaySharp.Controller
             {
                 Config = new Config
                 {
-                    VmessSub = string.Empty,
-                    VmessRaw = string.Empty,
-                    Upgrade = 0
+                    Subscription = string.Empty,
+                    RawData = string.Empty,
+                    UpgradeTime = 0
                 };
                 Save();
             }
@@ -28,7 +28,7 @@ namespace V2RaySharp.Controller
             {
                 var json = File.ReadAllText(config);
                 Config = JsonConvert.DeserializeObject<Config>(json);
-                Node.LoadVmess(Config.VmessRaw, true);
+                Node.LoadVmess(Config.RawData, true);
             }
         }
 

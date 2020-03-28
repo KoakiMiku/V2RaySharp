@@ -159,7 +159,7 @@ namespace V2RaySharp.View
                 }
                 else
                 {
-                    var dateTime = new DateTime(Configuration.Config.Upgrade);
+                    var dateTime = new DateTime(Configuration.Config.UpgradeTime);
                     labelUpgrade.Content = $"{I18N.GetString("Upgrade")}: " +
                         $"{dateTime:yyyy.MM.dd HH:mm:ss}";
 

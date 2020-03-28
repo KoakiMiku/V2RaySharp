@@ -117,24 +117,16 @@ namespace V2RaySharp.Controller
         private static void ChangeHostOnly()
         {
             var jObject = ReadConfig();
-            var jArray = jObject["inbounds"].ToObject<JArray>();
-            foreach (var item in jArray)
-            {
-                item["listen"] = "127.0.0.1";
-            }
-            jObject["inbounds"] = jArray;
+            jObject["inbounds"][0]["listen"] = "127.0.0.1";
+            jObject["inbounds"][1]["listen"] = "127.0.0.1";
             WriteConfig(jObject);
         }
 
         private static void ChangeAllowAny()
         {
             var jObject = ReadConfig();
-            var jArray = jObject["inbounds"].ToObject<JArray>();
-            foreach (var item in jArray)
-            {
-                item["listen"] = "0.0.0.0";
-            }
-            jObject["inbounds"] = jArray;
+            jObject["inbounds"][0]["listen"] = "0.0.0.0";
+            jObject["inbounds"][1]["listen"] = "0.0.0.0";
             WriteConfig(jObject);
         }
 
